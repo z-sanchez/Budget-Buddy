@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: "Raleway", sans-serif;
+}
+
+.navLink svg {
+  fill: black;
+}
+
+.navLink:hover svg,
+.navLink-active svg {
+  fill: #82e460;
+}
+
+.navLink:hover p,
+.navLink-active p {
+  color: #82e460;
+}
+
+.poppinsFont {
+  font-family: "Poppins", sans-serif;
+}
