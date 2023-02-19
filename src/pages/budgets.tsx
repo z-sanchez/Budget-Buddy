@@ -4,30 +4,24 @@ import { LineGraph } from "../components/Dashboard/LineGraph/LineGraph";
 import { LongTermGoals } from "../components/Dashboard/LongTermGoals/LongTermGoals";
 import { RecentActivity } from "../components/Dashboard/RecentActivity/RecentActivity";
 import { WeeklySpendingBlock } from "../components/Dashboard/WeeklySpending/WeeklySpendingBlock";
-import { BLUE, GREEN, RED, YELLOW } from "../utils/constants";
+import { BLUE, GREEN, GREY, RED, YELLOW } from "../utils/constants";
 import { type BudgetStatusProps } from "../utils/types";
 import { type NextPageWithLayout } from "./_app";
-import ShoppingIcon from "../../public/shopping-icon.svg";
+import DropdownIcon from "../../public/dropdown-icon.svg";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
+import { Collapse } from "@mui/material";
+import { BudgetsSection } from "../components/Budgets/BudgetsSection/BudgetsSection";
+import { IncomeSection } from "../components/Budgets/IncomeSection/IncomeSection";
 
 const Budgets: NextPageWithLayout = () => {
   return (
-    <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[50%_50%] grid-rows-[13%_25%_auto_25%] gap-2 px-5 py-3">
-      <div className="col-span-2">
-        <DashboardHeader />
-      </div>
-      <div className="col-span-1 ">
-        {/* <WeeklySpendingBlock budgetStatusData={budgetStatusData} /> */}
+    <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[100%] grid-rows-[13%_auto] gap-y-2 px-5 py-3">
+      <div className="col-span-1">
+        <DashboardHeader greeting="Budgets" />
       </div>
       <div className="col-span-1">
-        {/* <LongTermGoals longTermGoalData={longTermGoalsData} /> */}
-      </div>
-      <div className="col-span-2">{/* <LineGraph data={data} /> */}</div>
-      <div className="col-span-1">
-        {/* <RecentActivity data={testTransactions} /> */}
-      </div>
-      <div className="col-span-1">
-        <AccountsBlock />
+        <BudgetsSection />
+        <IncomeSection />
       </div>
     </div>
   );

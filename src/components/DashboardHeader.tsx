@@ -1,11 +1,11 @@
 import { BLUE, GREEN, GREY } from "../utils/constants";
 import { HeaderBudgetLine } from "./HeaderBudgetLine";
 
-const DashboardHeader = () => {
+const DashboardHeader = ({ greeting }: { greeting: string }) => {
   return (
     <div className="h-full w-full overflow-hidden py-5">
       <div className="flex items-center justify-between">
-        <p className="text-4xl font-thin 2xl:text-5xl">Good Evening, Ziek!</p>
+        <p className="text-4xl font-light 2xl:text-5xl">{greeting}</p>
         <p className="poppinsFont text-lg 2xl:text-2xl" style={{ color: GREY }}>
           Jan 20, 2023 5:30pm
         </p>
