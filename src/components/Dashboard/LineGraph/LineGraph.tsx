@@ -10,8 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { GREY } from "../utils/constants";
-import EllipsisIcon from "../../public/ellipsis-icon.svg";
+import { GREY } from "../../../utils/constants";
+import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
 
 ChartJS.register(
   CategoryScale,
@@ -97,7 +97,7 @@ const LineGraph = ({ data }: { data: LineGraphProps }) => {
 
         <EllipsisIcon className="cursor-pointer"></EllipsisIcon>
       </div>
-      <div className="mt-auto h-[80%] w-10/12 self-center">
+      <div className="my-auto h-[80%] w-10/12 self-center">
         {/* eslint-disable-next-line   */}
         {/*  @ts-ignore */}
         <Line options={options} data={data} />

@@ -1,11 +1,15 @@
+import Link from "next/link";
+
 const NavLink = ({
   Icon,
   name,
   linkActive,
+  link,
 }: {
   Icon: any;
   name: string;
   linkActive?: boolean;
+  link: string;
 }) => {
   return (
     <div
@@ -14,7 +18,9 @@ const NavLink = ({
       }`}
     >
       <Icon className="w-16" />
-      <p className="font-semibold">{name}</p>
+      <p className="text-sm font-semibold 2xl:text-base">
+        <Link href={link}>{name}</Link>
+      </p>
     </div>
   );
 };

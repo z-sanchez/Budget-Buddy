@@ -1,5 +1,5 @@
-import { type LongTermGoalStatusProps } from "../utils/types";
-import { BudgetStatus } from "./BudgetStatus";
+import { type LongTermGoalStatusProps } from "../../../utils/types";
+import { BudgetStatus } from "../../BudgetStatus";
 
 const LongTermGoalStatus = ({
   budgetAmount,

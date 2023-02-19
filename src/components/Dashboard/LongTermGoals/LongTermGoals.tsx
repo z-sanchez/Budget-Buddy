@@ -1,6 +1,6 @@
-import EllipsisIcon from "../../public/ellipsis-icon.svg";
-import { GREY } from "../utils/constants";
-import { type LongTermGoalStatusProps } from "../utils/types";
+import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
+import { GREY } from "../../../utils/constants";
+import { type LongTermGoalStatusProps } from "../../../utils/types";
 import { LongTermGoalStatus } from "./LongTermGoalStatus";
 
 const LongTermGoals = ({

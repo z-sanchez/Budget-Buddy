@@ -1,13 +1,14 @@
 import { DashboardHeader } from "../components/DashboardHeader";
 import NavigationLayout from "../components/layouts/NavigationLayout";
-import { LineGraph } from "../components/LineGraph";
-import { LongTermGoals } from "../components/LongTermGoals";
-import { RecentActivity } from "../components/RecentActivity";
-import { WeeklySpendingBlock } from "../components/WeeklySpendingBlock";
+import { LineGraph } from "../components/Dashboard/LineGraph/LineGraph";
+import { LongTermGoals } from "../components/Dashboard/LongTermGoals/LongTermGoals";
+import { RecentActivity } from "../components/Dashboard/RecentActivity/RecentActivity";
+import { WeeklySpendingBlock } from "../components/Dashboard/WeeklySpending/WeeklySpendingBlock";
 import { BLUE, GREEN, RED, YELLOW } from "../utils/constants";
 import { type BudgetStatusProps } from "../utils/types";
 import { type NextPageWithLayout } from "./_app";
 import ShoppingIcon from "../../public/shopping-icon.svg";
+import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 
 const Dashboard: NextPageWithLayout = () => {
   const budgetStatusData: BudgetStatusProps[] = [
@@ -160,7 +161,7 @@ const Dashboard: NextPageWithLayout = () => {
   ];
 
   return (
-    <div className="col-span-1 grid max-h-screen min-h-[820px] grid-cols-[50%_50%] grid-rows-[13%_28%_auto_28%] gap-2 px-5 py-5">
+    <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[50%_50%] grid-rows-[13%_25%_auto_25%] gap-2 px-5 py-3">
       <div className="col-span-2">
         <DashboardHeader />
       </div>
@@ -176,7 +177,9 @@ const Dashboard: NextPageWithLayout = () => {
       <div className="col-span-1">
         <RecentActivity data={testTransactions} />
       </div>
-      <div className="col-span-1">Account balances</div>
+      <div className="col-span-1">
+        <AccountsBlock />
+      </div>
     </div>
   );
 };

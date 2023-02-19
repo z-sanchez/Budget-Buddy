@@ -1,7 +1,7 @@
-import EllipsisIcon from "../../public/ellipsis-icon.svg";
-import { GREY } from "../utils/constants";
-import { type WeeklySpendingBlockProps } from "../utils/types";
-import { BudgetStatus } from "./BudgetStatus";
+import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
+import { GREY } from "../../../utils/constants";
+import { type WeeklySpendingBlockProps } from "../../../utils/types";
+import { BudgetStatus } from "../../BudgetStatus";
 
 const WeeklySpendingBlock = ({
   budgetStatusData,
@@ -17,7 +17,7 @@ const WeeklySpendingBlock = ({
         </p>
         <EllipsisIcon className="cursor-pointer"></EllipsisIcon>
       </div>
-      <div className="flex h-full flex-row flex-wrap justify-between">
+      <div className="my-1 flex h-full flex-row flex-wrap justify-between 2xl:my-3">
         {budgetStatusData
           .slice(0, 6)
           .map(({ color, name, budgetAmount, budgetBalance }, key) => {

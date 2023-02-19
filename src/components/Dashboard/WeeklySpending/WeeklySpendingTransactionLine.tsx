@@ -1,7 +1,7 @@
-import { GREEN_STATE, GREY, RED_STATE } from "../utils/constants";
-import EllipsisIcon from "../../public/ellipsis-icon.svg";
-import EditIcon from "../../public/edit-icon.svg";
-import { type WeeklySpendingTransactionLineProps } from "../utils/types";
+import { GREEN_STATE, GREY, RED_STATE } from "../../../utils/constants";
+import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
+import EditIcon from "../../../../public/edit-icon.svg";
+import { type WeeklySpendingTransactionLineProps } from "../../../utils/types";
 
 const WeeklySpendingTransactionLine = ({
   Icon,
@@ -12,9 +12,9 @@ const WeeklySpendingTransactionLine = ({
   transactionAmount,
 }: WeeklySpendingTransactionLineProps) => {
   return (
-    <div className="my-2 flex w-5/6 flex-row items-center justify-between">
+    <div className="my-2 flex w-11/12 flex-row items-center justify-between xl:w-5/6">
       <div
-        className="flex h-8 w-8 items-center justify-center rounded-lg outline outline-1 2xl:h-10 2xl:w-10"
+        className="mr-3 flex h-8 w-8 items-center justify-center rounded-lg outline outline-1 2xl:h-10 2xl:w-10"
         style={{ outlineColor: GREY }}
       >
         <Icon />

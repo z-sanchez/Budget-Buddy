@@ -1,7 +1,7 @@
-import { GREEN, GREY } from "../utils/constants";
-import EllipsisIcon from "../../public/ellipsis-icon.svg";
-import { WeeklySpendingTransactionLine } from "./WeeklySpendingTransactionLine";
-import { type WeeklySpendingTransactionLineProps } from "../utils/types";
+import { GREEN, GREY } from "../../../utils/constants";
+import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
+import { WeeklySpendingTransactionLine } from "../WeeklySpending/WeeklySpendingTransactionLine";
+import { type WeeklySpendingTransactionLineProps } from "../../../utils/types";
 
 const RecentActivity = ({
   data,
@@ -15,11 +15,11 @@ const RecentActivity = ({
           className="cursor-default text-xl font-light 2xl:text-2xl"
           style={{ color: GREY }}
         >
-          Weekly Spending
+          Recent Activity
         </p>
         <EllipsisIcon className="cursor-pointer"></EllipsisIcon>
       </div>
-      <div className=" my-3 flex h-2/3 flex-row flex-wrap items-start justify-center overflow-y-scroll ">
+      <div className=" my-auto flex h-2/3 flex-row flex-wrap items-start justify-center overflow-y-scroll ">
         {data.map(
           (transaction: WeeklySpendingTransactionLineProps, index: number) => {
             return (
