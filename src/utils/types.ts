@@ -6,6 +6,18 @@ export type BudgetStatusProps = {
   className?: string;
 };
 
+export type BudgetStatusDetailedProps = {
+  budgetAmount: number;
+  budgetBalance: number;
+  color: string;
+  name: string;
+  message: string;
+  edit: boolean;
+  accounts: { accountName: string; id: number }[];
+  longTerm?: boolean;
+  className?: string;
+};
+
 export type LongTermGoalStatusProps = {
   budgetAmount: number;
   budgetBalance: number;

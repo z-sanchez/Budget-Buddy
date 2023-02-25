@@ -23,3 +23,11 @@ html {
 .poppinsFont {
   font-family: "Poppins", sans-serif;
 }
+
+.tableRemoveButton {
+  color: #e31837;
+}
+
+.tableRemoveButton:hover {
+  color: #c21a34;
+}
