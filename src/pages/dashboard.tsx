@@ -161,7 +161,7 @@ const Dashboard: NextPageWithLayout = () => {
   ];
 
   return (
-    <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[50%_50%] grid-rows-[13%_25%_auto_25%] gap-y-2 px-5 py-3">
+    <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[50%_50%] grid-rows-[13%_25%_auto_25%] gap-y-2 px-5 py-3 pb-8">
       <div className="col-span-2">
         <DashboardHeader greeting="Good Evening, Ziek!" />
       </div>

@@ -10,7 +10,7 @@ const Budgets: NextPageWithLayout = () => {
       <div className="col-span-1">
         <DashboardHeader greeting="Budgets" />
       </div>
-      <div className="col-span-1">
+      <div className="col-span-1 pb-8">
         <BudgetsSection />
         <IncomeSection />
         <WeeklyBudgetSection />
