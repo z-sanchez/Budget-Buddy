@@ -14,7 +14,7 @@ const AccountsBlock = () => {
         </p>
         <EllipsisIcon className="cursor-pointer"></EllipsisIcon>
       </div>
-      <div className="mt-3 flex h-full flex-col justify-around">
+      <div className="mt-3 flex h-full flex-col justify-between">
         <AccountBlock color={RED} name={"Ziek's Account"} amount={1234.56} />
         <AccountBlock
           color={BLUE}

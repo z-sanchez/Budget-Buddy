@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { LinearProgress } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { GREY, LIGHT_GREY } from "../../../utils/constants";
@@ -5,9 +6,8 @@ import EditIcon from "../../../../public/edit-icon.svg";
 import CloseIcon from "../../../../public/close-icon.svg";
 import TargetIcon from "../../../../public/target-icon.svg";
 import type { BudgetStatusDetailedProps } from "../../../utils/types";
-import { DesktopDatePicker } from "@mui/x-date-pickers";
 import CalendarIcon from "../../../../public/calendar-icon.svg";
-import type { ElementType } from "react";
+import { DateModal } from "./DateModal";
 
 const BudgetStatusDetailed = ({
   budgetAmount,
@@ -15,11 +15,12 @@ const BudgetStatusDetailed = ({
   color,
   name,
   message,
-  edit,
-  accounts,
+  // accounts,
   longTerm,
   className,
 }: BudgetStatusDetailedProps) => {
+  const [edit, setEdit] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const percentage = (100 / budgetAmount) * budgetBalance;
 
   const theme = createTheme({
@@ -49,15 +50,17 @@ const BudgetStatusDetailed = ({
           className ? className : "w-2/5"
         }`}
       >
+        <DateModal modalOpen={modalOpen} onClose={() => setModalOpen(false)} />
         {edit && (
           <CloseIcon
             className="absolute h-3 w-3 cursor-pointer"
             style={{ right: "100%", bottom: "95%" }}
+            onClick={() => setEdit(false)}
           />
         )}
         {longTerm && !edit && (
           <TargetIcon
-            className="absolute h-3 w-3 cursor-pointer"
+            className="absolute h-3 w-3 "
             style={{ right: "100%", bottom: "95%" }}
           />
         )}
@@ -66,10 +69,10 @@ const BudgetStatusDetailed = ({
             {!edit ? (
               <>
                 <p className="2xl:text-xl">{name}</p>
-
                 <EditIcon
                   className="ml-3 h-3 w-3 cursor-pointer"
                   style={{ fill: GREY }}
+                  onClick={() => setEdit(true)}
                 />
               </>
             ) : (
@@ -107,27 +110,10 @@ const BudgetStatusDetailed = ({
               <p style={{ color: LIGHT_GREY }} className="text-xs font-light">
                 set dates:
               </p>
-
-              <DesktopDatePicker
-                renderInput={({ inputRef }) => (
-                  <div ref={inputRef}>
-                    <CalendarIcon
-                      className="ml-2 h-4 w-4"
-
-                      //   onClick={() => setDateOpen((prev) => !prev)}
-                    />
-                  </div>
-                )}
-                value={null}
-                onChange={(newValue) => {
-                  console.log(newValue);
-                }}
-                // onClose={() => setDateOpen(false)}
-                // open={dateOpen}
-                components={{
-                  OpenPickerIcon: CalendarIcon as ElementType,
-                }}
-              />
+              <CalendarIcon
+                className="ml-2 h-4 w-4 cursor-pointer"
+                onClick={() => setModalOpen(true)}
+              ></CalendarIcon>
             </div>
             <div className="flex items-center">
               <label

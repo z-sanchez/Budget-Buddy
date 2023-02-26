@@ -12,7 +12,6 @@ export type BudgetStatusDetailedProps = {
   color: string;
   name: string;
   message: string;
-  edit: boolean;
   accounts: { accountName: string; id: number }[];
   longTerm?: boolean;
   className?: string;

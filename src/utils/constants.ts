@@ -1,5 +1,6 @@
 export const GREY = "#9D9D9D";
 export const LIGHT_GREY = "#D9D9D9";
+export const EXTRA_LIGHT_GREY = "#F4F4F4";
 export const BLUE = "#00B8FF";
 export const RED = "#FF577F";
 export const YELLOW = "#F9E749";

@@ -1,12 +1,8 @@
 import { useState } from "react";
 import DropdownIcon from "../../../../public/dropdown-icon.svg";
 import { Collapse, TextField, Autocomplete } from "@mui/material";
-import { BudgetStatus } from "../../BudgetStatus";
-import { BLUE, GREEN, RED, YELLOW } from "../../../utils/constants";
-import type {
-  BudgetStatusDetailedProps,
-  BudgetStatusProps,
-} from "../../../utils/types";
+import { BLUE } from "../../../utils/constants";
+import type { BudgetStatusDetailedProps } from "../../../utils/types";
 import { BudgetStatusDetailed } from "./BudgetStatusDetailed";
 
 const BudgetsSection = () => {
@@ -46,7 +42,6 @@ const BudgetsSection = () => {
     name: "Dativity",
     budgetBalance: 20,
     message: "Next Payment: $40 due April 4th, 2023",
-    edit: false,
     accounts: [...accounts],
     longTerm: true,
   };
@@ -61,7 +56,7 @@ const BudgetsSection = () => {
           <DropdownIcon
             className={`${expandSection ? "" : "-rotate-90"} mr-3  transition`}
           />
-          <p className=" text-2xl font-light 2xl:text-3xl">March 2023</p>
+          <p className="text-2xl font-light 2xl:text-3xl">March 2023</p>
         </div>
         <Autocomplete
           disablePortal
