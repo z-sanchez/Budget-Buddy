@@ -12,8 +12,7 @@ import { api } from "../utils/api";
 import type { budgets } from "@prisma/client";
 
 const Dashboard: NextPageWithLayout = () => {
-  const hello = api.budgets.getAll.useQuery();
-  console.log("heres data:", hello.data);
+  const budgets = api.budgets.getAll.useQuery().data as budgets[];
 
   const longTermGoalsData = [
     {
@@ -131,7 +130,9 @@ const Dashboard: NextPageWithLayout = () => {
         <DashboardHeader greeting="Good Evening, Ziek!" />
       </div>
       <div className="col-span-1 ">
-        <WeeklySpendingBlock budgetStatusData={hello.data as budgets[]} />
+        <WeeklySpendingBlock
+          budgetStatusData={budgets?.filter(({ dashboard }) => dashboard)}
+        />
       </div>
       <div className="col-span-1">
         <LongTermGoals longTermGoalData={longTermGoalsData} />

@@ -20,6 +20,7 @@ model budgets {
   color    String  @db.VarChar(45)
   amount   Decimal @db.Decimal(13, 2)
   longTerm Int?    @db.TinyInt
+  dashboard Int?    @db.TinyInt
   account  String  @db.VarChar(45)
   balance  Decimal @db.Decimal(13, 2)
   userId   Int
