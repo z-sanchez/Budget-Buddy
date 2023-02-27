@@ -5,50 +5,15 @@ import { LongTermGoals } from "../components/Dashboard/LongTermGoals/LongTermGoa
 import { RecentActivity } from "../components/Dashboard/RecentActivity/RecentActivity";
 import { WeeklySpendingBlock } from "../components/Dashboard/WeeklySpending/WeeklySpendingBlock";
 import { BLUE, GREEN, RED, YELLOW } from "../utils/constants";
-import { type BudgetStatusProps } from "../utils/types";
 import { type NextPageWithLayout } from "./_app";
 import ShoppingIcon from "../../public/shopping-icon.svg";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
+import { api } from "../utils/api";
+import type { budgets } from "@prisma/client";
 
 const Dashboard: NextPageWithLayout = () => {
-  const budgetStatusData: BudgetStatusProps[] = [
-    {
-      color: GREEN,
-      budgetAmount: 200,
-      name: "Dativity",
-      budgetBalance: 50,
-    },
-    {
-      color: BLUE,
-      budgetAmount: 150,
-      name: "Dativity",
-      budgetBalance: 20,
-    },
-    {
-      color: RED,
-      budgetAmount: 60,
-      name: "Gas",
-      budgetBalance: 15,
-    },
-    {
-      color: YELLOW,
-      budgetAmount: 100,
-      name: "Ziek Allowance",
-      budgetBalance: 75,
-    },
-    {
-      color: RED,
-      budgetAmount: 60,
-      name: "Gas",
-      budgetBalance: 15,
-    },
-    {
-      color: YELLOW,
-      budgetAmount: 100,
-      name: "Ziek Allowance",
-      budgetBalance: 75,
-    },
-  ];
+  const hello = api.budgets.getAll.useQuery();
+  console.log("heres data:", hello.data);
 
   const longTermGoalsData = [
     {
@@ -166,7 +131,7 @@ const Dashboard: NextPageWithLayout = () => {
         <DashboardHeader greeting="Good Evening, Ziek!" />
       </div>
       <div className="col-span-1 ">
-        <WeeklySpendingBlock budgetStatusData={budgetStatusData} />
+        <WeeklySpendingBlock budgetStatusData={hello.data as budgets[]} />
       </div>
       <div className="col-span-1">
         <LongTermGoals longTermGoalData={longTermGoalsData} />

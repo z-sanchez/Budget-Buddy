@@ -4,13 +4,14 @@ import { GREY, LIGHT_GREY } from "../utils/constants";
 import { type BudgetStatusProps } from "../utils/types";
 
 const BudgetStatus = ({
-  budgetAmount,
-  budgetBalance,
+  amount,
+  balance,
   color,
   name,
   className,
 }: BudgetStatusProps) => {
-  const percentage = (100 / budgetAmount) * budgetBalance;
+  const percentage =
+    (100 / Number(amount)) * (Number(amount) - Number(balance));
 
   const theme = createTheme({
     components: {
@@ -43,7 +44,7 @@ const BudgetStatus = ({
             className="poppinsFont text-sm font-light 2xl:text-base"
             style={{ color: GREY }}
           >
-            {budgetBalance} / {budgetAmount}
+            {balance} / {amount}
           </p>
         </div>
         <LinearProgress

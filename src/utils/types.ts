@@ -1,6 +1,6 @@
 export type BudgetStatusProps = {
-  budgetAmount: number;
-  budgetBalance: number;
+  amount: string;
+  balance: string;
   color: string;
   name: string;
   className?: string;

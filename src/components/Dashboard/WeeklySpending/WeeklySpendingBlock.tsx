@@ -1,11 +1,18 @@
+import type { budgets } from "@prisma/client";
 import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
 import { GREY } from "../../../utils/constants";
-import { type WeeklySpendingBlockProps } from "../../../utils/types";
 import { BudgetStatus } from "../../BudgetStatus";
 
 const WeeklySpendingBlock = ({
   budgetStatusData,
-}: WeeklySpendingBlockProps) => {
+}: {
+  budgetStatusData: budgets[];
+}) => {
+  const budgets =
+    budgetStatusData?.length > 6
+      ? budgetStatusData?.slice(0, 6)
+      : budgetStatusData?.map((budget) => budget);
+
   return (
     <div className="flex h-full w-full flex-col justify-start overflow-hidden px-8">
       <div className="flex w-full items-center justify-between">
@@ -18,19 +25,17 @@ const WeeklySpendingBlock = ({
         <EllipsisIcon className="cursor-pointer"></EllipsisIcon>
       </div>
       <div className="my-1 flex h-full flex-row flex-wrap justify-between 2xl:my-3">
-        {budgetStatusData
-          .slice(0, 6)
-          .map(({ color, name, budgetAmount, budgetBalance }, key) => {
-            return (
-              <BudgetStatus
-                name={name}
-                key={key}
-                color={color}
-                budgetAmount={budgetAmount}
-                budgetBalance={budgetBalance}
-              ></BudgetStatus>
-            );
-          })}
+        {budgets?.map(({ color, name, amount, balance }, key) => {
+          return (
+            <BudgetStatus
+              name={name}
+              key={key}
+              color={color}
+              amount={String(amount)}
+              balance={String(balance)}
+            ></BudgetStatus>
+          );
+        })}
       </div>
     </div>
   );
