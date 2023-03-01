@@ -7,7 +7,7 @@ const SignIn: NextPage = () => {
   const [signIn, setSignIn] = useState(true);
 
   return (
-    <div className="flex h-screen w-screen">
+    <div className="flex h-screen w-screen min-w-[975px]">
       <div className="flex h-full w-1/2 items-center justify-center">
         <LoginSplash />
       </div>

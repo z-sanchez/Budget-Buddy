@@ -6,8 +6,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "../utils/api";
 
 const Home: NextPage = () => {
-  const hello = api.budgets.getAll.useQuery();
-  console.log(hello.data);
+  // const hello = api.budgets.getAll.useQuery();
 
   return (
     <>
@@ -46,7 +45,6 @@ const Home: NextPage = () => {
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">{JSON.stringify(hello)}</p>
             <AuthShowcase />
           </div>
         </div>
@@ -64,6 +62,8 @@ const AuthShowcase: React.FC = () => {
     undefined, // no input
     { enabled: sessionData?.user !== undefined }
   );
+
+  console.log(sessionData);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
