@@ -1,11 +1,8 @@
 import { type NextPage } from "next";
 import LoginSplash from "../../public/login-splash.svg";
-import { GREEN_STATE, LIGHT_GREY, EXTRA_LIGHT_GREY } from "../utils/constants";
-import { useState } from "react";
+import { GREEN_STATE, EXTRA_LIGHT_GREY, BLUE, GREY } from "../utils/constants";
 
 const SignIn: NextPage = () => {
-  const [signIn, setSignIn] = useState(true);
-
   return (
     <div className="flex h-screen w-screen min-w-[975px]">
       <div className="flex h-full w-1/2 items-center justify-center">
@@ -16,18 +13,10 @@ const SignIn: NextPage = () => {
           <form>
             <div className="flex items-center">
               <p
-                className="cursor-pointer border-x-0 border-y-0 border-b-2 pl-1 pr-10 pb-1 text-xl font-light transition 2xl:text-2xl"
-                style={{ borderColor: signIn ? GREEN_STATE : LIGHT_GREY }}
-                onClick={() => setSignIn(true)}
+                className="cursor-pointer border-x-0 border-y-0 border-b-2 pl-1 pr-10 pb-1 text-xl font-light  2xl:text-2xl"
+                style={{ borderColor: GREEN_STATE }}
               >
                 Sign In
-              </p>
-              <p
-                className=" cursor-pointer border-x-0 border-y-0 border-b-2 pl-1 pr-10 pb-1  text-xl font-light transition 2xl:text-2xl"
-                style={{ borderColor: signIn ? LIGHT_GREY : GREEN_STATE }}
-                onClick={() => setSignIn(false)}
-              >
-                Sign Up
               </p>
             </div>
 
@@ -37,47 +26,32 @@ const SignIn: NextPage = () => {
               style={{
                 backgroundColor: EXTRA_LIGHT_GREY,
               }}
-              placeholder="Username"
+              placeholder="Email"
             ></input>
-
-            {!signIn && (
-              <input
-                type="email"
-                className="mt-10 w-full rounded-lg py-3 pl-3"
-                style={{
-                  backgroundColor: EXTRA_LIGHT_GREY,
-                }}
-                placeholder="Email"
-              ></input>
-            )}
-
-            <input
-              type="password"
-              className="mt-10 w-full rounded-lg py-3 pl-3 "
-              style={{
-                backgroundColor: EXTRA_LIGHT_GREY,
-              }}
-              placeholder="Password"
-            ></input>
-
-            {!signIn && (
-              <input
-                type="password"
-                className="mt-10 w-full rounded-lg py-3 pl-3"
-                style={{
-                  backgroundColor: EXTRA_LIGHT_GREY,
-                }}
-                placeholder="Re-enter Password"
-              ></input>
-            )}
 
             <button
               style={{
                 backgroundColor: GREEN_STATE,
               }}
-              className="mt-10 w-full rounded-lg py-3 pl-3 font-medium text-white "
+              className="mt-5 w-full rounded-lg py-3 pl-3 font-medium text-white "
             >
-              {signIn ? "Sign In" : "Sign Up"}
+              Sign In
+            </button>
+
+            <p
+              className="mt-5 w-full text-center font-medium"
+              style={{ color: GREY }}
+            >
+              or
+            </p>
+
+            <button
+              style={{
+                backgroundColor: BLUE,
+              }}
+              className="mt-5 w-full rounded-lg py-3 pl-3 font-medium text-white "
+            >
+              Sign In With Google
             </button>
           </form>
         </div>
