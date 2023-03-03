@@ -12,3 +12,4 @@ export const GREEN_STATE = "#82E460";
 
 export const DASHBOARD_PATH = "/dashboard";
 export const BUDGETS_PATH = "/budgets";
+export const SIGNIN_PATH = "/";
