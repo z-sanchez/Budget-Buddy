@@ -4,46 +4,18 @@ import { LineGraph } from "../components/Dashboard/LineGraph/LineGraph";
 import { LongTermGoals } from "../components/Dashboard/LongTermGoals/LongTermGoals";
 import { RecentActivity } from "../components/Dashboard/RecentActivity/RecentActivity";
 import { WeeklySpendingBlock } from "../components/Dashboard/WeeklySpending/WeeklySpendingBlock";
-import { BLUE, GREEN, RED, YELLOW } from "../utils/constants";
+import { YELLOW } from "../utils/constants";
 import { type NextPageWithLayout } from "./_app";
 import ShoppingIcon from "../../public/shopping-icon.svg";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 import { api } from "../utils/api";
-import type { budgets } from "@prisma/client";
+import type { budgets, longTerm } from "@prisma/client";
 
 const Dashboard: NextPageWithLayout = () => {
-  const budgets = api.budgets.getAll.useQuery().data as budgets[];
+  const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
 
-  const longTermGoalsData = [
-    {
-      color: GREEN,
-      budgetAmount: 200,
-      name: "Seattle",
-      budgetBalance: 50,
-      priority: 1,
-    },
-    {
-      color: BLUE,
-      budgetAmount: 150,
-      name: "Wedding",
-      budgetBalance: 20,
-      priority: 2,
-    },
-    {
-      color: RED,
-      budgetAmount: 60,
-      name: "Honeymoon",
-      budgetBalance: 15,
-      priority: 3,
-    },
-    {
-      color: YELLOW,
-      budgetAmount: 100,
-      name: "Ziek Allowance",
-      budgetBalance: 75,
-      priority: 4,
-    },
-  ];
+  const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
+    .data as longTerm[];
 
   const labels = [
     "January",

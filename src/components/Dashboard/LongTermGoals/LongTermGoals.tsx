@@ -1,13 +1,18 @@
+import { type longTerm } from "@prisma/client";
 import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
 import { GREY } from "../../../utils/constants";
-import { type LongTermGoalStatusProps } from "../../../utils/types";
 import { LongTermGoalStatus } from "./LongTermGoalStatus";
 
 const LongTermGoals = ({
   longTermGoalData,
 }: {
-  longTermGoalData: LongTermGoalStatusProps[];
+  longTermGoalData: longTerm[];
 }) => {
+  const longTermGoalsToRender =
+    longTermGoalData?.length > 3
+      ? longTermGoalData?.slice(0, 3)
+      : longTermGoalData;
+
   return (
     <div className="flex h-full w-full flex-col justify-start overflow-hidden px-8">
       <div className="flex w-full items-center justify-between ">
@@ -20,7 +25,7 @@ const LongTermGoals = ({
         <EllipsisIcon className="cursor-pointer"></EllipsisIcon>
       </div>
       <div className="flex w-4/6 flex-row flex-wrap justify-between self-center">
-        {longTermGoalData.slice(0, 3).map((props, key) => {
+        {longTermGoalsToRender?.map((props, key) => {
           return <LongTermGoalStatus key={key} {...props} />;
         })}
       </div>

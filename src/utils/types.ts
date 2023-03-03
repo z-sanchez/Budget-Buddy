@@ -17,14 +17,6 @@ export type BudgetStatusDetailedProps = {
   className?: string;
 };
 
-export type LongTermGoalStatusProps = {
-  budgetAmount: number;
-  budgetBalance: number;
-  color: string;
-  name: string;
-  priority: number;
-};
-
 export interface WeeklySpendingBlockProps {
   budgetStatusData: BudgetStatusProps[];
 }

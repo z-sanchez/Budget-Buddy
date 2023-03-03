@@ -1,13 +1,13 @@
-import { type LongTermGoalStatusProps } from "../../../utils/types";
+import { type longTerm } from "@prisma/client";
 import { BudgetStatus } from "../../BudgetStatus";
 
 const LongTermGoalStatus = ({
-  budgetAmount,
-  budgetBalance,
+  goal,
+  saved,
   color,
   name,
   priority,
-}: LongTermGoalStatusProps) => {
+}: longTerm) => {
   return (
     <div className="my-1 flex w-full items-center justify-between 2xl:my-3">
       <div
@@ -19,8 +19,8 @@ const LongTermGoalStatus = ({
       <div className="flex w-3/4 items-center justify-between">
         <BudgetStatus
           className="my-0 w-full"
-          budgetAmount={budgetAmount}
-          budgetBalance={budgetBalance}
+          amount={String(goal)}
+          balance={String(saved)}
           color={color}
           name={name}
         ></BudgetStatus>
