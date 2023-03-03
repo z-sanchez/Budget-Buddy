@@ -35,16 +35,6 @@ model posts {
   created_at DateTime @db.Date
 }
 
-model transactions {
-  id        Int      @id @default(autoincrement())
-  amount    Decimal  @db.Decimal(19, 2)
-  accountId Int
-  userId    Int
-  budgetId  Int
-  date      DateTime @db.DateTime(0)
-  name      String   @db.VarChar(45)
-}
-
 model users {
   id       Int    @id @default(autoincrement())
   name     String @db.VarChar(45)
@@ -118,4 +108,14 @@ model LongTerm {
   accountId Int
 
   @@index([userId], map: "userId")
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  amount    Decimal  @db.Decimal(19, 2)
+  accountId Int
+  userId    Int
+  budgetId  Int
+  date      DateTime @db.DateTime(0)
+  name      String   @db.VarChar(45)
 }

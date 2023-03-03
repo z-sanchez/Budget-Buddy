@@ -29,3 +29,11 @@ export type WeeklySpendingTransactionLineProps = {
   transactionUser: string;
   transactionAmount: number;
 };
+
+export type LineGraphDataset = {
+  label: string;
+  data: number[];
+  fill: boolean;
+  borderColor: string;
+  tension: number;
+};

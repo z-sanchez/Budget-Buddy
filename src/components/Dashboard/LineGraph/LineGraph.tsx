@@ -24,7 +24,6 @@ ChartJS.register(
 );
 
 const options = {
-  //   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
@@ -74,7 +73,7 @@ const LineGraph = ({ data }: { data: LineGraphProps }) => {
             className="cursor-default text-xl font-light 2xl:text-2xl"
             style={{ color: GREY }}
           >
-            Monthly Spending
+            Weekly Spend Habits
           </p>
 
           {data.datasets.map((dataset, index) => {

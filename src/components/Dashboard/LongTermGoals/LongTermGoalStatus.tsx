@@ -1,13 +1,12 @@
-import { type longTerm } from "@prisma/client";
+import { type LongTerm } from "@prisma/client";
 import { BudgetStatus } from "../../BudgetStatus";
-
 const LongTermGoalStatus = ({
   goal,
   saved,
   color,
   name,
   priority,
-}: longTerm) => {
+}: LongTerm) => {
   return (
     <div className="my-1 flex w-full items-center justify-between 2xl:my-3">
       <div

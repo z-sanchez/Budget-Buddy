@@ -9,22 +9,30 @@ import { type NextPageWithLayout } from "./_app";
 import ShoppingIcon from "../../public/shopping-icon.svg";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 import { api } from "../utils/api";
-import type { budgets, longTerm } from "@prisma/client";
+import type { budgets, LongTerm, Transaction } from "@prisma/client";
+import { createLineGraphData } from "../utils/helpers/lineGraph";
 
 const Dashboard: NextPageWithLayout = () => {
+  const transactions = api.transactions.getAllTransactions.useQuery()
+    .data as Transaction[];
+
+  console.log(transactions);
   const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
 
   const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
-    .data as longTerm[];
+    .data as LongTerm[];
 
+  const lineGraphdata = createLineGraphData({ budgets, transactions });
+
+  console.log(lineGraphdata);
   const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
   ];
 
   const data = {
@@ -110,7 +118,7 @@ const Dashboard: NextPageWithLayout = () => {
         <LongTermGoals longTermGoalData={longTermGoalsData} />
       </div>
       <div className="col-span-2">
-        <LineGraph data={data} />
+        <LineGraph data={lineGraphdata} />
       </div>
       <div className="col-span-1">
         <RecentActivity data={testTransactions} />

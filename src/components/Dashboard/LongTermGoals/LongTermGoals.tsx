@@ -1,4 +1,4 @@
-import { type longTerm } from "@prisma/client";
+import { type LongTerm } from "@prisma/client";
 import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
 import { GREY } from "../../../utils/constants";
 import { LongTermGoalStatus } from "./LongTermGoalStatus";
@@ -6,7 +6,7 @@ import { LongTermGoalStatus } from "./LongTermGoalStatus";
 const LongTermGoals = ({
   longTermGoalData,
 }: {
-  longTermGoalData: longTerm[];
+  longTermGoalData: LongTerm[];
 }) => {
   const longTermGoalsToRender =
     longTermGoalData?.length > 3
