@@ -4,13 +4,12 @@ import { LineGraph } from "../components/Dashboard/LineGraph/LineGraph";
 import { LongTermGoals } from "../components/Dashboard/LongTermGoals/LongTermGoals";
 import { RecentActivity } from "../components/Dashboard/RecentActivity/RecentActivity";
 import { WeeklySpendingBlock } from "../components/Dashboard/WeeklySpending/WeeklySpendingBlock";
-import { YELLOW } from "../utils/constants";
 import { type NextPageWithLayout } from "./_app";
 import ShoppingIcon from "../../public/shopping-icon.svg";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 import { api } from "../utils/api";
 import type { budgets, LongTerm, Transaction } from "@prisma/client";
-import { createLineGraphData } from "../utils/helpers/lineGraph";
+import { createWeekBudgetSpendingLineGraphData } from "../utils/helpers/lineGraph";
 
 const Dashboard: NextPageWithLayout = () => {
   const transactions = api.transactions.getAllTransactions.useQuery()
@@ -22,52 +21,12 @@ const Dashboard: NextPageWithLayout = () => {
   const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
     .data as LongTerm[];
 
-  const lineGraphdata = createLineGraphData({ budgets, transactions });
+  const lineGraphdata = createWeekBudgetSpendingLineGraphData({
+    budgets,
+    transactions,
+  });
 
   console.log(lineGraphdata);
-  const labels = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Dativity",
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        borderColor: "#82E460",
-        tension: 0.4,
-      },
-      {
-        label: "Gas",
-        data: [55, 81, 60, 56, 65, 59, 65],
-        fill: false,
-        borderColor: "#FF577F",
-        tension: 0.4,
-      },
-      {
-        label: "Grocery",
-        data: [39, 81, 34, 56, 61, 59, 28],
-        fill: false,
-        borderColor: "#00B8FF",
-        tension: 0.4,
-      },
-      {
-        label: "Ziek Allowance",
-        data: [22, 43, 36, 56, 89, 34, 14],
-        fill: false,
-        borderColor: YELLOW,
-        tension: 0.4,
-      },
-    ],
-  };
 
   const testTransactions = [
     {

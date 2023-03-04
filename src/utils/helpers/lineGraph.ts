@@ -1,4 +1,5 @@
 import { type Transaction, type budgets } from "@prisma/client";
+import dayjs from "dayjs";
 import { type LineGraphDataset } from "../types";
 
 const labels = [
@@ -11,7 +12,8 @@ const labels = [
   "Saturday",
 ];
 
-export const createLineGraphData = ({
+//takes arrays of budgets and transactions, maps values to a line graph dataset
+export const createWeekBudgetSpendingLineGraphData = ({
   budgets,
   transactions,
 }: {
@@ -23,7 +25,7 @@ export const createLineGraphData = ({
   budgets?.forEach((budget) => {
     const dataset: LineGraphDataset = {
       label: "",
-      data: [],
+      data: [0, 0, 0, 0, 0, 0, 0],
       fill: false,
       borderColor: "",
       tension: 0.4,
@@ -33,8 +35,10 @@ export const createLineGraphData = ({
       ({ budgetId }) => budget.id === budgetId
     );
 
-    dataset.data = transactionData?.map(({ amount }) => Number(amount));
-
+    transactionData.forEach(({ date, amount }) => {
+      const dayOfWeek = dayjs(date).day();
+      dataset.data[dayOfWeek] = Number(amount);
+    });
     dataset.label = budget.name;
     dataset.borderColor = budget.color;
 
