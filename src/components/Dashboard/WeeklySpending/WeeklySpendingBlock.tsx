@@ -1,6 +1,6 @@
 import type { budgets } from "@prisma/client";
 import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
-import { GREY } from "../../../utils/constants";
+import { GREY, RED_STATE } from "../../../utils/constants";
 import { BudgetStatus } from "../../BudgetStatus";
 
 const WeeklySpendingBlock = ({
@@ -26,6 +26,7 @@ const WeeklySpendingBlock = ({
       </div>
       <div className="my-1 flex h-full flex-row flex-wrap justify-between 2xl:my-3">
         {budgets?.map(({ color, name, amount, balance }, key) => {
+          const overBudget = Number(balance) > Number(amount);
           return (
             <BudgetStatus
               name={name}
@@ -33,6 +34,7 @@ const WeeklySpendingBlock = ({
               color={color}
               amount={String(amount)}
               balance={String(balance)}
+              outlineColor={overBudget ? RED_STATE : ""}
             ></BudgetStatus>
           );
         })}

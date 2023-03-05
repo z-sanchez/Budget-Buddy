@@ -1,4 +1,5 @@
 import { type LongTerm } from "@prisma/client";
+import { GREEN_STATE } from "../../../utils/constants";
 import { BudgetStatus } from "../../BudgetStatus";
 const LongTermGoalStatus = ({
   goal,
@@ -7,6 +8,8 @@ const LongTermGoalStatus = ({
   name,
   priority,
 }: LongTerm) => {
+  const goalMet = Number(saved) > Number(goal);
+
   return (
     <div className="my-1 flex w-full items-center justify-between 2xl:my-3">
       <div
@@ -22,6 +25,7 @@ const LongTermGoalStatus = ({
           balance={String(saved)}
           color={color}
           name={name}
+          outlineColor={goalMet ? GREEN_STATE : ""}
         ></BudgetStatus>
       </div>
     </div>

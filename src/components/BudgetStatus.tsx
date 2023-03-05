@@ -1,6 +1,6 @@
 import { LinearProgress } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { GREY, LIGHT_GREY, RED_STATE } from "../utils/constants";
+import { LIGHT_GREY } from "../utils/constants";
 import { type BudgetStatusProps } from "../utils/types";
 
 const BudgetStatus = ({
@@ -8,12 +8,13 @@ const BudgetStatus = ({
   balance,
   color,
   name,
+  outlineColor = "",
   className,
 }: BudgetStatusProps) => {
   const overBudget = Number(balance) > Number(amount);
 
   const percentage = !overBudget
-    ? (100 / Number(amount)) * (Number(amount) - Number(balance))
+    ? (100 / Number(amount)) * Number(balance)
     : 100;
 
   const theme = createTheme({
@@ -26,7 +27,7 @@ const BudgetStatus = ({
                 backgroundColor: LIGHT_GREY,
                 borderRadius: "2rem",
                 height: "7px",
-                outline: overBudget ? `2px solid ${RED_STATE}` : "",
+                outline: outlineColor ? `2px solid ${outlineColor}` : "",
               }),
           }),
           bar1Determinate: {
@@ -46,7 +47,7 @@ const BudgetStatus = ({
           <p className="2xl:text-xl">{name}</p>
           <p
             className="poppinsFont text-sm font-light 2xl:text-base"
-            style={{ color: !overBudget ? GREY : RED_STATE }}
+            style={{ color: outlineColor ? outlineColor : "GREY" }}
           >
             {balance} / {amount}
           </p>

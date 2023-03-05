@@ -12,13 +12,9 @@ import type { budgets, LongTerm, Transaction } from "@prisma/client";
 import { createWeekBudgetSpendingLineGraphData } from "../utils/helpers/lineGraph";
 
 const Dashboard: NextPageWithLayout = () => {
-  const transactions = api.transactions.getAllTransactions.useQuery()
-    .data as Transaction[];
-
   const thisWeeksTransactions =
-    api.transactions.getThisWeeksTransactions.useQuery().data;
+    api.transactions.getThisWeeksTransactions.useQuery().data as Transaction[];
 
-  console.log(thisWeeksTransactions);
   const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
 
   const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
@@ -26,7 +22,7 @@ const Dashboard: NextPageWithLayout = () => {
 
   const lineGraphdata = createWeekBudgetSpendingLineGraphData({
     budgets: budgets?.filter(({ dashboard }) => dashboard),
-    transactions,
+    transactions: thisWeeksTransactions,
   });
 
   console.log(lineGraphdata);
@@ -77,7 +73,11 @@ const Dashboard: NextPageWithLayout = () => {
         />
       </div>
       <div className="col-span-1">
-        <LongTermGoals longTermGoalData={longTermGoalsData} />
+        <LongTermGoals
+          longTermGoalData={longTermGoalsData?.filter(
+            ({ dashboard }) => dashboard
+          )}
+        />
       </div>
       <div className="col-span-2">
         <LineGraph data={lineGraphdata} />

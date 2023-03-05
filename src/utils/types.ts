@@ -3,6 +3,7 @@ export type BudgetStatusProps = {
   balance: string;
   color: string;
   name: string;
+  outlineColor?: string;
   className?: string;
 };
 

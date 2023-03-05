@@ -8,10 +8,9 @@ const LongTermGoals = ({
 }: {
   longTermGoalData: LongTerm[];
 }) => {
-  const longTermGoalsToRender =
-    longTermGoalData?.length > 3
-      ? longTermGoalData?.slice(0, 3)
-      : longTermGoalData;
+  const longTermGoalsToRender = longTermGoalData?.sort(
+    (a, b) => a.priority - b.priority
+  );
 
   return (
     <div className="flex h-full w-full flex-col justify-start overflow-hidden px-8">
