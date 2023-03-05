@@ -19,15 +19,13 @@ export const transactionsRouter = createTRPCRouter({
 
     const prevSunday = today.subtract(daysToPreviousSunday + 1, "day");
 
-    const transactions = await ctx.prisma.transaction.findMany();
-
-    return transactions.filter(({ date }) => {
-      const transactionDate = dayjs(date);
-
-      return (
-        transactionDate.isAfter(prevSunday) &&
-        transactionDate.isBefore(nextSunday)
-      );
+    return ctx.prisma.transaction.findMany({
+      where: {
+        date: {
+          lte: nextSunday.toISOString(),
+          gte: prevSunday.toISOString(),
+        },
+      },
     });
   }),
 });

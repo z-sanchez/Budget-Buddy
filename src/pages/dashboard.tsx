@@ -25,9 +25,11 @@ const Dashboard: NextPageWithLayout = () => {
     .data as LongTerm[];
 
   const lineGraphdata = createWeekBudgetSpendingLineGraphData({
-    budgets,
+    budgets: budgets?.filter(({ dashboard }) => dashboard),
     transactions,
   });
+
+  console.log(lineGraphdata);
 
   const testTransactions = [
     {

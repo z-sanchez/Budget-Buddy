@@ -37,7 +37,7 @@ export const createWeekBudgetSpendingLineGraphData = ({
 
     transactionData.forEach(({ date, amount }) => {
       const dayOfWeek = dayjs(date).day();
-      dataset.data[dayOfWeek] = Number(amount);
+      dataset.data[dayOfWeek] += Number(amount);
     });
     dataset.label = budget.name;
     dataset.borderColor = budget.color;
