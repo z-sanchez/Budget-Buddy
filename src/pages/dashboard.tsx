@@ -15,7 +15,10 @@ const Dashboard: NextPageWithLayout = () => {
   const transactions = api.transactions.getAllTransactions.useQuery()
     .data as Transaction[];
 
-  console.log(transactions);
+  const thisWeeksTransactions =
+    api.transactions.getThisWeeksTransactions.useQuery().data;
+
+  console.log(thisWeeksTransactions);
   const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
 
   const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
@@ -25,8 +28,6 @@ const Dashboard: NextPageWithLayout = () => {
     budgets,
     transactions,
   });
-
-  console.log(lineGraphdata);
 
   const testTransactions = [
     {
