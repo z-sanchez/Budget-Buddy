@@ -3,7 +3,7 @@ import { HeaderBudgetLine } from "./HeaderBudgetLine";
 
 const DashboardHeader = ({ greeting }: { greeting: string }) => {
   return (
-    <div className="h-full w-full overflow-hidden py-5">
+    <div className="h-full min-h-[120px] w-full overflow-hidden py-5">
       <div className="flex items-center justify-between">
         <p className="text-4xl font-light 2xl:text-5xl">{greeting}</p>
         <p className="poppinsFont text-lg 2xl:text-2xl" style={{ color: GREY }}>
