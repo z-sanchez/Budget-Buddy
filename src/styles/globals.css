@@ -31,3 +31,11 @@ html {
 .tableRemoveButton:hover {
   color: #c21a34;
 }
+
+.bgGreenOnHover {
+  background-color: #82e460;
+}
+
+.bgGreenOnHover:hover {
+  background-color: #5ace33;
+}

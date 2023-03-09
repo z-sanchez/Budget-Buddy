@@ -28,11 +28,8 @@ const RecentActivity = ({
           }
         )}
       </div>
-      <div
-        className="flex w-full justify-center rounded-lg py-2"
-        style={{ backgroundColor: GREEN }}
-      >
-        <p className=" text-white 2xl:text-xl">Add Transaction</p>
+      <div className="bgGreenOnHover flex  w-full cursor-pointer justify-center rounded-lg py-2 transition-colors">
+        <p className="text-white 2xl:text-xl">Add Transaction</p>
       </div>
     </div>
   );
