@@ -29,40 +29,9 @@ const Dashboard: NextPageWithLayout = () => {
 
   console.log(lineGraphdata);
 
-  const testTransactions = [
-    {
-      Icon: ShoppingIcon as string,
-      transactionName: "Stuff",
-      transactionDate: "01/20/2000",
-      transactionTime: "4:20 pm",
-      transactionUser: "Ziek",
-      transactionAmount: 22,
-    },
-    {
-      Icon: ShoppingIcon as string,
-      transactionName: "Stuff",
-      transactionDate: "02/04/2033",
-      transactionTime: "5:57 am",
-      transactionUser: "Chelsea",
-      transactionAmount: -30,
-    },
-    {
-      Icon: ShoppingIcon as string,
-      transactionName: "Stuff",
-      transactionDate: "01/20/2000",
-      transactionTime: "4:20 pm",
-      transactionUser: "Ziek",
-      transactionAmount: 22,
-    },
-    {
-      Icon: ShoppingIcon as string,
-      transactionName: "Stuff",
-      transactionDate: "02/04/2033",
-      transactionTime: "5:57 am",
-      transactionUser: "Chelsea",
-      transactionAmount: -30,
-    },
-  ];
+  const transactionsWithIcon = thisWeeksTransactions?.map((transaction) => {
+    return { ...transaction, Icon: ShoppingIcon as string };
+  });
 
   return (
     <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[50%_50%] grid-rows-[13%_25%_auto_25%] gap-y-2 px-5 py-3 pb-8">
@@ -85,7 +54,7 @@ const Dashboard: NextPageWithLayout = () => {
         <LineGraph data={lineGraphdata} />
       </div>
       <div className="col-span-1">
-        <RecentActivity data={testTransactions} />
+        <RecentActivity data={transactionsWithIcon} />
       </div>
       <div className="col-span-1">
         <AccountsBlock />

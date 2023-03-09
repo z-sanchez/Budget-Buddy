@@ -49,3 +49,7 @@ export type ThisWeeksTransactions = {
   amount: number;
   budgetId: number;
 };
+
+export type ThisWeeksTransactionsWithIcon = ThisWeeksTransactions & {
+  Icon: string;
+};
