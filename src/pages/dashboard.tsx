@@ -8,12 +8,14 @@ import { type NextPageWithLayout } from "./_app";
 import ShoppingIcon from "../../public/shopping-icon.svg";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 import { api } from "../utils/api";
-import type { budgets, LongTerm, Transaction } from "@prisma/client";
+import type { budgets, LongTerm } from "@prisma/client";
 import { createWeekBudgetSpendingLineGraphData } from "../utils/helpers/lineGraph";
+import { type ThisWeeksTransactions } from "../utils/types";
 
 const Dashboard: NextPageWithLayout = () => {
   const thisWeeksTransactions =
-    api.transactions.getThisWeeksTransactions.useQuery().data as Transaction[];
+    api.transactions.getThisWeeksTransactions.useQuery()
+      .data as ThisWeeksTransactions[];
 
   const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
 

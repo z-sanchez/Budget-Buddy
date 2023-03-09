@@ -1,6 +1,6 @@
-import { type Transaction, type budgets } from "@prisma/client";
+import { type budgets } from "@prisma/client";
 import dayjs from "dayjs";
-import { type LineGraphDataset } from "../types";
+import { type ThisWeeksTransactions, type LineGraphDataset } from "../types";
 
 const labels = [
   "Sunday",
@@ -14,11 +14,11 @@ const labels = [
 
 //takes arrays of budgets and transactions, maps values to a line graph dataset
 export const createWeekBudgetSpendingLineGraphData = ({
-  budgets,
   transactions,
+  budgets,
 }: {
   budgets: budgets[];
-  transactions: Transaction[];
+  transactions: ThisWeeksTransactions[];
 }) => {
   const data: LineGraphDataset[] = [];
 

@@ -10,16 +10,12 @@ export const transactionsRouter = createTRPCRouter({
 
   getThisWeeksTransactions: protectedProcedure.query(async ({ ctx }) => {
     const today = dayjs();
-
     const daysToNextSunday = 7 - today.day();
-
     const daysToPreviousSunday = today.day();
-
     const nextSunday = today.add(daysToNextSunday, "day");
-
     const prevSunday = today.subtract(daysToPreviousSunday + 1, "day");
 
-    return ctx.prisma.transaction.findMany({
+    const weeksTransactionData = await ctx.prisma.transaction.findMany({
       where: {
         date: {
           lte: nextSunday.toISOString(),
@@ -27,5 +23,46 @@ export const transactionsRouter = createTRPCRouter({
         },
       },
     });
+
+    return Promise.all(
+      weeksTransactionData.map(async (transaction) => {
+        const newTransaction = {
+          id: transaction.id,
+          amount: Number(transaction.amount),
+          date: String(transaction.date),
+          name: transaction.name,
+          budgetId: transaction.budgetId,
+          accountName: "",
+          userName: "",
+          budgetName: "",
+        };
+
+        newTransaction.accountName = (await ctx.prisma.accounts
+          .findUnique({
+            where: {
+              id: transaction.accountId,
+            },
+          })
+          .then((data) => data?.name)) as string;
+
+        newTransaction.userName = (await ctx.prisma.users
+          .findUnique({
+            where: {
+              id: transaction.userId,
+            },
+          })
+          .then((data) => data?.name)) as string;
+
+        newTransaction.budgetName = (await ctx.prisma.budgets
+          .findUnique({
+            where: {
+              id: transaction.budgetId,
+            },
+          })
+          .then((data) => data?.name)) as string;
+
+        return newTransaction;
+      })
+    );
   }),
 });

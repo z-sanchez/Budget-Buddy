@@ -38,3 +38,14 @@ export type LineGraphDataset = {
   borderColor: string;
   tension: number;
 };
+
+export type ThisWeeksTransactions = {
+  id: number;
+  accountName: string;
+  budgetName: string;
+  date: string;
+  name: string;
+  userName: string;
+  amount: number;
+  budgetId: number;
+};
