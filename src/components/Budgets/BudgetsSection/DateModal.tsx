@@ -50,7 +50,7 @@ const DateModal = ({
                 style={{ color: GREY }}
                 onClick={() => onClose(false)}
               />
-              <p className=" text-2xl font-light 2xl:text-3xl">
+              <p className="py-5 text-2xl font-light 2xl:text-3xl">
                 Modal Payment Dates
               </p>
             </div>
