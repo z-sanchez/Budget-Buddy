@@ -10,12 +10,12 @@ const RecentActivity = ({
 }: {
   data: ThisWeeksTransactionsWithIcon[];
 }) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   return (
     <>
       <AddTransactionModal
-        modalOpen={modalOpen}
+        isModalOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
       />
       <div className="flex h-full w-full flex-col justify-start overflow-hidden px-8">

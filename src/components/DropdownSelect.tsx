@@ -10,10 +10,10 @@ const DropdownSelect = ({
   placeholder,
   onChange,
 }: {
-  value: string;
-  options: { label: string }[];
+  value: { label: string; name: string };
+  options: { label: string; name: string }[];
   placeholder: string;
-  onChange: (value: string) => void;
+  onChange: (value: { label: string; name: string }) => void;
 }) => {
   const styles = {
     styleOverrides: {
@@ -36,16 +36,33 @@ const DropdownSelect = ({
     },
   });
 
+  const allOptions = options
+    .map((option) => {
+      return option;
+    })
+    .concat([{ label: "Select Option", name: "" }]);
+
+  const selectedOption = value.label === "" ? "Select Option" : value.label;
+
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
         disablePortal
-        options={options}
-        onChange={(_, value) => onChange(value?.label || "")}
+        options={allOptions.map(({ label }) => {
+          return label;
+        })}
+        onChange={(_, value) => {
+          const selectedOption = allOptions.find(
+            ({ label }) => label === value
+          ) || { label: "", name: "" };
+          onChange({
+            ...selectedOption,
+          });
+        }}
         sx={{
           width: 1 / 1,
         }}
-        value={{ label: value }}
+        value={selectedOption}
         renderInput={(params) => (
           <TextField {...params} placeholder={placeholder} />
         )}

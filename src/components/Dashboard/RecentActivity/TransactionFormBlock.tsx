@@ -7,33 +7,59 @@ import dayjs from "dayjs";
 import { DropdownSelect } from "../../DropdownSelect";
 
 const testBudgetName = [
-  { label: "Dativity" },
-  { label: "Grocery" },
-  { label: "Ziek" },
-  { label: "Chelsea" },
-  { label: "Gas" },
-  { label: "Loans" },
+  { label: "Selected Option", name: "" },
+  { label: "Dativity", name: "Dativity" },
+  { label: "Grocery", name: "Grocery" },
+  { label: "Ziek", name: "Ziek" },
+  { label: "Chelsea", name: "Chelsea" },
+  { label: "Gas", name: "Gas" },
+  { label: "Loans", name: "Loans" },
 ];
 
-const testUserName = [{ label: "Ziek" }, { label: "Chelsea" }];
+const testUserName = [
+  { label: "Selected Option", name: "" },
+  { label: "Ziek", name: "Ziek" },
+  { label: "Chelsea", name: "Chelsea" },
+];
 
-const TransactionFormBlock = () => {
+const TransactionFormBlock = ({
+  id,
+  budgetName,
+  userName,
+  transactionName,
+  transactionAmount,
+  date,
+}: {
+  id: number;
+  budgetName: { label: string; name: string };
+  userName: { label: string; name: string };
+  transactionName: string;
+  transactionAmount: number;
+  date: string;
+}) => {
   const [dateOpen, setDateOpen] = useState(false);
-  const [budgetName, setBudgetName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [transactionName, setTransactionName] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState(0);
-  const [date, setDate] = useState("");
+  const [budgetNameValue, setBudgetName] = useState(budgetName);
+  const [userNameValue, setUserName] = useState(userName);
+  const [transactionNameValue, setTransactionName] = useState(transactionName);
+  const [transactionAmountValue, setTransactionAmount] =
+    useState(transactionAmount);
+  const [dateValue, setDate] = useState(date);
 
   useEffect(() => {
     console.log("new transaction: ", {
-      budgetName,
-      userName,
-      transactionAmount,
-      transactionName,
-      date: dayjs(date).format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
+      budgetNameValue,
+      userNameValue,
+      transactionAmountValue,
+      transactionNameValue,
+      date: dayjs(dateValue).format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
     });
-  }, [budgetName, userName, transactionAmount, transactionName, date]);
+  }, [
+    budgetNameValue,
+    userNameValue,
+    transactionAmountValue,
+    transactionNameValue,
+    dateValue,
+  ]);
 
   return (
     <>
@@ -41,7 +67,7 @@ const TransactionFormBlock = () => {
         <span className="mr-3 text-lg font-bold">Transaction Name</span>{" "}
         <input
           type="text"
-          value={transactionName}
+          value={transactionNameValue}
           onChange={(event) => setTransactionName(event.target.value)}
           className="w-full py-1 px-3"
           placeholder="transaction name"
@@ -53,8 +79,8 @@ const TransactionFormBlock = () => {
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Users</p>
         <DropdownSelect
-          options={testUserName}
-          value={userName}
+          options={[...testUserName]}
+          value={userNameValue}
           placeholder="Select Users"
           onChange={(value) => setUserName(value)}
         />
@@ -62,8 +88,8 @@ const TransactionFormBlock = () => {
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Budgets</p>
         <DropdownSelect
-          options={testBudgetName}
-          value={budgetName}
+          options={[...testBudgetName]}
+          value={budgetNameValue}
           placeholder="Select Budgets"
           onChange={(value) => setBudgetName(value)}
         />
@@ -74,7 +100,7 @@ const TransactionFormBlock = () => {
           <span className="mr-3 text-lg font-bold">$</span>{" "}
           <input
             type="number"
-            value={transactionAmount}
+            value={transactionAmountValue}
             onChange={(event) =>
               setTransactionAmount(Number(event.target.value))
             }
@@ -94,7 +120,7 @@ const TransactionFormBlock = () => {
               />
             </div>
           )}
-          value={date}
+          value={dateValue}
           onChange={(newValue) => {
             setDate(newValue || "");
           }}
