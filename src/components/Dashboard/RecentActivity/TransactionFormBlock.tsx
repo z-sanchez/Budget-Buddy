@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import { DropdownSelect } from "../../DropdownSelect";
 
 const testBudgetName = [
-  { label: "Selected Option", name: "" },
   { label: "Dativity", name: "Dativity" },
   { label: "Grocery", name: "Grocery" },
   { label: "Ziek", name: "Ziek" },
@@ -17,7 +16,6 @@ const testBudgetName = [
 ];
 
 const testUserName = [
-  { label: "Selected Option", name: "" },
   { label: "Ziek", name: "Ziek" },
   { label: "Chelsea", name: "Chelsea" },
 ];
@@ -95,7 +93,7 @@ const TransactionFormBlock = ({
         />
       </div>
 
-      <div className="flex  w-1/2  items-center justify-between">
+      <div className="flex w-full items-center justify-between">
         <div>
           <span className="mr-3 text-lg font-bold">$</span>{" "}
           <input
@@ -115,7 +113,7 @@ const TransactionFormBlock = ({
           renderInput={({ inputRef }) => (
             <div ref={inputRef}>
               <CalendarIcon
-                className="mx-auto h-7 w-7 cursor-pointer"
+                className="h-7 w-7 cursor-pointer"
                 onClick={() => setDateOpen((prev) => !prev)}
               />
             </div>
@@ -130,6 +128,9 @@ const TransactionFormBlock = ({
             OpenPickerIcon: CalendarIcon as ElementType,
           }}
         />
+        <div className="flex w-40 cursor-pointer justify-center self-center rounded-lg bg-white py-2 text-red-500 transition-colors hover:bg-red-500 hover:text-white hover:outline-transparent">
+          <p>Remove Transaction</p>
+        </div>
       </div>
     </>
   );

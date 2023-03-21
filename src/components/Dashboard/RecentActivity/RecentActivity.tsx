@@ -3,7 +3,7 @@ import { GREY } from "../../../utils/constants";
 import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
 import { WeeklySpendingTransactionLine } from "../WeeklySpending/WeeklySpendingTransactionLine";
 import { type ThisWeeksTransactionsWithIcon } from "../../../utils/types";
-import { AddTransactionModal } from "./AddTransactionModal";
+import { AddTransactionModalContent } from "./AddTransactionModalContent";
 import { Modal } from "@mui/material";
 
 const RecentActivity = ({
@@ -20,7 +20,9 @@ const RecentActivity = ({
         onClose={() => setModalOpen(false)}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <AddTransactionModal onClose={() => setModalOpen(false)} />
+        <>
+          <AddTransactionModalContent onClose={() => setModalOpen(false)} />
+        </>
       </Modal>
       <div className="flex h-full w-full flex-col justify-start overflow-hidden px-8">
         <div className="flex w-full items-center justify-between">

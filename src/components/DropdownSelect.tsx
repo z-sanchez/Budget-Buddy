@@ -36,13 +36,15 @@ const DropdownSelect = ({
     },
   });
 
-  const allOptions = options
-    .map((option) => {
+  const allOptions = [{ label: "Select Option", name: "" }].concat(
+    options.map((option) => {
       return option;
     })
-    .concat([{ label: "Select Option", name: "" }]);
+  );
 
   const selectedOption = value.label === "" ? "Select Option" : value.label;
+
+  console.log(allOptions);
 
   return (
     <ThemeProvider theme={theme}>

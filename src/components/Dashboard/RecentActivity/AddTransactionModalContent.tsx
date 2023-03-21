@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Modal } from "@mui/material";
+import React, { useState } from "react";
 import { GREY, LIGHT_GREY } from "../../../utils/constants";
 import CloseIcon from "../../../../public/close-icon.svg";
-import { ClickAwayListener } from "@mui/base";
 import PlusIcon from "../../../../public/plus-icon.svg";
 import { TransactionFormBlock } from "./TransactionFormBlock";
 
-const AddTransactionModal = ({ onClose }: { onClose: () => void }) => {
+const AddTransactionModalContent = ({ onClose }: { onClose: () => void }) => {
   const [transactions, setTransactions] = useState([
     {
       id: 1,
@@ -36,7 +34,7 @@ const AddTransactionModal = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div className="mb-20 flex h-3/5 w-2/3 flex-col items-start justify-start  rounded-md bg-white  lg:w-1/3">
+    <div className="mb-20 flex h-3/5 w-2/3 flex-col items-start justify-start rounded-md bg-white  lg:w-1/3">
       <div
         className="flex w-full items-center border-x-0 border-y-0 border-b bg-white px-5 py-8 pb-1"
         style={{ borderColor: LIGHT_GREY }}
@@ -73,11 +71,11 @@ const AddTransactionModal = ({ onClose }: { onClose: () => void }) => {
           className="plusIconHover mx-auto mt-10 h-6 w-6 cursor-pointer rounded-3xl py-1 px-1 outline outline-2 transition-all"
         />
       </div>
-      <div className="bgGreenOnHover my-2 ml-auto mr-5 flex w-1/3 cursor-pointer justify-center self-center rounded-lg py-2 transition-colors">
+      <div className="bgGreenOnHover my-2 mt-auto ml-auto mr-5 flex w-1/3 cursor-pointer justify-center self-center rounded-lg py-2 transition-colors">
         <p className="text-white 2xl:text-xl">Add Transactions</p>
       </div>
     </div>
   );
 };
 
-export { AddTransactionModal };
+export { AddTransactionModalContent };
