@@ -1,36 +1,56 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import { GREY, LIGHT_GREY } from "../../../utils/constants";
 import CloseIcon from "../../../../public/close-icon.svg";
 import PlusIcon from "../../../../public/plus-icon.svg";
 import { TransactionFormBlock } from "./TransactionFormBlock";
+import transactionBlockReducer from "./reducers/transactionBlockReducer";
+import { type TransactionLine } from "../../../utils/types";
+
+const INITIAL_TRANSACTION: TransactionLine[] = [
+  {
+    id: 1,
+    budgetName: { label: "", name: "" },
+    userName: { label: "", name: "" },
+    transactionName: "",
+    transactionAmount: "",
+    date: "",
+  },
+];
 
 const AddTransactionModalContent = ({ onClose }: { onClose: () => void }) => {
-  const [transactions, setTransactions] = useState([
-    {
-      id: 1,
-      budgetName: { label: "", name: "" },
-      userName: { label: "", name: "" },
-      transactionName: "",
-      transactionAmount: 0,
-      date: "",
-    },
-  ]);
+  const [transactions, dispatch] = useReducer(
+    transactionBlockReducer,
+    INITIAL_TRANSACTION
+  );
 
   const addTransactionForm = () => {
-    const newTransactions = transactions.map((transaction) => {
-      return { ...transaction };
-    });
-
-    newTransactions.push({
+    dispatch({
+      type: "added",
       id: transactions.length + 1,
       budgetName: { label: "", name: "" },
       userName: { label: "", name: "" },
       transactionName: "",
-      transactionAmount: 0,
+      transactionAmount: "",
       date: "",
     });
+  };
 
-    setTransactions(newTransactions);
+  const changeTransaction = (transaction: TransactionLine) => {
+    dispatch({
+      type: "changed",
+      ...transaction,
+    });
+  };
+
+  const deleteTransaction = (transaction: TransactionLine) => {
+    dispatch({
+      type: "deleted",
+      ...transaction,
+    });
+  };
+
+  const submitTransactions = () => {
+    console.log("submitted", transactions);
   };
 
   return (
@@ -55,7 +75,11 @@ const AddTransactionModalContent = ({ onClose }: { onClose: () => void }) => {
 
           return (
             <React.Fragment key={transaction.id}>
-              <TransactionFormBlock {...transaction} />
+              <TransactionFormBlock
+                changeTransaction={changeTransaction}
+                deleteTransaction={deleteTransaction}
+                {...transaction}
+              />
               {addDivider && (
                 <div
                   style={{ backgroundColor: LIGHT_GREY }}
@@ -71,7 +95,10 @@ const AddTransactionModalContent = ({ onClose }: { onClose: () => void }) => {
           className="plusIconHover mx-auto mt-10 h-6 w-6 cursor-pointer rounded-3xl py-1 px-1 outline outline-2 transition-all"
         />
       </div>
-      <div className="bgGreenOnHover my-2 mt-auto ml-auto mr-5 flex w-1/3 cursor-pointer justify-center self-center rounded-lg py-2 transition-colors">
+      <div
+        onClick={submitTransactions}
+        className="bgGreenOnHover my-2 mt-auto ml-auto mr-5 flex w-1/3 cursor-pointer justify-center self-center rounded-lg py-2 transition-colors"
+      >
         <p className="text-white 2xl:text-xl">Add Transactions</p>
       </div>
     </div>

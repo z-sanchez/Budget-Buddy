@@ -44,8 +44,6 @@ const DropdownSelect = ({
 
   const selectedOption = value.label === "" ? "Select Option" : value.label;
 
-  console.log(allOptions);
-
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
