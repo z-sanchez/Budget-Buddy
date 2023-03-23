@@ -10,10 +10,10 @@ const DropdownSelect = ({
   placeholder,
   onChange,
 }: {
-  value: { label: string; name: string };
-  options: { label: string; name: string }[];
+  value: { label: string; id: string };
+  options: { label: string; id: string }[];
   placeholder: string;
-  onChange: (value: { label: string; name: string }) => void;
+  onChange: (value: { label: string; id: string }) => void;
 }) => {
   const styles = {
     styleOverrides: {
@@ -36,7 +36,7 @@ const DropdownSelect = ({
     },
   });
 
-  const allOptions = [{ label: "Select Option", name: "" }].concat(
+  const allOptions = [{ label: "Select Option", id: "" }].concat(
     options.map((option) => {
       return option;
     })
@@ -54,7 +54,7 @@ const DropdownSelect = ({
         onChange={(_, value) => {
           const selectedOption = allOptions.find(
             ({ label }) => label === value
-          ) || { label: "", name: "" };
+          ) || { label: "", id: "" };
           onChange({
             ...selectedOption,
           });

@@ -1,19 +1,20 @@
 import React, { useReducer } from "react";
-import { GREY, LIGHT_GREY } from "../../../utils/constants";
+import { DATE_FORMAT, GREY, LIGHT_GREY } from "../../../utils/constants";
 import CloseIcon from "../../../../public/close-icon.svg";
 import PlusIcon from "../../../../public/plus-icon.svg";
 import { TransactionFormBlock } from "./TransactionFormBlock";
 import transactionBlockReducer from "./reducers/transactionBlockReducer";
 import { type TransactionLine } from "../../../utils/types";
+import dayjs from "dayjs";
 
 const INITIAL_TRANSACTION: TransactionLine[] = [
   {
     id: 1,
-    budgetName: { label: "", name: "" },
-    userName: { label: "", name: "" },
+    budgetName: { label: "", id: "" },
+    userName: { label: "", id: "" },
     transactionName: "",
     transactionAmount: "",
-    date: "",
+    date: dayjs().format(DATE_FORMAT),
   },
 ];
 
@@ -27,11 +28,11 @@ const AddTransactionModalContent = ({ onClose }: { onClose: () => void }) => {
     dispatch({
       type: "added",
       id: transactions.length + 1,
-      budgetName: { label: "", name: "" },
-      userName: { label: "", name: "" },
+      budgetName: { label: "", id: "" },
+      userName: { label: "", id: "" },
       transactionName: "",
       transactionAmount: "",
-      date: "",
+      date: dayjs().format(DATE_FORMAT),
     });
   };
 

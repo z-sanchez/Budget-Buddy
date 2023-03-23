@@ -56,8 +56,8 @@ export type ThisWeeksTransactionsWithIcon = ThisWeeksTransactions & {
 
 export type TransactionLine = {
   id: number;
-  budgetName: { label: string; name: string };
-  userName: { label: string; name: string };
+  budgetName: { label: string; id: string };
+  userName: { label: string; id: string };
   transactionName: string;
   transactionAmount: number | "";
   date: string;

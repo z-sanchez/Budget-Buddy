@@ -27,8 +27,6 @@ const Dashboard: NextPageWithLayout = () => {
     transactions: thisWeeksTransactions,
   });
 
-  console.log(lineGraphdata);
-
   const transactionsWithIcon = thisWeeksTransactions?.map((transaction) => {
     return { ...transaction, Icon: ShoppingIcon as string };
   });

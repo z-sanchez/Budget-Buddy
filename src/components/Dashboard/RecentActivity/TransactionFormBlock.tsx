@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LIGHT_GREY } from "../../../utils/constants";
+import { DATE_FORMAT, LIGHT_GREY } from "../../../utils/constants";
 import { DesktopDateTimePicker } from "@mui/x-date-pickers";
 import CalendarIcon from "../../../../public/calendar-icon.svg";
 import type { ElementType } from "react";
@@ -8,17 +8,17 @@ import { DropdownSelect } from "../../DropdownSelect";
 import { type TransactionLine } from "../../../utils/types";
 
 const testBudgetName = [
-  { label: "Dativity", name: "Dativity" },
-  { label: "Grocery", name: "Grocery" },
-  { label: "Ziek", name: "Ziek" },
-  { label: "Chelsea", name: "Chelsea" },
-  { label: "Gas", name: "Gas" },
-  { label: "Loans", name: "Loans" },
+  { label: "Dativity", id: "Dativity" },
+  { label: "Grocery", id: "Grocery" },
+  { label: "Ziek", id: "Ziek" },
+  { label: "Chelsea", id: "Chelsea" },
+  { label: "Gas", id: "Gas" },
+  { label: "Loans", id: "Loans" },
 ];
 
 const testUserName = [
-  { label: "Ziek", name: "Ziek" },
-  { label: "Chelsea", name: "Chelsea" },
+  { label: "Ziek", id: "Ziek" },
+  { label: "Chelsea", id: "Chelsea" },
 ];
 
 const TransactionFormBlock = ({
@@ -49,7 +49,7 @@ const TransactionFormBlock = ({
       userName: userNameValue,
       transactionAmount: transactionAmountValue,
       transactionName: transactionNameValue,
-      date: dayjs(dateValue).format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
+      date: dayjs(dateValue).format(DATE_FORMAT),
     });
   };
 
@@ -60,7 +60,7 @@ const TransactionFormBlock = ({
       userName: userNameValue,
       transactionAmount: transactionAmountValue,
       transactionName: transactionNameValue,
-      date: dayjs(dateValue).format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
+      date: dayjs(dateValue).format(DATE_FORMAT),
     });
   };
 
