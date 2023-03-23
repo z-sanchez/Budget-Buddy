@@ -5,13 +5,32 @@ import { WeeklySpendingTransactionLine } from "../WeeklySpending/WeeklySpendingT
 import { type ThisWeeksTransactionsWithIcon } from "../../../utils/types";
 import { AddTransactionModalContent } from "./AddTransactionModalContent";
 import { Modal } from "@mui/material";
+import { type budgets, type users } from "@prisma/client";
 
 const RecentActivity = ({
   data,
+  budgets,
+  users,
 }: {
   data: ThisWeeksTransactionsWithIcon[];
+  budgets: budgets[];
+  users: users[];
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const budgetsLabeled = budgets.map(({ name, id }) => {
+    return {
+      label: name,
+      id,
+    };
+  });
+
+  const usersLabeled = users.map(({ name, id }) => {
+    return {
+      label: name,
+      id,
+    };
+  });
 
   return (
     <>
@@ -21,7 +40,11 @@ const RecentActivity = ({
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <>
-          <AddTransactionModalContent onClose={() => setModalOpen(false)} />
+          <AddTransactionModalContent
+            budgets={budgetsLabeled}
+            users={usersLabeled}
+            onClose={() => setModalOpen(false)}
+          />
         </>
       </Modal>
       <div className="flex h-full w-full flex-col justify-start overflow-hidden px-8">

@@ -8,7 +8,7 @@ import { type NextPageWithLayout } from "./_app";
 import ShoppingIcon from "../../public/shopping-icon.svg";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 import { api } from "../utils/api";
-import type { budgets, LongTerm } from "@prisma/client";
+import type { budgets, LongTerm, users } from "@prisma/client";
 import { createWeekBudgetSpendingLineGraphData } from "../utils/helpers/lineGraph";
 import { type ThisWeeksTransactions } from "../utils/types";
 
@@ -18,6 +18,8 @@ const Dashboard: NextPageWithLayout = () => {
       .data as ThisWeeksTransactions[];
 
   const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
+
+  const users = api.user.getAllAccountUsers.useQuery().data as users[];
 
   const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
     .data as LongTerm[];
@@ -52,7 +54,11 @@ const Dashboard: NextPageWithLayout = () => {
         <LineGraph data={lineGraphdata} />
       </div>
       <div className="col-span-1">
-        <RecentActivity data={transactionsWithIcon} />
+        <RecentActivity
+          data={transactionsWithIcon}
+          budgets={budgets}
+          users={users}
+        />
       </div>
       <div className="col-span-1">
         <AccountsBlock />

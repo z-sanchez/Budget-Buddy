@@ -7,20 +7,6 @@ import dayjs from "dayjs";
 import { DropdownSelect } from "../../DropdownSelect";
 import { type TransactionLine } from "../../../utils/types";
 
-const testBudgetName = [
-  { label: "Dativity", id: "Dativity" },
-  { label: "Grocery", id: "Grocery" },
-  { label: "Ziek", id: "Ziek" },
-  { label: "Chelsea", id: "Chelsea" },
-  { label: "Gas", id: "Gas" },
-  { label: "Loans", id: "Loans" },
-];
-
-const testUserName = [
-  { label: "Ziek", id: "Ziek" },
-  { label: "Chelsea", id: "Chelsea" },
-];
-
 const TransactionFormBlock = ({
   id,
   budgetName,
@@ -30,9 +16,19 @@ const TransactionFormBlock = ({
   date,
   changeTransaction,
   deleteTransaction,
+  budgets,
+  users,
 }: TransactionLine & {
   changeTransaction: (transaction: TransactionLine) => void;
   deleteTransaction: (transaction: TransactionLine) => void;
+  budgets: {
+    label: string;
+    id: number;
+  }[];
+  users: {
+    label: string;
+    id: number;
+  }[];
 }) => {
   const [dateOpen, setDateOpen] = useState(false);
   const [budgetNameValue, setBudgetName] = useState(budgetName);
@@ -83,7 +79,7 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Users</p>
         <DropdownSelect
-          options={[...testUserName]}
+          options={users}
           value={userNameValue}
           placeholder="Select Users"
           onChange={(value) => {
@@ -95,7 +91,7 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Budgets</p>
         <DropdownSelect
-          options={[...testBudgetName]}
+          options={budgets}
           value={budgetNameValue}
           placeholder="Select Budgets"
           onChange={(value) => {
@@ -132,6 +128,7 @@ const TransactionFormBlock = ({
             </div>
           )}
           value={dateValue}
+          disableFuture
           onChange={(newValue) => {
             setDate(newValue || "");
             handleChangeTransaction();

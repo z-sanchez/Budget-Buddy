@@ -7,18 +7,36 @@ import transactionBlockReducer from "./reducers/transactionBlockReducer";
 import { type TransactionLine } from "../../../utils/types";
 import dayjs from "dayjs";
 
+type Budgets = {
+  label: string;
+  id: number;
+};
+
+type Users = {
+  label: string;
+  id: number;
+};
+
 const INITIAL_TRANSACTION: TransactionLine[] = [
   {
     id: 1,
-    budgetName: { label: "", id: "" },
-    userName: { label: "", id: "" },
+    budgetName: { label: "", id: 0 },
+    userName: { label: "", id: 0 },
     transactionName: "",
     transactionAmount: "",
     date: dayjs().format(DATE_FORMAT),
   },
 ];
 
-const AddTransactionModalContent = ({ onClose }: { onClose: () => void }) => {
+const AddTransactionModalContent = ({
+  onClose,
+  budgets,
+  users,
+}: {
+  onClose: () => void;
+  budgets: Budgets[];
+  users: Users[];
+}) => {
   const [transactions, dispatch] = useReducer(
     transactionBlockReducer,
     INITIAL_TRANSACTION
@@ -28,8 +46,8 @@ const AddTransactionModalContent = ({ onClose }: { onClose: () => void }) => {
     dispatch({
       type: "added",
       id: transactions.length + 1,
-      budgetName: { label: "", id: "" },
-      userName: { label: "", id: "" },
+      budgetName: { label: "", id: 0 },
+      userName: { label: "", id: 0 },
       transactionName: "",
       transactionAmount: "",
       date: dayjs().format(DATE_FORMAT),
@@ -77,6 +95,8 @@ const AddTransactionModalContent = ({ onClose }: { onClose: () => void }) => {
           return (
             <React.Fragment key={transaction.id}>
               <TransactionFormBlock
+                budgets={budgets}
+                users={users}
                 changeTransaction={changeTransaction}
                 deleteTransaction={deleteTransaction}
                 {...transaction}
