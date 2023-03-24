@@ -17,11 +17,17 @@ type Users = {
   id: number;
 };
 
+type Accounts = {
+  label: string;
+  id: number;
+};
+
 const INITIAL_TRANSACTION: TransactionLine[] = [
   {
     id: 1,
     budgetName: { label: "", id: 0 },
     userName: { label: "", id: 0 },
+    accountName: { label: "", id: 0 },
     transactionName: "",
     transactionAmount: "",
     date: dayjs().format(DATE_FORMAT),
@@ -29,13 +35,17 @@ const INITIAL_TRANSACTION: TransactionLine[] = [
 ];
 
 const AddTransactionModalContent = ({
+  handleAddTransactions,
   onClose,
   budgets,
   users,
+  accounts,
 }: {
+  handleAddTransactions: (transactions: TransactionLine[]) => void;
   onClose: () => void;
   budgets: Budgets[];
   users: Users[];
+  accounts: Accounts[];
 }) => {
   const [transactions, dispatch] = useReducer(
     transactionBlockReducer,
@@ -48,6 +58,7 @@ const AddTransactionModalContent = ({
       id: transactions.length + 1,
       budgetName: { label: "", id: 0 },
       userName: { label: "", id: 0 },
+      accountName: { label: "", id: 0 },
       transactionName: "",
       transactionAmount: "",
       date: dayjs().format(DATE_FORMAT),
@@ -69,7 +80,7 @@ const AddTransactionModalContent = ({
   };
 
   const submitTransactions = () => {
-    console.log("submitted", transactions);
+    handleAddTransactions(transactions);
   };
 
   return (
@@ -97,6 +108,7 @@ const AddTransactionModalContent = ({
               <TransactionFormBlock
                 budgets={budgets}
                 users={users}
+                accounts={accounts}
                 changeTransaction={changeTransaction}
                 deleteTransaction={deleteTransaction}
                 {...transaction}

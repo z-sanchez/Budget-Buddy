@@ -58,6 +58,7 @@ export type TransactionLine = {
   id: number;
   budgetName: { label: string; id: number };
   userName: { label: string; id: number };
+  accountName: { label: string; id: number };
   transactionName: string;
   transactionAmount: number | "";
   date: string;

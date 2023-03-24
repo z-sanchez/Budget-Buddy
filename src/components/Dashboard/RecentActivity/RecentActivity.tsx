@@ -2,30 +2,44 @@ import { useState } from "react";
 import { GREY } from "../../../utils/constants";
 import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
 import { WeeklySpendingTransactionLine } from "../WeeklySpending/WeeklySpendingTransactionLine";
-import { type ThisWeeksTransactionsWithIcon } from "../../../utils/types";
+import {
+  type TransactionLine,
+  type ThisWeeksTransactionsWithIcon,
+} from "../../../utils/types";
 import { AddTransactionModalContent } from "./AddTransactionModalContent";
 import { Modal } from "@mui/material";
-import { type budgets, type users } from "@prisma/client";
+import type { accounts, budgets, users } from "@prisma/client";
 
 const RecentActivity = ({
   data,
   budgets,
   users,
+  accounts,
+  handleAddTransactions,
 }: {
+  handleAddTransactions: (transactions: TransactionLine[]) => void;
   data: ThisWeeksTransactionsWithIcon[];
   budgets: budgets[];
   users: users[];
+  accounts: accounts[];
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const budgetsLabeled = budgets.map(({ name, id }) => {
+  const budgetsLabeled = budgets?.map(({ name, id }) => {
     return {
       label: name,
       id,
     };
   });
 
-  const usersLabeled = users.map(({ name, id }) => {
+  const usersLabeled = users?.map(({ name, id }) => {
+    return {
+      label: name,
+      id,
+    };
+  });
+
+  const accountsLabeled = accounts?.map(({ name, id }) => {
     return {
       label: name,
       id,
@@ -41,8 +55,10 @@ const RecentActivity = ({
       >
         <>
           <AddTransactionModalContent
+            handleAddTransactions={handleAddTransactions}
             budgets={budgetsLabeled}
             users={usersLabeled}
+            accounts={accountsLabeled}
             onClose={() => setModalOpen(false)}
           />
         </>

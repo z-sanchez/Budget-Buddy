@@ -11,6 +11,7 @@ const TransactionFormBlock = ({
   id,
   budgetName,
   userName,
+  accountName,
   transactionName,
   transactionAmount,
   date,
@@ -18,6 +19,7 @@ const TransactionFormBlock = ({
   deleteTransaction,
   budgets,
   users,
+  accounts,
 }: TransactionLine & {
   changeTransaction: (transaction: TransactionLine) => void;
   deleteTransaction: (transaction: TransactionLine) => void;
@@ -29,10 +31,16 @@ const TransactionFormBlock = ({
     label: string;
     id: number;
   }[];
+  accounts: {
+    label: string;
+    id: number;
+  }[];
 }) => {
   const [dateOpen, setDateOpen] = useState(false);
   const [budgetNameValue, setBudgetName] = useState(budgetName);
   const [userNameValue, setUserName] = useState(userName);
+  const [accountNameValue, setAccountName] = useState(accountName);
+
   const [transactionNameValue, setTransactionName] = useState(transactionName);
   const [transactionAmountValue, setTransactionAmount] =
     useState(transactionAmount);
@@ -43,6 +51,7 @@ const TransactionFormBlock = ({
       id,
       budgetName: budgetNameValue,
       userName: userNameValue,
+      accountName: accountNameValue,
       transactionAmount: transactionAmountValue,
       transactionName: transactionNameValue,
       date: dayjs(dateValue).format(DATE_FORMAT),
@@ -54,6 +63,7 @@ const TransactionFormBlock = ({
       id,
       budgetName: budgetNameValue,
       userName: userNameValue,
+      accountName: accountNameValue,
       transactionAmount: transactionAmountValue,
       transactionName: transactionNameValue,
       date: dayjs(dateValue).format(DATE_FORMAT),
@@ -96,6 +106,18 @@ const TransactionFormBlock = ({
           placeholder="Select Budgets"
           onChange={(value) => {
             setBudgetName(value);
+            handleChangeTransaction();
+          }}
+        />
+      </div>
+      <div className="mb-5 flex h-16 w-full flex-col justify-between">
+        <p className="font-bold">Accounts</p>
+        <DropdownSelect
+          options={accounts}
+          value={accountNameValue}
+          placeholder="Select Budgets"
+          onChange={(value) => {
+            setAccountName(value);
             handleChangeTransaction();
           }}
         />
