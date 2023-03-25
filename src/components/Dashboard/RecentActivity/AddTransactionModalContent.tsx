@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { DATE_FORMAT, GREY, LIGHT_GREY } from "../../../utils/constants";
+import { GREY, LIGHT_GREY } from "../../../utils/constants";
 import CloseIcon from "../../../../public/close-icon.svg";
 import PlusIcon from "../../../../public/plus-icon.svg";
 import { TransactionFormBlock } from "./TransactionFormBlock";
@@ -30,7 +30,7 @@ const INITIAL_TRANSACTION: TransactionLine[] = [
     accountName: { label: "", id: 0 },
     transactionName: "",
     transactionAmount: "",
-    date: dayjs().format(DATE_FORMAT),
+    date: dayjs(new Date()).toISOString(),
   },
 ];
 
@@ -61,7 +61,7 @@ const AddTransactionModalContent = ({
       accountName: { label: "", id: 0 },
       transactionName: "",
       transactionAmount: "",
-      date: dayjs().format(DATE_FORMAT),
+      date: dayjs(new Date()).toISOString(),
     });
   };
 

@@ -14,6 +14,7 @@ import {
   type TransactionLine,
   type ThisWeeksTransactions,
 } from "../utils/types";
+import dayjs from "dayjs";
 
 const Dashboard: NextPageWithLayout = () => {
   const thisWeeksTransactions =
@@ -31,14 +32,14 @@ const Dashboard: NextPageWithLayout = () => {
 
   const lineGraphdata = createWeekBudgetSpendingLineGraphData({
     budgets: budgets?.filter(({ dashboard }) => dashboard),
-    transactions: thisWeeksTransactions,
+    transactions: thisWeeksTransactions?.filter(({ amount }) => amount < 0),
   });
 
   const transactionsWithIcon = thisWeeksTransactions?.map((transaction) => {
     return { ...transaction, Icon: ShoppingIcon as string };
   });
   const makeTransactionsMutation =
-    api.transactions.makeTransactions.useMutation;
+    api.transactions.makeTransactions.useMutation();
 
   const addTransactions = (transactions: TransactionLine[]) => {
     const formatttedTransactions = transactions.map((transaction) => {
@@ -48,11 +49,13 @@ const Dashboard: NextPageWithLayout = () => {
         userId: transaction.userName.id,
         budgetId: transaction.budgetName.id,
         name: transaction.transactionName,
-        date: transaction.date,
+        date: dayjs(transaction.date).toDate(),
       };
     });
 
-    makeTransactionsMutation(formatttedTransactions);
+    console.log(formatttedTransactions);
+
+    makeTransactionsMutation.mutate(formatttedTransactions);
   };
 
   return (

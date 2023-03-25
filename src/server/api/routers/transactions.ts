@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { z } from "zod";
+import { date, z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
@@ -76,7 +76,7 @@ export const transactionsRouter = createTRPCRouter({
           userId: z.number(),
           budgetId: z.number(),
           name: z.string(),
-          date: z.string(),
+          date: z.date(),
         })
       )
     )

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DATE_FORMAT, LIGHT_GREY } from "../../../utils/constants";
+import { LIGHT_GREY } from "../../../utils/constants";
 import { DesktopDateTimePicker } from "@mui/x-date-pickers";
 import CalendarIcon from "../../../../public/calendar-icon.svg";
 import type { ElementType } from "react";
@@ -54,7 +54,7 @@ const TransactionFormBlock = ({
       accountName: accountNameValue,
       transactionAmount: transactionAmountValue,
       transactionName: transactionNameValue,
-      date: dayjs(dateValue).format(DATE_FORMAT),
+      date: dayjs(dateValue).toISOString(),
     });
   };
 
@@ -66,7 +66,7 @@ const TransactionFormBlock = ({
       accountName: accountNameValue,
       transactionAmount: transactionAmountValue,
       transactionName: transactionNameValue,
-      date: dayjs(dateValue).format(DATE_FORMAT),
+      date: dayjs(dateValue).toISOString(),
     });
   };
 
