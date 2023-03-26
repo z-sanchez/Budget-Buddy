@@ -60,6 +60,6 @@ export type TransactionLine = {
   userName: { label: string; id: number };
   accountName: { label: string; id: number };
   transactionName: string;
-  transactionAmount: number | "";
+  transactionAmount: number;
   date: string;
 };

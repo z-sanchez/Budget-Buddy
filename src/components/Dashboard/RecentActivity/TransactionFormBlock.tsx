@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LIGHT_GREY } from "../../../utils/constants";
 import { DesktopDateTimePicker } from "@mui/x-date-pickers";
 import CalendarIcon from "../../../../public/calendar-icon.svg";
@@ -40,11 +40,23 @@ const TransactionFormBlock = ({
   const [budgetNameValue, setBudgetName] = useState(budgetName);
   const [userNameValue, setUserName] = useState(userName);
   const [accountNameValue, setAccountName] = useState(accountName);
-
+  const [isIncome, setIsIncome] = useState(false);
   const [transactionNameValue, setTransactionName] = useState(transactionName);
   const [transactionAmountValue, setTransactionAmount] =
     useState(transactionAmount);
   const [dateValue, setDate] = useState(date);
+
+  useEffect(() => {
+    if (
+      (isIncome && transactionAmountValue < 0) ||
+      (!isIncome && transactionAmountValue > -1)
+    ) {
+      const adjustedTransactionAmount = Math.abs(transactionAmountValue);
+      setTransactionAmount(
+        isIncome ? adjustedTransactionAmount : adjustedTransactionAmount * -1
+      );
+    }
+  }, [isIncome, transactionAmountValue]);
 
   const handleChangeTransaction = () => {
     changeTransaction({
@@ -122,19 +134,33 @@ const TransactionFormBlock = ({
           }}
         />
       </div>
-
-      <div className="flex w-full items-center justify-between">
-        <div>
+      <div className="mr-5 flex items-center ">
+        <label htmlFor="income-checkbox" className="mr-3">
+          Income
+        </label>
+        <input
+          type="checkbox"
+          value={"income"}
+          name="income-checkbox"
+          onChange={() => {
+            setIsIncome((prev) => !prev);
+          }}
+        ></input>
+      </div>
+      <div className="flex w-full items-center">
+        <div className="mr-5">
           <span className="mr-3 text-lg font-bold">$</span>{" "}
           <input
             type="number"
             value={transactionAmountValue}
+            min={isIncome ? 1 : -9999}
+            max={isIncome ? 9999 : -1}
             onChange={(event) =>
               setTransactionAmount(Number(event.target.value))
             }
             onBlur={handleChangeTransaction}
-            className=" py-1 text-end"
-            placeholder="income amount"
+            className="w-20 pr-3 text-center"
+            placeholder="amount"
             style={{
               outline: `1px solid ${LIGHT_GREY}`,
             }}
@@ -144,7 +170,7 @@ const TransactionFormBlock = ({
           renderInput={({ inputRef }) => (
             <div ref={inputRef}>
               <CalendarIcon
-                className="h-7 w-7 cursor-pointer"
+                className="mr-5 h-7 w-7 cursor-pointer"
                 onClick={() => setDateOpen((prev) => !prev)}
               />
             </div>
@@ -161,12 +187,20 @@ const TransactionFormBlock = ({
             OpenPickerIcon: CalendarIcon as ElementType,
           }}
         />
-        <div
+        <input
+          type="time"
+          onBlur={handleChangeTransaction}
+          className="mr-5 pr-3 text-center"
+          style={{
+            outline: `1px solid ${LIGHT_GREY}`,
+          }}
+        ></input>
+        <button
           onClick={handleDeleteTransaction}
           className="flex w-40 cursor-pointer justify-center self-center rounded-lg bg-white py-2 text-red-500 transition-colors hover:bg-red-500 hover:text-white hover:outline-transparent"
         >
           <p>Remove Transaction</p>
-        </div>
+        </button>
       </div>
     </>
   );

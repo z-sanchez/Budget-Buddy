@@ -38,6 +38,7 @@ const Dashboard: NextPageWithLayout = () => {
   const transactionsWithIcon = thisWeeksTransactions?.map((transaction) => {
     return { ...transaction, Icon: ShoppingIcon as string };
   });
+
   const makeTransactionsMutation =
     api.transactions.makeTransactions.useMutation();
 
@@ -52,8 +53,6 @@ const Dashboard: NextPageWithLayout = () => {
         date: dayjs(transaction.date).toDate(),
       };
     });
-
-    console.log(formatttedTransactions);
 
     makeTransactionsMutation.mutate(formatttedTransactions);
   };

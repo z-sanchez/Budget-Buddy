@@ -29,7 +29,7 @@ const INITIAL_TRANSACTION: TransactionLine[] = [
     userName: { label: "", id: 0 },
     accountName: { label: "", id: 0 },
     transactionName: "",
-    transactionAmount: "",
+    transactionAmount: -1,
     date: dayjs(new Date()).toISOString(),
   },
 ];
@@ -60,7 +60,7 @@ const AddTransactionModalContent = ({
       userName: { label: "", id: 0 },
       accountName: { label: "", id: 0 },
       transactionName: "",
-      transactionAmount: "",
+      transactionAmount: -1,
       date: dayjs(new Date()).toISOString(),
     });
   };
@@ -84,7 +84,7 @@ const AddTransactionModalContent = ({
   };
 
   return (
-    <div className="mb-20 flex h-3/5 w-2/3 flex-col items-start justify-start rounded-md bg-white  lg:w-1/3">
+    <div className="mb-20 flex h-3/5 w-2/3 min-w-[640px] flex-col items-start justify-start rounded-md bg-white  lg:w-1/3">
       <div
         className="flex w-full items-center border-x-0 border-y-0 border-b bg-white px-5 py-8 pb-1"
         style={{ borderColor: LIGHT_GREY }}
