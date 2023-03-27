@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LIGHT_GREY } from "../../../utils/constants";
+import { LIGHT_GREY, RED_STATE } from "../../../utils/constants";
 import { DesktopDateTimePicker } from "@mui/x-date-pickers";
 import CalendarIcon from "../../../../public/calendar-icon.svg";
 import type { ElementType } from "react";
@@ -58,6 +58,32 @@ const TransactionFormBlock = ({
     }
   }, [isIncome, transactionAmountValue]);
 
+  const errorMessage = () => {
+    let message = "Please enter: ";
+    const emptyFields = [];
+
+    if (transactionNameValue === "") emptyFields.push("Transaction Name");
+    if (userNameValue.id === 0) emptyFields.push("User");
+    if (budgetNameValue.id === 0) emptyFields.push("Budget");
+    if (accountNameValue.id === 0) emptyFields.push("Account");
+    if (dateValue === "Invalid Date") emptyFields.push("Date");
+
+    if (emptyFields.length) {
+      message += emptyFields.join(", ");
+
+      return (
+        <p
+          className="mb-3 rounded-sm bg-red-100 px-2 py-1"
+          style={{ color: RED_STATE }}
+        >
+          {message}
+        </p>
+      );
+    }
+
+    return null;
+  };
+
   const handleChangeTransaction = () => {
     changeTransaction({
       id,
@@ -84,6 +110,7 @@ const TransactionFormBlock = ({
 
   return (
     <>
+      {errorMessage()}
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <span className="mr-3 text-lg font-bold">Transaction Name</span>{" "}
         <input
@@ -187,14 +214,6 @@ const TransactionFormBlock = ({
             OpenPickerIcon: CalendarIcon as ElementType,
           }}
         />
-        <input
-          type="time"
-          onBlur={handleChangeTransaction}
-          className="mr-5 pr-3 text-center"
-          style={{
-            outline: `1px solid ${LIGHT_GREY}`,
-          }}
-        ></input>
         <button
           onClick={handleDeleteTransaction}
           className="flex w-40 cursor-pointer justify-center self-center rounded-lg bg-white py-2 text-red-500 transition-colors hover:bg-red-500 hover:text-white hover:outline-transparent"
