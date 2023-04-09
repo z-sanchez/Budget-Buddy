@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { date, z } from "zod";
+import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
@@ -12,8 +12,11 @@ export const transactionsRouter = createTRPCRouter({
     const today = dayjs();
     const daysToNextSunday = 7 - today.day();
     const daysToPreviousSunday = today.day();
-    const nextSunday = today.add(daysToNextSunday, "day");
-    const prevSunday = today.subtract(daysToPreviousSunday + 1, "day");
+
+    const nextSunday = today.add(daysToNextSunday, "day").startOf("day");
+    const prevSunday = today
+      .subtract(daysToPreviousSunday, "day")
+      .startOf("day");
 
     const weeksTransactionData = await ctx.prisma.transaction.findMany({
       where: {

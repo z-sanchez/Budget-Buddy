@@ -55,7 +55,10 @@ const RecentActivity = ({
       >
         <>
           <AddTransactionModalContent
-            handleAddTransactions={handleAddTransactions}
+            handleAddTransactions={(transaction) => {
+              setModalOpen(false);
+              handleAddTransactions(transaction);
+            }}
             budgets={budgetsLabeled}
             users={usersLabeled}
             accounts={accountsLabeled}
