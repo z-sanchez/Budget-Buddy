@@ -75,9 +75,9 @@ export const transactionsRouter = createTRPCRouter({
       z.array(
         z.object({
           amount: z.number(),
-          accountId: z.number(),
-          userId: z.number(),
-          budgetId: z.number(),
+          accountId: z.number().gt(0),
+          userId: z.number().gt(0),
+          budgetId: z.number().gt(0),
           name: z.string(),
           date: z.date(),
         })

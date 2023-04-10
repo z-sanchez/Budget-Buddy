@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LIGHT_GREY, RED_STATE } from "../../../utils/constants";
 import { DesktopDateTimePicker } from "@mui/x-date-pickers";
 import CalendarIcon from "../../../../public/calendar-icon.svg";
@@ -37,14 +37,72 @@ const TransactionFormBlock = ({
   }[];
 }) => {
   const [dateOpen, setDateOpen] = useState(false);
-  const [budgetNameValue, setBudgetName] = useState(budgetName);
-  const [userNameValue, setUserName] = useState(userName);
-  const [accountNameValue, setAccountName] = useState(accountName);
   const [isIncome, setIsIncome] = useState(false);
   const [transactionNameValue, setTransactionName] = useState(transactionName);
   const [transactionAmountValue, setTransactionAmount] =
     useState(transactionAmount);
   const [dateValue, setDate] = useState(date);
+
+  const handleChangeTransaction = useCallback(
+    (updatedDropdown?: {
+      budgetName?: {
+        label: string;
+        id: number;
+      };
+      userName?: {
+        label: string;
+        id: number;
+      };
+      accountName?: {
+        label: string;
+        id: number;
+      };
+    }) => {
+      console.log({
+        id,
+        budgetName,
+        userName,
+        accountName,
+        transactionAmount: transactionAmountValue,
+        transactionName: transactionNameValue,
+        date: dayjs(dateValue).toISOString(),
+        ...updatedDropdown,
+      });
+
+      changeTransaction({
+        id,
+        budgetName,
+        userName,
+        accountName,
+        transactionAmount: transactionAmountValue,
+        transactionName: transactionNameValue,
+        date: dayjs(dateValue).toISOString(),
+        ...updatedDropdown,
+      });
+    },
+    [
+      budgetName,
+      userName,
+      accountName,
+      id,
+      transactionAmountValue,
+      transactionNameValue,
+      dateValue,
+      changeTransaction,
+    ]
+  );
+
+  const handleDeleteTransaction = () => {
+    deleteTransaction({
+      id,
+      budgetName,
+      userName,
+      accountName,
+      transactionAmount: transactionAmountValue,
+      transactionName: transactionNameValue,
+      date: dayjs(dateValue).toISOString(),
+    });
+  };
 
   useEffect(() => {
     if (
@@ -63,9 +121,9 @@ const TransactionFormBlock = ({
     const emptyFields = [];
 
     if (transactionNameValue === "") emptyFields.push("Transaction Name");
-    if (userNameValue.id === 0) emptyFields.push("User");
-    if (budgetNameValue.id === 0) emptyFields.push("Budget");
-    if (accountNameValue.id === 0) emptyFields.push("Account");
+    if (userName.id === 0) emptyFields.push("User");
+    if (budgetName.id === 0) emptyFields.push("Budget");
+    if (accountName.id === 0) emptyFields.push("Account");
     if (dateValue === "Invalid Date") emptyFields.push("Date");
 
     if (emptyFields.length) {
@@ -84,30 +142,6 @@ const TransactionFormBlock = ({
     return null;
   };
 
-  const handleChangeTransaction = () => {
-    changeTransaction({
-      id,
-      budgetName: budgetNameValue,
-      userName: userNameValue,
-      accountName: accountNameValue,
-      transactionAmount: transactionAmountValue,
-      transactionName: transactionNameValue,
-      date: dayjs(dateValue).toISOString(),
-    });
-  };
-
-  const handleDeleteTransaction = () => {
-    deleteTransaction({
-      id,
-      budgetName: budgetNameValue,
-      userName: userNameValue,
-      accountName: accountNameValue,
-      transactionAmount: transactionAmountValue,
-      transactionName: transactionNameValue,
-      date: dayjs(dateValue).toISOString(),
-    });
-  };
-
   return (
     <>
       {errorMessage()}
@@ -117,7 +151,7 @@ const TransactionFormBlock = ({
           type="text"
           value={transactionNameValue}
           onChange={(event) => setTransactionName(event.target.value)}
-          onBlur={handleChangeTransaction}
+          onBlur={() => handleChangeTransaction()}
           className="w-full py-1 px-3"
           placeholder="transaction name"
           style={{
@@ -129,11 +163,10 @@ const TransactionFormBlock = ({
         <p className="font-bold">Users</p>
         <DropdownSelect
           options={users}
-          value={userNameValue}
+          value={userName}
           placeholder="Select Users"
           onChange={(value) => {
-            setUserName(value);
-            handleChangeTransaction();
+            handleChangeTransaction({ userName: value });
           }}
         />
       </div>
@@ -141,11 +174,10 @@ const TransactionFormBlock = ({
         <p className="font-bold">Budgets</p>
         <DropdownSelect
           options={budgets}
-          value={budgetNameValue}
+          value={budgetName}
           placeholder="Select Budgets"
           onChange={(value) => {
-            setBudgetName(value);
-            handleChangeTransaction();
+            handleChangeTransaction({ budgetName: value });
           }}
         />
       </div>
@@ -153,11 +185,10 @@ const TransactionFormBlock = ({
         <p className="font-bold">Accounts</p>
         <DropdownSelect
           options={accounts}
-          value={accountNameValue}
+          value={accountName}
           placeholder="Select Budgets"
           onChange={(value) => {
-            setAccountName(value);
-            handleChangeTransaction();
+            handleChangeTransaction({ accountName: value });
           }}
         />
       </div>
@@ -185,7 +216,7 @@ const TransactionFormBlock = ({
             onChange={(event) =>
               setTransactionAmount(Number(event.target.value))
             }
-            onBlur={handleChangeTransaction}
+            onBlur={() => handleChangeTransaction()}
             className="w-20 pr-3 text-center"
             placeholder="amount"
             style={{
