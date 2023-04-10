@@ -24,6 +24,13 @@ const useTransactions = () => {
       },
     });
 
+  const deleteTransactionMutation =
+    api.transactions.deleteTransaction.useMutation({
+      onSuccess: () => {
+        void ctx.transactions.getThisWeeksTransactions.invalidate();
+      },
+    });
+
   const addTransactions = async (
     transactions: TransactionLine[]
   ): Promise<boolean> => {
@@ -46,10 +53,20 @@ const useTransactions = () => {
     }
   };
 
+  const deleteTransaction = async (transactionId: number): Promise<boolean> => {
+    try {
+      await deleteTransactionMutation.mutateAsync(transactionId);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   return {
     thisWeeksTransactions,
     addTransactions,
     transactionsWithIcon,
+    deleteTransaction,
   };
 };
 

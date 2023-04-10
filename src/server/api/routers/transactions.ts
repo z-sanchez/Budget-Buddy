@@ -88,4 +88,14 @@ export const transactionsRouter = createTRPCRouter({
         .createMany({ data: input })
         .catch((error) => console.log(error));
     }),
+
+  deleteTransaction: protectedProcedure
+    .input(z.number())
+    .mutation(({ ctx, input }) => {
+      ctx.prisma.transaction
+        .delete({
+          where: { id: input },
+        })
+        .catch((error) => console.log(error));
+    }),
 });

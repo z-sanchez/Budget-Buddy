@@ -16,8 +16,10 @@ const RecentActivity = ({
   users,
   accounts,
   handleAddTransactions,
+  handleDeleteTransaction,
 }: {
   handleAddTransactions: (transactions: TransactionLine[]) => Promise<boolean>;
+  handleDeleteTransaction: (transactionId: number) => Promise<boolean>;
   data: ThisWeeksTransactionsWithIcon[];
   budgets: DropdownOption[];
   users: DropdownOption[];
@@ -73,7 +75,11 @@ const RecentActivity = ({
         <div className=" my-auto flex h-2/3 flex-row flex-wrap items-start justify-center overflow-y-scroll ">
           {data?.map((transaction, index: number) => {
             return (
-              <WeeklySpendingTransactionLine {...transaction} key={index} />
+              <WeeklySpendingTransactionLine
+                {...transaction}
+                key={index}
+                handleDeleteTransaction={handleDeleteTransaction}
+              />
             );
           })}
         </div>

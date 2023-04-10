@@ -4,14 +4,24 @@ import EditIcon from "../../../../public/edit-icon.svg";
 import { type ThisWeeksTransactionsWithIcon } from "../../../utils/types";
 import dayjs from "dayjs";
 
+type Props = ThisWeeksTransactionsWithIcon & {
+  handleDeleteTransaction: (transactionId: number) => Promise<boolean>;
+};
+
 const WeeklySpendingTransactionLine = ({
   Icon,
   name,
   userName,
   date,
   amount,
-}: ThisWeeksTransactionsWithIcon) => {
+  id,
+  handleDeleteTransaction,
+}: Props) => {
   const dateFormatted = dayjs(date).format("L LT");
+
+  const deleteTransaction = () => {
+    handleDeleteTransaction(id).catch((error) => console.log(error));
+  };
 
   return (
     <div className="my-2 flex w-full flex-row items-center justify-between px-2 lg:w-11/12">
@@ -37,7 +47,10 @@ const WeeklySpendingTransactionLine = ({
       </p>
       <div className="flex w-1/12 items-center justify-between">
         <EditIcon className="icon--hoverGreen w-5 cursor-pointer transition-colors" />
-        <TrashIcon className="icon--hoverRed w-5 cursor-pointer transition-colors" />
+        <TrashIcon
+          className="icon--hoverRed w-5 cursor-pointer transition-colors"
+          onClick={deleteTransaction}
+        />
       </div>
     </div>
   );

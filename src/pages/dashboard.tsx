@@ -12,8 +12,12 @@ import { createWeekBudgetSpendingLineGraphData } from "../utils/helpers/lineGrap
 import { useTransactions } from "../hooks/useTransactions";
 
 const Dashboard: NextPageWithLayout = () => {
-  const { thisWeeksTransactions, addTransactions, transactionsWithIcon } =
-    useTransactions();
+  const {
+    thisWeeksTransactions,
+    addTransactions,
+    transactionsWithIcon,
+    deleteTransaction,
+  } = useTransactions();
 
   const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
 
@@ -73,6 +77,7 @@ const Dashboard: NextPageWithLayout = () => {
       <div className="col-span-1">
         <RecentActivity
           handleAddTransactions={addTransactions}
+          handleDeleteTransaction={deleteTransaction}
           data={transactionsWithIcon}
           budgets={budgetOptions}
           accounts={accountOptions}
