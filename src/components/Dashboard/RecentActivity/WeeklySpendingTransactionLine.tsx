@@ -1,5 +1,5 @@
 import { GREEN_STATE, GREY, RED_STATE } from "../../../utils/constants";
-import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
+import TrashIcon from "../../../../public/trash-icon.svg";
 import EditIcon from "../../../../public/edit-icon.svg";
 import { type ThisWeeksTransactionsWithIcon } from "../../../utils/types";
 import dayjs from "dayjs";
@@ -11,32 +11,33 @@ const WeeklySpendingTransactionLine = ({
   date,
   amount,
 }: ThisWeeksTransactionsWithIcon) => {
-  const dateFormatted = dayjs(date).format("DD/MM/YYYY");
-  const timeFormatted = dayjs(date).format("HH:MM");
+  const dateFormatted = dayjs(date).format("L LT");
 
   return (
-    <div className="my-2 flex w-11/12 flex-row items-center justify-between xl:w-5/6">
-      <div
-        className="mr-3 flex h-8 w-8 items-center justify-center rounded-lg outline outline-1 2xl:h-10 2xl:w-10"
-        style={{ outlineColor: GREY }}
-      >
-        <Icon />
-      </div>
-      <div className="flex w-64 flex-col">
-        <p className="2xl:text-xl ">{name}</p>
-        <p className="poppinsFont  text-xs 2xl:text-sm" style={{ color: GREY }}>
-          {dateFormatted} {timeFormatted} by {userName}
-        </p>
+    <div className="my-2 flex w-full flex-row items-center justify-between px-2 lg:w-11/12">
+      <div className="flex w-8/12 items-center">
+        <div
+          className="mr-5 flex items-center justify-center rounded-lg p-1 outline outline-1"
+          style={{ outlineColor: GREY }}
+        >
+          <Icon />
+        </div>
+        <div className="flex flex-col">
+          <p className="truncate">{name}</p>
+          <p className="poppinsFont truncate" style={{ color: GREY }}>
+            {dateFormatted} by {userName}
+          </p>
+        </div>
       </div>
       <p
-        className="poppinsFont 2xl:text-xl"
+        className="poppinsFont "
         style={{ color: amount < 0 ? RED_STATE : GREEN_STATE }}
       >
         {amount < 0 ? "-" : ""}${Math.abs(amount)}
       </p>
-      <div className="flex">
-        <EditIcon className="mr-5 h-5 w-5 cursor-pointer" />
-        <EllipsisIcon className="cursor-pointer" />
+      <div className="flex w-1/12 items-center justify-between">
+        <EditIcon className="icon--hoverGreen w-5 cursor-pointer transition-colors" />
+        <TrashIcon className="icon--hoverRed w-5 cursor-pointer transition-colors" />
       </div>
     </div>
   );

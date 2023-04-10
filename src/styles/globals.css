@@ -50,3 +50,11 @@ html {
   outline-color: #82e460;
   fill: white;
 }
+
+.icon--hoverRed:hover {
+  fill: #e31837;
+}
+
+.icon--hoverGreen:hover {
+  fill: #82e460;
+}
