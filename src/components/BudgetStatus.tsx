@@ -41,12 +41,12 @@ const BudgetStatus = ({
   return (
     <ThemeProvider theme={theme}>
       <div
-        className={` h-fit cursor-pointer ${className ? className : "w-2/5"}`}
+        className={`h-fit cursor-pointer ${className ? className : "w-2/5"}`}
       >
         <div className="mb-3 flex items-center justify-between">
-          <p className="2xl:text-xl">{name}</p>
+          <p className="truncate 2xl:text-xl">{name}</p>
           <p
-            className="poppinsFont text-sm font-light 2xl:text-base"
+            className="poppinsFont w-fit whitespace-nowrap text-sm font-light 2xl:text-base"
             style={{ color: outlineColor ? outlineColor : "GREY" }}
           >
             {balance} / {amount}

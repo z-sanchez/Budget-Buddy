@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GREY } from "../../../utils/constants";
 import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
-import { WeeklySpendingTransactionLine } from "../WeeklySpending/WeeklySpendingTransactionLine";
+import { WeeklySpendingTransactionLine } from "./WeeklySpendingTransactionLine";
 import {
   type TransactionLine,
   type ThisWeeksTransactionsWithIcon,
