@@ -38,8 +38,6 @@ const useTransactions = () => {
       };
     });
 
-    makeTransactionsMutation.mutate(formatttedTransactions);
-
     try {
       await makeTransactionsMutation.mutateAsync(formatttedTransactions);
       return true;
