@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import type { NextPageWithLayout } from "../../pages/_app";
-import BugdetScoutLogo from "../../../public/budget-scout-logo.svg";
+import BugdetScoutLogo from "../../../public/budget-buddy-logo.svg";
 import HomeIcon from "../../../public/home-icon.svg";
 import BudgetIcon from "../../../public/budget-icon.svg";
 import GoalsIcon from "../../../public/goals-icon.svg";

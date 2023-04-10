@@ -18,19 +18,6 @@ export type BudgetStatusDetailedProps = {
   className?: string;
 };
 
-export interface WeeklySpendingBlockProps {
-  budgetStatusData: BudgetStatusProps[];
-}
-
-export type WeeklySpendingTransactionLineProps = {
-  Icon: any;
-  transactionName: string;
-  transactionDate: string;
-  transactionTime: string;
-  transactionUser: string;
-  transactionAmount: number;
-};
-
 export type LineGraphDataset = {
   label: string;
   data: number[];
