@@ -29,6 +29,27 @@ const Dashboard: NextPageWithLayout = () => {
     transactions: thisWeeksTransactions?.filter(({ amount }) => amount < 0),
   });
 
+  const budgetOptions = budgets?.map(({ name, id }) => {
+    return {
+      label: name,
+      id,
+    };
+  });
+
+  const accountOptions = accounts?.map(({ name, id }) => {
+    return {
+      label: name,
+      id,
+    };
+  });
+
+  const userOptions = users?.map(({ name, id }) => {
+    return {
+      label: name,
+      id,
+    };
+  });
+
   return (
     <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[50%_50%] grid-rows-[13%_25%_auto_25%] gap-y-2 px-5 py-3 pb-8">
       <div className="col-span-2">
@@ -53,9 +74,9 @@ const Dashboard: NextPageWithLayout = () => {
         <RecentActivity
           handleAddTransactions={addTransactions}
           data={transactionsWithIcon}
-          budgets={budgets}
-          accounts={accounts}
-          users={users}
+          budgets={budgetOptions}
+          accounts={accountOptions}
+          users={userOptions}
         />
       </div>
       <div className="col-span-1">

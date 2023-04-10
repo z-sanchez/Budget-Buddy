@@ -4,16 +4,17 @@ import {
   TextField,
   ThemeProvider,
 } from "@mui/material";
+import { type DropdownOption } from "../utils/types";
 const DropdownSelect = ({
   value,
   options,
   placeholder,
   onChange,
 }: {
-  value: { label: string; id: number };
-  options: { label: string; id: number }[];
+  value: DropdownOption;
+  options: DropdownOption[];
   placeholder: string;
-  onChange: (value: { label: string; id: number }) => void;
+  onChange: (value: DropdownOption) => void;
 }) => {
   const styles = {
     styleOverrides: {

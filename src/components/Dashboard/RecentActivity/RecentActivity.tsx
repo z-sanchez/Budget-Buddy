@@ -5,10 +5,10 @@ import { WeeklySpendingTransactionLine } from "./WeeklySpendingTransactionLine";
 import {
   type TransactionLine,
   type ThisWeeksTransactionsWithIcon,
+  type DropdownOption,
 } from "../../../utils/types";
 import { AddTransactionModalContent } from "./AddTransactionModalContent";
 import { Modal } from "@mui/material";
-import type { accounts, budgets, users } from "@prisma/client";
 
 const RecentActivity = ({
   data,
@@ -19,37 +19,27 @@ const RecentActivity = ({
 }: {
   handleAddTransactions: (transactions: TransactionLine[]) => Promise<boolean>;
   data: ThisWeeksTransactionsWithIcon[];
-  budgets: budgets[];
-  users: users[];
-  accounts: accounts[];
+  budgets: DropdownOption[];
+  users: DropdownOption[];
+  accounts: DropdownOption[];
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [error, setError] = useState("");
-
-  const budgetsLabeled = budgets?.map(({ name, id }) => {
-    return {
-      label: name,
-      id,
-    };
-  });
-
-  const usersLabeled = users?.map(({ name, id }) => {
-    return {
-      label: name,
-      id,
-    };
-  });
-
-  const accountsLabeled = accounts?.map(({ name, id }) => {
-    return {
-      label: name,
-      id,
-    };
-  });
+  const [modalErrorMessage, setModalErrorMessage] = useState("");
 
   const closeModal = () => {
-    setError("");
+    setModalErrorMessage("");
     setModalOpen(false);
+  };
+
+  const addTransactions = async (transactions: TransactionLine[]) => {
+    const isOK = await handleAddTransactions(transactions);
+
+    if (!isOK) {
+      setModalErrorMessage("Invalid Transaction");
+      return;
+    }
+
+    closeModal();
   };
 
   return (
@@ -61,20 +51,11 @@ const RecentActivity = ({
       >
         <>
           <AddTransactionModalContent
-            handleAddTransactions={async (transaction) => {
-              const isOK = await handleAddTransactions(transaction);
-
-              if (!isOK) {
-                setError("Invalid Transaction");
-                return;
-              }
-
-              closeModal();
-            }}
-            budgets={budgetsLabeled}
-            users={usersLabeled}
-            accounts={accountsLabeled}
-            error={error}
+            handleAddTransactions={addTransactions}
+            budgetDropdownOption={budgets}
+            userDropdownOption={users}
+            accountDropdownOption={accounts}
+            errorMessage={modalErrorMessage}
             onClose={closeModal}
           />
         </>
@@ -96,12 +77,12 @@ const RecentActivity = ({
             );
           })}
         </div>
-        <div
+        <button
           className="bgGreenOnHover flex  w-full cursor-pointer justify-center rounded-lg py-2 transition-colors"
           onClick={() => setModalOpen(true)}
         >
-          <p className="text-white 2xl:text-xl">Add Transaction</p>
-        </div>
+          <span className="text-white 2xl:text-xl">Add Transaction</span>
+        </button>
       </div>
     </>
   );

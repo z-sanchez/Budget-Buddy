@@ -5,7 +5,10 @@ import CalendarIcon from "../../../../public/calendar-icon.svg";
 import type { ElementType } from "react";
 import dayjs from "dayjs";
 import { DropdownSelect } from "../../DropdownSelect";
-import { type TransactionLine } from "../../../utils/types";
+import {
+  type DropdownOption,
+  type TransactionLine,
+} from "../../../utils/types";
 
 const TransactionFormBlock = ({
   id,
@@ -17,24 +20,15 @@ const TransactionFormBlock = ({
   date,
   changeTransaction,
   deleteTransaction,
-  budgets,
-  users,
-  accounts,
+  budgetDropdownOption,
+  userDropdownOption,
+  accountDropdownOption,
 }: TransactionLine & {
   changeTransaction: (transaction: TransactionLine) => void;
   deleteTransaction: (transaction: TransactionLine) => void;
-  budgets: {
-    label: string;
-    id: number;
-  }[];
-  users: {
-    label: string;
-    id: number;
-  }[];
-  accounts: {
-    label: string;
-    id: number;
-  }[];
+  budgetDropdownOption: DropdownOption[];
+  userDropdownOption: DropdownOption[];
+  accountDropdownOption: DropdownOption[];
 }) => {
   const [dateOpen, setDateOpen] = useState(false);
   const [isIncome, setIsIncome] = useState(false);
@@ -45,30 +39,10 @@ const TransactionFormBlock = ({
 
   const handleChangeTransaction = useCallback(
     (updatedDropdown?: {
-      budgetName?: {
-        label: string;
-        id: number;
-      };
-      userName?: {
-        label: string;
-        id: number;
-      };
-      accountName?: {
-        label: string;
-        id: number;
-      };
+      budgetName?: DropdownOption;
+      userName?: DropdownOption;
+      accountName?: DropdownOption;
     }) => {
-      console.log({
-        id,
-        budgetName,
-        userName,
-        accountName,
-        transactionAmount: transactionAmountValue,
-        transactionName: transactionNameValue,
-        date: dayjs(dateValue).toISOString(),
-        ...updatedDropdown,
-      });
-
       changeTransaction({
         id,
         budgetName,
@@ -162,7 +136,7 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Users</p>
         <DropdownSelect
-          options={users}
+          options={userDropdownOption}
           value={userName}
           placeholder="Select Users"
           onChange={(value) => {
@@ -173,7 +147,7 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Budgets</p>
         <DropdownSelect
-          options={budgets}
+          options={budgetDropdownOption}
           value={budgetName}
           placeholder="Select Budgets"
           onChange={(value) => {
@@ -184,7 +158,7 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Accounts</p>
         <DropdownSelect
-          options={accounts}
+          options={accountDropdownOption}
           value={accountName}
           placeholder="Select Budgets"
           onChange={(value) => {

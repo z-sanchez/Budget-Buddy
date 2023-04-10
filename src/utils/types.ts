@@ -63,3 +63,8 @@ export type TransactionLine = {
   transactionAmount: number;
   date: string;
 };
+
+export type DropdownOption = {
+  id: number;
+  label: string;
+};

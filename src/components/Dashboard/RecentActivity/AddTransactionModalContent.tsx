@@ -4,66 +4,49 @@ import CloseIcon from "../../../../public/close-icon.svg";
 import PlusIcon from "../../../../public/plus-icon.svg";
 import { TransactionFormBlock } from "./TransactionFormBlock";
 import transactionBlockReducer from "./reducers/transactionBlockReducer";
-import { type TransactionLine } from "../../../utils/types";
+import {
+  type DropdownOption,
+  type TransactionLine,
+} from "../../../utils/types";
 import dayjs from "dayjs";
 
-type Budgets = {
-  label: string;
-  id: number;
+const NEW_TRANSACTION = {
+  id: 1,
+  budgetName: { label: "", id: 0 },
+  userName: { label: "", id: 0 },
+  accountName: { label: "", id: 0 },
+  transactionName: "",
+  transactionAmount: -1,
+  date: dayjs(new Date()).toISOString(),
 };
 
-type Users = {
-  label: string;
-  id: number;
-};
-
-type Accounts = {
-  label: string;
-  id: number;
-};
-
-const INITIAL_TRANSACTION: TransactionLine[] = [
-  {
-    id: 1,
-    budgetName: { label: "", id: 0 },
-    userName: { label: "", id: 0 },
-    accountName: { label: "", id: 0 },
-    transactionName: "",
-    transactionAmount: -1,
-    date: dayjs(new Date()).toISOString(),
-  },
-];
+const INITIAL_TRANSACTIONS: TransactionLine[] = [{ ...NEW_TRANSACTION }];
 
 const AddTransactionModalContent = ({
   handleAddTransactions,
   onClose,
-  budgets,
-  users,
-  accounts,
-  error,
+  budgetDropdownOption,
+  userDropdownOption,
+  accountDropdownOption,
+  errorMessage,
 }: {
   handleAddTransactions: (transactions: TransactionLine[]) => Promise<void>;
   onClose: () => void;
-  budgets: Budgets[];
-  users: Users[];
-  accounts: Accounts[];
-  error?: string;
+  budgetDropdownOption: DropdownOption[];
+  userDropdownOption: DropdownOption[];
+  accountDropdownOption: DropdownOption[];
+  errorMessage?: string;
 }) => {
   const [transactions, dispatch] = useReducer(
     transactionBlockReducer,
-    INITIAL_TRANSACTION
+    INITIAL_TRANSACTIONS
   );
 
   const addTransactionForm = () => {
     dispatch({
+      ...NEW_TRANSACTION,
       type: "added",
       id: transactions.length + 1,
-      budgetName: { label: "", id: 0 },
-      userName: { label: "", id: 0 },
-      accountName: { label: "", id: 0 },
-      transactionName: "",
-      transactionAmount: -1,
-      date: dayjs(new Date()).toISOString(),
     });
   };
 
@@ -98,12 +81,12 @@ const AddTransactionModalContent = ({
         />
         <p className="self-center py-4 text-2xl font-light 2xl:text-3xl">
           Add Transaction
-          {error && (
+          {errorMessage && (
             <span
               className="rounded-sm bg-red-100 px-2 py-1 text-sm transition-colors"
               style={{ color: RED_STATE }}
             >
-              {error}
+              {errorMessage}
             </span>
           )}
         </p>
@@ -111,19 +94,19 @@ const AddTransactionModalContent = ({
 
       <div className="w-full overflow-y-scroll px-5 pt-5 pb-10">
         {transactions.map((transaction, index) => {
-          const addDivider = index + 1 !== transactions.length;
+          const needDivider = index + 1 !== transactions.length;
 
           return (
             <React.Fragment key={transaction.id}>
               <TransactionFormBlock
-                budgets={budgets}
-                users={users}
-                accounts={accounts}
+                budgetDropdownOption={budgetDropdownOption}
+                userDropdownOption={userDropdownOption}
+                accountDropdownOption={accountDropdownOption}
                 changeTransaction={changeTransaction}
                 deleteTransaction={deleteTransaction}
                 {...transaction}
               />
-              {addDivider && (
+              {needDivider && (
                 <div
                   style={{ backgroundColor: LIGHT_GREY }}
                   className="my-10 mx-auto h-[1px] w-3/4"
@@ -138,12 +121,12 @@ const AddTransactionModalContent = ({
           className="plusIconHover mx-auto mt-10 h-6 w-6 cursor-pointer rounded-3xl py-1 px-1 outline outline-2 transition-all"
         />
       </div>
-      <div
+      <button
         onClick={submitTransactions}
         className="bgGreenOnHover my-2 mt-auto ml-auto mr-5 flex w-1/3 cursor-pointer justify-center self-center rounded-lg py-2 transition-colors"
       >
         <p className="text-white 2xl:text-xl">Add Transactions</p>
-      </div>
+      </button>
     </div>
   );
 };
