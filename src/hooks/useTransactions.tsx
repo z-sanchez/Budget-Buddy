@@ -7,6 +7,8 @@ import ShoppingIcon from "../../public/shopping-icon.svg";
 import dayjs from "dayjs";
 
 const useTransactions = () => {
+  const ctx = api.useContext();
+
   const thisWeeksTransactions =
     api.transactions.getThisWeeksTransactions.useQuery()
       .data as ThisWeeksTransactions[];
@@ -15,8 +17,6 @@ const useTransactions = () => {
     return { ...transaction, Icon: ShoppingIcon as string };
   });
 
-  const ctx = api.useContext();
-
   const makeTransactionsMutation =
     api.transactions.makeTransactions.useMutation({
       onSuccess: () => {
@@ -24,7 +24,9 @@ const useTransactions = () => {
       },
     });
 
-  const addTransactions = (transactions: TransactionLine[]) => {
+  const addTransactions = async (
+    transactions: TransactionLine[]
+  ): Promise<boolean> => {
     const formatttedTransactions = transactions.map((transaction) => {
       return {
         amount: Number(transaction.transactionAmount),
@@ -37,6 +39,13 @@ const useTransactions = () => {
     });
 
     makeTransactionsMutation.mutate(formatttedTransactions);
+
+    try {
+      await makeTransactionsMutation.mutateAsync(formatttedTransactions);
+      return true;
+    } catch (error) {
+      return false;
+    }
   };
 
   return {

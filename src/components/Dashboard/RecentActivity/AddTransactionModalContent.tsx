@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { GREY, LIGHT_GREY } from "../../../utils/constants";
+import { GREY, LIGHT_GREY, RED_STATE } from "../../../utils/constants";
 import CloseIcon from "../../../../public/close-icon.svg";
 import PlusIcon from "../../../../public/plus-icon.svg";
 import { TransactionFormBlock } from "./TransactionFormBlock";
@@ -40,12 +40,14 @@ const AddTransactionModalContent = ({
   budgets,
   users,
   accounts,
+  error,
 }: {
-  handleAddTransactions: (transactions: TransactionLine[]) => void;
+  handleAddTransactions: (transactions: TransactionLine[]) => Promise<void>;
   onClose: () => void;
   budgets: Budgets[];
   users: Users[];
   accounts: Accounts[];
+  error?: string;
 }) => {
   const [transactions, dispatch] = useReducer(
     transactionBlockReducer,
@@ -80,11 +82,11 @@ const AddTransactionModalContent = ({
   };
 
   const submitTransactions = () => {
-    handleAddTransactions(transactions);
+    void handleAddTransactions(transactions);
   };
 
   return (
-    <div className="mb-20 flex h-3/5 w-2/3 min-w-[640px] flex-col items-start justify-start rounded-md bg-white  lg:w-1/3">
+    <div className="mb-20 flex h-3/5 w-2/3 min-w-[640px] flex-col items-start justify-start rounded-md bg-white lg:w-1/3">
       <div
         className="flex w-full items-center border-x-0 border-y-0 border-b bg-white px-5 py-8 pb-1"
         style={{ borderColor: LIGHT_GREY }}
@@ -96,6 +98,14 @@ const AddTransactionModalContent = ({
         />
         <p className="self-center py-4 text-2xl font-light 2xl:text-3xl">
           Add Transaction
+          {error && (
+            <span
+              className="rounded-sm bg-red-100 px-2 py-1 text-sm transition-colors"
+              style={{ color: RED_STATE }}
+            >
+              {error}
+            </span>
+          )}
         </p>
       </div>
 

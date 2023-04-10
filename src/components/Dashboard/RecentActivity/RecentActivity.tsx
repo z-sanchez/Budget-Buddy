@@ -17,13 +17,14 @@ const RecentActivity = ({
   accounts,
   handleAddTransactions,
 }: {
-  handleAddTransactions: (transactions: TransactionLine[]) => void;
+  handleAddTransactions: (transactions: TransactionLine[]) => Promise<boolean>;
   data: ThisWeeksTransactionsWithIcon[];
   budgets: budgets[];
   users: users[];
   accounts: accounts[];
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [error, setError] = useState("");
 
   const budgetsLabeled = budgets?.map(({ name, id }) => {
     return {
@@ -46,23 +47,35 @@ const RecentActivity = ({
     };
   });
 
+  const closeModal = () => {
+    setError("");
+    setModalOpen(false);
+  };
+
   return (
     <>
       <Modal
         open={isModalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={closeModal}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <>
           <AddTransactionModalContent
-            handleAddTransactions={(transaction) => {
-              setModalOpen(false);
-              handleAddTransactions(transaction);
+            handleAddTransactions={async (transaction) => {
+              const isOK = await handleAddTransactions(transaction);
+
+              if (!isOK) {
+                setError("Invalid Transaction");
+                return;
+              }
+
+              closeModal();
             }}
             budgets={budgetsLabeled}
             users={usersLabeled}
             accounts={accountsLabeled}
-            onClose={() => setModalOpen(false)}
+            error={error}
+            onClose={closeModal}
           />
         </>
       </Modal>
