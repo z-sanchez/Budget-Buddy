@@ -31,6 +31,12 @@ const useTransactions = () => {
       },
     });
 
+  const editTransactionMutation = api.transactions.editTransaction.useMutation({
+    onSuccess: () => {
+      void ctx.transactions.getThisWeeksTransactions.invalidate();
+    },
+  });
+
   const addTransactions = async (
     transactions: TransactionLine[]
   ): Promise<boolean> => {
@@ -53,6 +59,27 @@ const useTransactions = () => {
     }
   };
 
+  const editTransaction = async (
+    transaction: TransactionLine
+  ): Promise<boolean> => {
+    const formatttedTransaction = {
+      id: transaction.id,
+      amount: Number(transaction.transactionAmount),
+      accountId: transaction.accountName.id,
+      userId: transaction.userName.id,
+      budgetId: transaction.budgetName.id,
+      name: transaction.transactionName,
+      date: dayjs(transaction.date).toDate(),
+    };
+
+    try {
+      await editTransactionMutation.mutateAsync(formatttedTransaction);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   const deleteTransaction = async (transactionId: number): Promise<boolean> => {
     try {
       await deleteTransactionMutation.mutateAsync(transactionId);
@@ -64,9 +91,10 @@ const useTransactions = () => {
 
   return {
     thisWeeksTransactions,
-    addTransactions,
     transactionsWithIcon,
+    addTransactions,
     deleteTransaction,
+    editTransaction,
   };
 };
 

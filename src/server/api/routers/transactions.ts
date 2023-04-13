@@ -38,6 +38,7 @@ export const transactionsRouter = createTRPCRouter({
           accountId: transaction.accountId,
           accountName: "",
           userName: "",
+          accountUserId: transaction.userId,
           budgetName: "",
         };
 
@@ -86,6 +87,36 @@ export const transactionsRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => {
       ctx.prisma.transaction
         .createMany({ data: input })
+        .catch((error) => console.log(error));
+    }),
+
+  editTransaction: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        amount: z.number(),
+        accountId: z.number().gt(0),
+        userId: z.number().gt(0),
+        budgetId: z.number().gt(0),
+        name: z.string(),
+        date: z.date(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      ctx.prisma.transaction
+        .update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            name: input.name,
+            amount: input.amount,
+            accountId: input.accountId,
+            userId: input.userId,
+            budgetId: input.budgetId,
+            date: input.date,
+          },
+        })
         .catch((error) => console.log(error));
     }),
 

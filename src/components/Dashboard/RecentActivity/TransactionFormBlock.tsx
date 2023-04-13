@@ -23,12 +23,14 @@ const TransactionFormBlock = ({
   budgetDropdownOption,
   userDropdownOption,
   accountDropdownOption,
+  disableDelete,
 }: TransactionLine & {
   changeTransaction: (transaction: TransactionLine) => void;
   deleteTransaction: (transaction: TransactionLine) => void;
   budgetDropdownOption: DropdownOption[];
   userDropdownOption: DropdownOption[];
   accountDropdownOption: DropdownOption[];
+  disableDelete?: boolean;
 }) => {
   const [dateOpen, setDateOpen] = useState(false);
   const [isIncome, setIsIncome] = useState(false);
@@ -219,12 +221,14 @@ const TransactionFormBlock = ({
             OpenPickerIcon: CalendarIcon as ElementType,
           }}
         />
-        <button
-          onClick={handleDeleteTransaction}
-          className="flex w-40 cursor-pointer justify-center self-center rounded-lg bg-white py-2 text-red-500 transition-colors hover:bg-red-500 hover:text-white hover:outline-transparent"
-        >
-          <p>Remove Transaction</p>
-        </button>
+        {!disableDelete && (
+          <button
+            onClick={handleDeleteTransaction}
+            className="flex w-40 cursor-pointer justify-center self-center rounded-lg bg-white py-2 text-red-500 transition-colors hover:bg-red-500 hover:text-white hover:outline-transparent"
+          >
+            <p>Remove Transaction</p>
+          </button>
+        )}
       </div>
     </>
   );

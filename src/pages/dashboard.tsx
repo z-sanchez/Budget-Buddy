@@ -14,9 +14,10 @@ import { useTransactions } from "../hooks/useTransactions";
 const Dashboard: NextPageWithLayout = () => {
   const {
     thisWeeksTransactions,
-    addTransactions,
     transactionsWithIcon,
+    addTransactions,
     deleteTransaction,
+    editTransaction,
   } = useTransactions();
 
   const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
@@ -78,6 +79,7 @@ const Dashboard: NextPageWithLayout = () => {
         <RecentActivity
           handleAddTransactions={addTransactions}
           handleDeleteTransaction={deleteTransaction}
+          handleEditTransaction={editTransaction}
           data={transactionsWithIcon}
           budgets={budgetOptions}
           accounts={accountOptions}

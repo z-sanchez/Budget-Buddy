@@ -9,6 +9,10 @@ import {
 } from "../../../utils/types";
 import { AddTransactionModalContent } from "./AddTransactionModalContent";
 import { Modal } from "@mui/material";
+import { EditTransactionModalContent } from "./EditTransactionModalContent";
+
+const ADD_MODAL = "add";
+const EDIT_MODAL = "edit";
 
 const RecentActivity = ({
   data,
@@ -17,16 +21,36 @@ const RecentActivity = ({
   accounts,
   handleAddTransactions,
   handleDeleteTransaction,
+  handleEditTransaction,
 }: {
   handleAddTransactions: (transactions: TransactionLine[]) => Promise<boolean>;
   handleDeleteTransaction: (transactionId: number) => Promise<boolean>;
+  handleEditTransaction: (transaction: TransactionLine) => Promise<boolean>;
   data: ThisWeeksTransactionsWithIcon[];
   budgets: DropdownOption[];
   users: DropdownOption[];
   accounts: DropdownOption[];
 }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState<false | "add" | "edit">(false);
   const [modalErrorMessage, setModalErrorMessage] = useState("");
+  const [editableTransaction, setEditableTransaction] = useState({
+    id: 0,
+    budgetName: {
+      label: "",
+      id: 0,
+    },
+    userName: {
+      label: "",
+      id: 0,
+    },
+    accountName: {
+      label: "",
+      id: 0,
+    },
+    transactionName: "name",
+    transactionAmount: 0,
+    date: "",
+  });
 
   const closeModal = () => {
     setModalErrorMessage("");
@@ -44,22 +68,45 @@ const RecentActivity = ({
     closeModal();
   };
 
+  const editTransaction = async (transaction: TransactionLine) => {
+    const isOK = await handleEditTransaction(transaction);
+
+    if (!isOK) {
+      setModalErrorMessage("Invalid Transaction");
+      return;
+    }
+
+    closeModal();
+  };
+
   return (
     <>
       <Modal
-        open={isModalOpen}
+        open={isModalOpen !== false}
         onClose={closeModal}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <>
-          <AddTransactionModalContent
-            handleAddTransactions={addTransactions}
-            budgetDropdownOption={budgets}
-            userDropdownOption={users}
-            accountDropdownOption={accounts}
-            errorMessage={modalErrorMessage}
-            onClose={closeModal}
-          />
+          {isModalOpen === ADD_MODAL ? (
+            <AddTransactionModalContent
+              handleAddTransactions={addTransactions}
+              budgetDropdownOption={budgets}
+              userDropdownOption={users}
+              accountDropdownOption={accounts}
+              errorMessage={modalErrorMessage}
+              onClose={closeModal}
+            />
+          ) : (
+            <EditTransactionModalContent
+              handleEditTransaction={editTransaction}
+              transaction={editableTransaction}
+              budgetDropdownOption={budgets}
+              userDropdownOption={users}
+              accountDropdownOption={accounts}
+              errorMessage={modalErrorMessage}
+              onClose={closeModal}
+            />
+          )}
         </>
       </Modal>
       <div className="flex h-full w-full flex-col justify-start overflow-hidden px-8">
@@ -79,13 +126,17 @@ const RecentActivity = ({
                 {...transaction}
                 key={index}
                 handleDeleteTransaction={handleDeleteTransaction}
+                handleEditTransaction={(transaction: TransactionLine) => {
+                  setEditableTransaction(transaction);
+                  setModalOpen(EDIT_MODAL);
+                }}
               />
             );
           })}
         </div>
         <button
           className="bgGreenOnHover flex  w-full cursor-pointer justify-center rounded-lg py-2 transition-colors"
-          onClick={() => setModalOpen(true)}
+          onClick={() => setModalOpen(ADD_MODAL)}
         >
           <span className="text-white 2xl:text-xl">Add Transaction</span>
         </button>

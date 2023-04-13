@@ -29,12 +29,14 @@ export type LineGraphDataset = {
 export type ThisWeeksTransactions = {
   id: number;
   accountName: string;
+  accountId: number;
   budgetName: string;
   date: string;
   name: string;
   userName: string;
   amount: number;
   budgetId: number;
+  accountUserId: number;
 };
 
 export type ThisWeeksTransactionsWithIcon = ThisWeeksTransactions & {
