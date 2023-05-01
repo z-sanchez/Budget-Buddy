@@ -23,9 +23,13 @@ const RecentActivity = ({
   handleDeleteTransaction,
   handleEditTransaction,
 }: {
-  handleAddTransactions: (transactions: TransactionLine[]) => Promise<boolean>;
+  handleAddTransactions: (
+    transactions: TransactionLine[]
+  ) => Promise<string | true>;
   handleDeleteTransaction: (transactionId: number) => Promise<boolean>;
-  handleEditTransaction: (transaction: TransactionLine) => Promise<boolean>;
+  handleEditTransaction: (
+    transaction: TransactionLine
+  ) => Promise<string | true>;
   data: ThisWeeksTransactionsWithIcon[];
   budgets: DropdownOption[];
   users: DropdownOption[];
@@ -58,10 +62,10 @@ const RecentActivity = ({
   };
 
   const addTransactions = async (transactions: TransactionLine[]) => {
-    const isOK = await handleAddTransactions(transactions);
+    const response = await handleAddTransactions(transactions);
 
-    if (!isOK) {
-      setModalErrorMessage("Invalid Transaction");
+    if (typeof response === "string") {
+      setModalErrorMessage(response);
       return;
     }
 
@@ -69,10 +73,10 @@ const RecentActivity = ({
   };
 
   const editTransaction = async (transaction: TransactionLine) => {
-    const isOK = await handleEditTransaction(transaction);
+    const response = await handleEditTransaction(transaction);
 
-    if (!isOK) {
-      setModalErrorMessage("Invalid Transaction");
+    if (typeof response === "string") {
+      setModalErrorMessage(response);
       return;
     }
 

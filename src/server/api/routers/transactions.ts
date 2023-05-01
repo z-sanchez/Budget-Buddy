@@ -1,7 +1,10 @@
 import dayjs from "dayjs";
-import { z } from "zod";
+import { date, undefined, z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { Transaction } from "@prisma/client";
+import { TRPCClientError } from "@trpc/client";
+import { TRPCError } from "@trpc/server";
 
 export const transactionsRouter = createTRPCRouter({
   getAllTransactions: protectedProcedure.query(({ ctx }) => {
@@ -84,10 +87,38 @@ export const transactionsRouter = createTRPCRouter({
         })
       )
     )
-    .mutation(({ ctx, input }) => {
-      ctx.prisma.transaction
-        .createMany({ data: input })
-        .catch((error) => console.log(error));
+    .mutation(async ({ ctx, input }) => {
+      for (const transaction of input) {
+        const { amount, accountId } = transaction;
+
+        const account = await ctx.prisma.accounts.findUnique({
+          where: {
+            id: accountId,
+          },
+        });
+
+        const accountBalanceAfterTransaction =
+          Number(account?.amount) + Number(amount);
+
+        const isValidTransaction = accountBalanceAfterTransaction >= 0;
+
+        if (!isValidTransaction) {
+          return "Insufficient Funds";
+        }
+
+        ctx.prisma.accounts
+          .update({
+            where: { id: accountId },
+            data: {
+              amount: accountBalanceAfterTransaction,
+            },
+          })
+          .catch((error) => console.log(error));
+
+        ctx.prisma.transaction
+          .create({ data: transaction })
+          .catch((error) => console.log(error));
+      }
     }),
 
   editTransaction: protectedProcedure
@@ -102,7 +133,31 @@ export const transactionsRouter = createTRPCRouter({
         date: z.date(),
       })
     )
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
+      const account = await ctx.prisma.accounts.findUnique({
+        where: {
+          id: input.accountId,
+        },
+      });
+
+      const accountBalanceAfterTransaction =
+        Number(account?.amount) + Number(input.amount);
+
+      const isValidTransaction = accountBalanceAfterTransaction >= 0;
+
+      if (!isValidTransaction) {
+        return "Insufficient Funds";
+      }
+
+      ctx.prisma.accounts
+        .update({
+          where: { id: input.accountId },
+          data: {
+            amount: accountBalanceAfterTransaction,
+          },
+        })
+        .catch((error) => console.log(error));
+
       ctx.prisma.transaction
         .update({
           where: {

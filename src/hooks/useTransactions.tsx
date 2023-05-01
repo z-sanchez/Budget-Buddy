@@ -21,6 +21,7 @@ const useTransactions = () => {
     api.transactions.makeTransactions.useMutation({
       onSuccess: () => {
         void ctx.transactions.getThisWeeksTransactions.invalidate();
+        void ctx.accounts.getAllAccounts.invalidate();
       },
     });
 
@@ -34,12 +35,13 @@ const useTransactions = () => {
   const editTransactionMutation = api.transactions.editTransaction.useMutation({
     onSuccess: () => {
       void ctx.transactions.getThisWeeksTransactions.invalidate();
+      void ctx.accounts.getAllAccounts.invalidate();
     },
   });
 
   const addTransactions = async (
     transactions: TransactionLine[]
-  ): Promise<boolean> => {
+  ): Promise<string | true> => {
     const formatttedTransactions = transactions.map((transaction) => {
       return {
         amount: Number(transaction.transactionAmount),
@@ -52,16 +54,19 @@ const useTransactions = () => {
     });
 
     try {
-      await makeTransactionsMutation.mutateAsync(formatttedTransactions);
-      return true;
+      const response = await makeTransactionsMutation.mutateAsync(
+        formatttedTransactions
+      );
+
+      return typeof response === "string" ? response : true;
     } catch (error) {
-      return false;
+      return "Invalid Transaction";
     }
   };
 
   const editTransaction = async (
     transaction: TransactionLine
-  ): Promise<boolean> => {
+  ): Promise<string | true> => {
     const formatttedTransaction = {
       id: transaction.id,
       amount: Number(transaction.transactionAmount),
@@ -73,10 +78,12 @@ const useTransactions = () => {
     };
 
     try {
-      await editTransactionMutation.mutateAsync(formatttedTransaction);
-      return true;
+      const response = await editTransactionMutation.mutateAsync(
+        formatttedTransaction
+      );
+      return typeof response === "string" ? response : true;
     } catch (error) {
-      return false;
+      return "Invalid Transaction";
     }
   };
 

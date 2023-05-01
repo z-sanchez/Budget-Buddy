@@ -26,6 +26,8 @@ const Dashboard: NextPageWithLayout = () => {
 
   const accounts = api.accounts.getAllAccounts.useQuery().data as accounts[];
 
+  const dashboardAccounts = accounts?.filter(({ dashboard }) => dashboard);
+
   const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
     .data as LongTerm[];
 
@@ -87,7 +89,7 @@ const Dashboard: NextPageWithLayout = () => {
         />
       </div>
       <div className="col-span-1">
-        <AccountsBlock />
+        <AccountsBlock accounts={dashboardAccounts} />
       </div>
     </div>
   );

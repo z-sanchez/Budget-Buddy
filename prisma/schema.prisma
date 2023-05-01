@@ -12,6 +12,8 @@ model accounts {
   userId Int
   amount Decimal @db.Decimal(19, 2)
   name   String  @db.VarChar(45)
+  color     String  @db.VarChar(45) @default("#000000")
+  dashboard Int?    @db.TinyInt
 }
 
 model budgets {
