@@ -29,6 +29,7 @@ const useTransactions = () => {
     api.transactions.deleteTransaction.useMutation({
       onSuccess: () => {
         void ctx.transactions.getThisWeeksTransactions.invalidate();
+        void ctx.accounts.getAllAccounts.invalidate();
       },
     });
 
@@ -87,12 +88,16 @@ const useTransactions = () => {
     }
   };
 
-  const deleteTransaction = async (transactionId: number): Promise<boolean> => {
+  const deleteTransaction = async (
+    transactionId: number
+  ): Promise<true | string> => {
     try {
-      await deleteTransactionMutation.mutateAsync(transactionId);
-      return true;
+      const response = await deleteTransactionMutation.mutateAsync(
+        transactionId
+      );
+      return typeof response === "string" ? response : true;
     } catch (error) {
-      return false;
+      return "Invalid Transaction";
     }
   };
 

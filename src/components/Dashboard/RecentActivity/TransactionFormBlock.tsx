@@ -33,27 +33,32 @@ const TransactionFormBlock = ({
   disableDelete?: boolean;
 }) => {
   const [dateOpen, setDateOpen] = useState(false);
-  const [isIncome, setIsIncome] = useState(false);
+  const [isIncome, setIsIncome] = useState(() =>
+    transactionAmount > 0 ? true : false
+  );
   const [transactionNameValue, setTransactionName] = useState(transactionName);
   const [transactionAmountValue, setTransactionAmount] =
     useState(transactionAmount);
   const [dateValue, setDate] = useState(date);
 
   const handleChangeTransaction = useCallback(
-    (updatedDropdown?: {
+    (updatedFields?: {
       budgetName?: DropdownOption;
       userName?: DropdownOption;
       accountName?: DropdownOption;
+      amount?: number;
     }) => {
       changeTransaction({
         id,
         budgetName,
         userName,
         accountName,
-        transactionAmount: transactionAmountValue,
+        transactionAmount: updatedFields?.amount
+          ? updatedFields.amount
+          : transactionAmountValue,
         transactionName: transactionNameValue,
         date: dayjs(dateValue).toISOString(),
-        ...updatedDropdown,
+        ...updatedFields,
       });
     },
     [
@@ -79,18 +84,6 @@ const TransactionFormBlock = ({
       date: dayjs(dateValue).toISOString(),
     });
   };
-
-  useEffect(() => {
-    if (
-      (isIncome && transactionAmountValue < 0) ||
-      (!isIncome && transactionAmountValue > -1)
-    ) {
-      const adjustedTransactionAmount = Math.abs(transactionAmountValue);
-      setTransactionAmount(
-        isIncome ? adjustedTransactionAmount : adjustedTransactionAmount * -1
-      );
-    }
-  }, [isIncome, transactionAmountValue]);
 
   const errorMessage = () => {
     let message = "Please enter: ";
@@ -175,9 +168,16 @@ const TransactionFormBlock = ({
         <input
           type="checkbox"
           value={"income"}
+          checked={isIncome}
           name="income-checkbox"
           onChange={() => {
             setIsIncome((prev) => !prev);
+            const adjustedTransactionAmount = Math.abs(transactionAmountValue);
+            const amount = !isIncome
+              ? adjustedTransactionAmount
+              : adjustedTransactionAmount * -1;
+            setTransactionAmount(amount);
+            handleChangeTransaction({ amount });
           }}
         ></input>
       </div>

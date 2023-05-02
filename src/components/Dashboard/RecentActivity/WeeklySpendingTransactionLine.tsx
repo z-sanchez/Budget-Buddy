@@ -6,9 +6,10 @@ import {
   type ThisWeeksTransactionsWithIcon,
 } from "../../../utils/types";
 import dayjs from "dayjs";
+import { useState } from "react";
 
 type Props = ThisWeeksTransactionsWithIcon & {
-  handleDeleteTransaction: (transactionId: number) => Promise<boolean>;
+  handleDeleteTransaction: (transactionId: number) => Promise<string | true>;
   handleEditTransaction: (transaction: TransactionLine) => void;
 };
 
@@ -27,10 +28,19 @@ const WeeklySpendingTransactionLine = ({
   handleDeleteTransaction,
   handleEditTransaction,
 }: Props) => {
+  const [error, setError] = useState("");
   const dateFormatted = dayjs(date).format("L LT");
 
-  const deleteTransaction = () => {
-    handleDeleteTransaction(id).catch((error) => console.log(error));
+  const deleteTransaction = async () => {
+    const response = await handleDeleteTransaction(id).catch((error) =>
+      console.log(error)
+    );
+
+    if (typeof response === "string") {
+      setError(response);
+      return;
+    }
+    setError("");
   };
 
   return (
@@ -43,14 +53,25 @@ const WeeklySpendingTransactionLine = ({
           <Icon />
         </div>
         <div className="flex flex-col">
-          <p className="truncate">{name}</p>
+          <p className="truncate">
+            {name}{" "}
+            {error && (
+              <span
+                className="ml-5 cursor-pointer bg-red-100 px-2 py-1"
+                style={{ color: RED_STATE }}
+                onClick={() => setError("")}
+              >
+                {error}
+              </span>
+            )}
+          </p>
           <p className="poppinsFont truncate" style={{ color: GREY }}>
             {dateFormatted} by {userName}
           </p>
         </div>
       </div>
       <p
-        className="poppinsFont "
+        className="poppinsFont"
         style={{ color: amount < 0 ? RED_STATE : GREEN_STATE }}
       >
         {amount < 0 ? "-" : ""}${Math.abs(amount)}

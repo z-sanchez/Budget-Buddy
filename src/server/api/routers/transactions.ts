@@ -134,14 +134,29 @@ export const transactionsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const oldTransaction = await ctx.prisma.transaction.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
       const account = await ctx.prisma.accounts.findUnique({
         where: {
           id: input.accountId,
         },
       });
 
+      const oldTransactionAmount = Number(oldTransaction?.amount);
+
+      const oldAccountBalance = Number(account?.amount);
+
+      const newTransactionAmount =
+        oldTransactionAmount >= 0
+          ? oldAccountBalance - oldTransactionAmount
+          : oldAccountBalance + Math.abs(oldTransactionAmount);
+
       const accountBalanceAfterTransaction =
-        Number(account?.amount) + Number(input.amount);
+        newTransactionAmount + input.amount;
 
       const isValidTransaction = accountBalanceAfterTransaction >= 0;
 
@@ -177,7 +192,39 @@ export const transactionsRouter = createTRPCRouter({
 
   deleteTransaction: protectedProcedure
     .input(z.number())
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
+      const transaction = await ctx.prisma.transaction.findUnique({
+        where: {
+          id: input,
+        },
+      });
+
+      const refundAmount = Number(transaction?.amount) * -1;
+
+      const account = await ctx.prisma.accounts.findUnique({
+        where: {
+          id: transaction?.accountId,
+        },
+      });
+
+      const accountBalanceAfterTransaction =
+        Number(account?.amount) + refundAmount;
+
+      const isValidTransaction = accountBalanceAfterTransaction >= 0;
+
+      if (!isValidTransaction) {
+        return "Insufficient Funds";
+      }
+
+      ctx.prisma.accounts
+        .update({
+          where: { id: transaction?.accountId },
+          data: {
+            amount: accountBalanceAfterTransaction,
+          },
+        })
+        .catch((error) => console.log(error));
+
       ctx.prisma.transaction
         .delete({
           where: { id: input },

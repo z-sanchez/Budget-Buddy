@@ -26,7 +26,7 @@ const RecentActivity = ({
   handleAddTransactions: (
     transactions: TransactionLine[]
   ) => Promise<string | true>;
-  handleDeleteTransaction: (transactionId: number) => Promise<boolean>;
+  handleDeleteTransaction: (transactionId: number) => Promise<string | true>;
   handleEditTransaction: (
     transaction: TransactionLine
   ) => Promise<string | true>;
