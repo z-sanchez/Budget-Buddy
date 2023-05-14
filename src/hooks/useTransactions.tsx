@@ -22,6 +22,7 @@ const useTransactions = () => {
       onSuccess: () => {
         void ctx.transactions.getThisWeeksTransactions.invalidate();
         void ctx.accounts.getAllAccounts.invalidate();
+        void ctx.accounts.getTotalBalance.invalidate();
       },
     });
 
@@ -30,6 +31,7 @@ const useTransactions = () => {
       onSuccess: () => {
         void ctx.transactions.getThisWeeksTransactions.invalidate();
         void ctx.accounts.getAllAccounts.invalidate();
+        void ctx.accounts.getTotalBalance.invalidate();
       },
     });
 
@@ -37,6 +39,7 @@ const useTransactions = () => {
     onSuccess: () => {
       void ctx.transactions.getThisWeeksTransactions.invalidate();
       void ctx.accounts.getAllAccounts.invalidate();
+      void ctx.accounts.getTotalBalance.invalidate();
     },
   });
 
