@@ -1,7 +1,9 @@
-import { type NextPageWithLayout } from "./_app";
+import { type NextPageWithLayout } from "../_app";
+import { useRouter } from "next/router";
 
-const Pricing: NextPageWithLayout = ({ data }: { data: string }) => {
-  return <h1>{data}</h1>;
+const Pricing: NextPageWithLayout = () => {
+  const router = useRouter();
+  return <h1>{router.query.id}</h1>;
 };
 
 export function getServerSideProps() {
@@ -17,7 +19,7 @@ Pricing.getLayout = (page) => {
     <div>
       <p>Top</p>
       {page}
-      <p>Bottom</p>
+      <p>Default</p>
     </div>
   );
 };

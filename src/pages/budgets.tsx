@@ -4,12 +4,17 @@ import { type NextPageWithLayout } from "./_app";
 import { BudgetsSection } from "../components/Budgets/BudgetsSection/BudgetsSection";
 import { IncomeSection } from "../components/Budgets/IncomeSection/IncomeSection";
 import { WeeklyBudgetSection } from "../components/Budgets/WeeklyBudgetSection/WeeklyBudgetSection";
-
+import { api } from "../utils/api";
 const Budgets: NextPageWithLayout = () => {
+  const totalBalance = api.accounts.getTotalBalance.useQuery().data ?? "";
+
   return (
     <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[100%] grid-rows-[13%_auto] gap-y-2 px-5 py-3">
       <div className="col-span-1">
-        <DashboardHeader greeting="Budgets" />
+        <DashboardHeader
+          greeting="Budgets"
+          totalBalance={String(totalBalance)}
+        />
       </div>
       <div className="col-span-1 pb-8">
         <BudgetsSection />

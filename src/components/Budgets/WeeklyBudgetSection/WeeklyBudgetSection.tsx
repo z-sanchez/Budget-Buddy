@@ -10,7 +10,7 @@ import {
 import { BudgetLine } from "./BudgetLine";
 
 const WeeklyBudgetSection = () => {
-  const [expandSection, setExpandSection] = useState(false);
+  const [expandSection, setExpandSection] = useState(true);
 
   return (
     <>

@@ -6,7 +6,7 @@ import type { BudgetStatusDetailedProps } from "../../../utils/types";
 import { BudgetStatusDetailed } from "./BudgetStatusDetailed";
 
 const BudgetsSection = () => {
-  const [expandSection, setExpandSection] = useState(false);
+  const [expandSection, setExpandSection] = useState(true);
 
   const testBudgetName = [
     { label: "Dativity" },
@@ -46,6 +46,57 @@ const BudgetsSection = () => {
     longTerm: true,
   };
 
+  const monthLinks = [
+    {
+      month: "Jan",
+      active: false,
+    },
+    {
+      month: "Feb",
+      active: false,
+    },
+    {
+      month: "Mar",
+      active: true,
+    },
+    {
+      month: "Apr",
+      active: false,
+    },
+    {
+      month: "May",
+      active: false,
+    },
+    {
+      month: "Jun",
+      active: false,
+    },
+    {
+      month: "Jul",
+      active: false,
+    },
+    {
+      month: "Aug",
+      active: false,
+    },
+    {
+      month: "Sep",
+      active: false,
+    },
+    {
+      month: "Oct",
+      active: false,
+    },
+    {
+      month: "Nov",
+      active: false,
+    },
+    {
+      month: "Dec",
+      active: false,
+    },
+  ];
+
   return (
     <>
       <div className="flex w-full flex-row justify-between px-8 ">
@@ -74,31 +125,54 @@ const BudgetsSection = () => {
         />
       </div>
       <Collapse in={expandSection}>
-        <div className="mt-5 flex w-full flex-wrap justify-center px-14">
-          <BudgetStatusDetailed
-            {...budgetStatusData}
-            className="mx-8 my-5 w-1/4"
-          />
-          <BudgetStatusDetailed
-            {...budgetStatusData}
-            className="mx-8 my-5 w-1/4"
-          />
-          <BudgetStatusDetailed
-            {...budgetStatusData}
-            className="mx-8 my-5 w-1/4"
-          />
-          <BudgetStatusDetailed
-            {...budgetStatusData}
-            className="mx-8 my-5 w-1/4"
-          />
-          <BudgetStatusDetailed
-            {...budgetStatusData}
-            className="mx-8 my-5 w-1/4"
-          />
-          <BudgetStatusDetailed
-            {...budgetStatusData}
-            className="mx-8 my-5 w-1/4"
-          />
+        <div>
+          <div className="mx-16 mt-3 flex w-1/3 justify-between font-light">
+            {monthLinks.map(({ month, active }) => {
+              return (
+                <button
+                  className="blueOnHover hover:font-normal hover:underline"
+                  style={
+                    active
+                      ? {
+                          color: BLUE,
+                          fontWeight: 400,
+                          textDecoration: "underline",
+                        }
+                      : {}
+                  }
+                  key={month}
+                >
+                  {month}
+                </button>
+              );
+            })}
+          </div>
+          <div className="mt-5 flex w-full flex-wrap justify-center px-14">
+            <BudgetStatusDetailed
+              {...budgetStatusData}
+              className="mx-8 my-5 w-1/4"
+            />
+            <BudgetStatusDetailed
+              {...budgetStatusData}
+              className="mx-8 my-5 w-1/4"
+            />
+            <BudgetStatusDetailed
+              {...budgetStatusData}
+              className="mx-8 my-5 w-1/4"
+            />
+            <BudgetStatusDetailed
+              {...budgetStatusData}
+              className="mx-8 my-5 w-1/4"
+            />
+            <BudgetStatusDetailed
+              {...budgetStatusData}
+              className="mx-8 my-5 w-1/4"
+            />
+            <BudgetStatusDetailed
+              {...budgetStatusData}
+              className="mx-8 my-5 w-1/4"
+            />
+          </div>
         </div>
       </Collapse>
     </>

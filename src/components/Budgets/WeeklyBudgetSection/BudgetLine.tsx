@@ -6,7 +6,7 @@ import DropdownIcon from "../../../../public/dropdown-icon.svg";
 import { TransactionBlock } from "./TransactionBlock";
 
 const BudgetLine = () => {
-  const [expandSection, setExpandSection] = useState(false);
+  const [expandSection, setExpandSection] = useState(true);
 
   return (
     <>
