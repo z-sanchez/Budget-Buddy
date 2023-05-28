@@ -4,9 +4,12 @@ import { Collapse, TextField, Autocomplete } from "@mui/material";
 import { BLUE } from "../../../utils/constants";
 import type { BudgetStatusDetailedProps } from "../../../utils/types";
 import { BudgetStatusDetailed } from "./BudgetStatusDetailed";
+import GarbageIcon from "../../../../public/trash-icon.svg";
+import { useRouter } from "next/router";
 
 const BudgetsSection = () => {
   const [expandSection, setExpandSection] = useState(true);
+  const router = useRouter();
 
   const testBudgetName = [
     { label: "Dativity" },
@@ -36,14 +39,15 @@ const BudgetsSection = () => {
     },
   ];
 
-  const budgetStatusData: BudgetStatusDetailedProps = {
+  const budgetStatusData: BudgetStatusDetailedProps & { Icon: string } = {
     color: BLUE,
     budgetAmount: 150,
-    name: "Dativity",
+    name: "Bussy Money",
     budgetBalance: 20,
     message: "Next Payment: $40 due April 4th, 2023",
     accounts: [...accounts],
     longTerm: true,
+    Icon: GarbageIcon as string,
   };
 
   const monthLinks = [
@@ -97,9 +101,13 @@ const BudgetsSection = () => {
     },
   ];
 
+  const handleEditBudget = async (budgetName: string) => {
+    await router.push(`/budgets/${budgetName}`);
+  };
+
   return (
     <>
-      <div className="flex w-full flex-row justify-between px-8 ">
+      <div className="flex w-full flex-row justify-between px-8">
         <div
           className="flex cursor-pointer items-center"
           onClick={() => setExpandSection((prev) => !prev)}
@@ -125,7 +133,7 @@ const BudgetsSection = () => {
         />
       </div>
       <Collapse in={expandSection}>
-        <div>
+        <div className="flex flex-col">
           <div className="mx-16 mt-3 flex w-1/3 justify-between font-light">
             {monthLinks.map(({ month, active }) => {
               return (
@@ -147,30 +155,36 @@ const BudgetsSection = () => {
               );
             })}
           </div>
-          <div className="mt-5 flex w-full flex-wrap justify-center px-14">
+          <div className="mt-5 flex w-10/12 flex-wrap justify-between self-center">
             <BudgetStatusDetailed
               {...budgetStatusData}
-              className="mx-8 my-5 w-1/4"
+              onEdit={handleEditBudget}
+              className="my-5 mx-5 w-2/5 2xl:w-1/4"
             />
             <BudgetStatusDetailed
               {...budgetStatusData}
-              className="mx-8 my-5 w-1/4"
+              onEdit={handleEditBudget}
+              className="my-5 mx-5 w-2/5 2xl:w-1/4"
             />
             <BudgetStatusDetailed
               {...budgetStatusData}
-              className="mx-8 my-5 w-1/4"
+              onEdit={handleEditBudget}
+              className="my-5 mx-5 w-2/5 2xl:w-1/4"
             />
             <BudgetStatusDetailed
               {...budgetStatusData}
-              className="mx-8 my-5 w-1/4"
+              onEdit={handleEditBudget}
+              className="my-5 mx-5 w-2/5 2xl:w-1/4"
             />
             <BudgetStatusDetailed
               {...budgetStatusData}
-              className="mx-8 my-5 w-1/4"
+              onEdit={handleEditBudget}
+              className="my-5 mx-5 w-2/5 2xl:w-1/4"
             />
             <BudgetStatusDetailed
               {...budgetStatusData}
-              className="mx-8 my-5 w-1/4"
+              onEdit={handleEditBudget}
+              className="my-5 mx-5 w-2/5 2xl:w-1/4"
             />
           </div>
         </div>

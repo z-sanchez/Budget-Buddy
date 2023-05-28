@@ -5,7 +5,7 @@ import EditIcon from "../../../../public/edit-icon.svg";
 import TargetIcon from "../../../../public/target-icon.svg";
 import type { BudgetStatusDetailedProps } from "../../../utils/types";
 
-const getTheme = (backgroundColor: string) => {
+const getThemeWithBackgroundColor = (backgroundColor: string) => {
   return createTheme({
     components: {
       MuiLinearProgress: {
@@ -28,6 +28,7 @@ const getTheme = (backgroundColor: string) => {
 };
 
 const BudgetStatusDetailed = ({
+  Icon,
   budgetAmount,
   budgetBalance,
   color,
@@ -35,10 +36,14 @@ const BudgetStatusDetailed = ({
   message,
   longTerm,
   className,
-}: BudgetStatusDetailedProps) => {
+  onEdit,
+}: BudgetStatusDetailedProps & {
+  Icon: string;
+  onEdit: (budgetName: string) => Promise<void>;
+}) => {
   const percentage = (100 / budgetAmount) * budgetBalance;
 
-  const theme = getTheme(color);
+  const theme = getThemeWithBackgroundColor(color);
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,11 +61,14 @@ const BudgetStatusDetailed = ({
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center">
             <>
+              <span className="mr-3">
+                <Icon />
+              </span>
               <p className="2xl:text-xl">{name}</p>
               <EditIcon
                 className="ml-3 h-3 w-3 cursor-pointer"
                 style={{ fill: GREY }}
-                onClick={() => null}
+                onClick={() => onEdit(name)}
               />
             </>
           </div>

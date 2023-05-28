@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { LIGHT_GREY, RED_STATE } from "../../../utils/constants";
 import { DesktopDateTimePicker } from "@mui/x-date-pickers";
 import CalendarIcon from "../../../../public/calendar-icon.svg";

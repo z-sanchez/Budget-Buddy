@@ -35,7 +35,7 @@ export const createWeekBudgetSpendingLineGraphData = ({
       ({ budgetId }) => budget.id === budgetId
     );
 
-    transactionData.forEach(({ date, amount }) => {
+    transactionData?.forEach(({ date, amount }) => {
       const dayOfWeek = dayjs(date).day();
       dataset.data[dayOfWeek] += Number(Math.abs(amount));
     });
