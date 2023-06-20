@@ -20,7 +20,7 @@ const WeeklySpendingBlock = ({
           className="cursor-default text-xl font-light 2xl:text-2xl"
           style={{ color: GREY }}
         >
-          Weekly Spending
+          Budgets
         </p>
         <EllipsisIcon className="cursor-pointer"></EllipsisIcon>
       </div>

@@ -3,7 +3,7 @@ import NavigationLayout from "../components/layouts/NavigationLayout";
 import { LineGraph } from "../components/Dashboard/LineGraph/LineGraph";
 import { LongTermGoals } from "../components/Dashboard/LongTermGoals/LongTermGoals";
 import { RecentActivity } from "../components/Dashboard/RecentActivity/RecentActivity";
-import { WeeklySpendingBlock } from "../components/Dashboard/WeeklySpending/WeeklySpendingBlock";
+import { WeeklySpendingBlock } from "../components/Dashboard/Budgets/WeeklySpendingBlock";
 import { type NextPageWithLayout } from "./_app";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 import { api } from "../utils/api";

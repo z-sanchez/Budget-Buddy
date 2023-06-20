@@ -1,6 +1,7 @@
 import { LinearProgress } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { LIGHT_GREY } from "../utils/constants";
+import ExclamationIcon from "../../public/exclamation-icon.svg";
 import { type BudgetStatusProps } from "../utils/types";
 
 const BudgetStatus = ({
@@ -41,8 +42,16 @@ const BudgetStatus = ({
   return (
     <ThemeProvider theme={theme}>
       <div
-        className={`h-fit cursor-pointer ${className ? className : "w-2/5"}`}
+        className={`relative h-fit cursor-pointer ${
+          className ? className : "w-2/5"
+        }`}
       >
+        {overBudget && (
+          <ExclamationIcon
+            className="absolute h-5 w-5"
+            style={{ right: "100%", bottom: "75%", fill: outlineColor }}
+          />
+        )}
         <div className="mb-3 flex items-center justify-between">
           <p className="truncate 2xl:text-xl">{name}</p>
           <p
