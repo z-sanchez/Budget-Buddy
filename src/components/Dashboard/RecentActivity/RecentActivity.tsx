@@ -18,7 +18,7 @@ const RecentActivity = ({
   data,
   budgets,
   users,
-  accounts,
+  bankAccounts,
   handleAddTransactions,
   handleDeleteTransaction,
   handleEditTransaction,
@@ -26,30 +26,30 @@ const RecentActivity = ({
   handleAddTransactions: (
     transactions: TransactionLine[]
   ) => Promise<string | true>;
-  handleDeleteTransaction: (transactionId: number) => Promise<string | true>;
+  handleDeleteTransaction: (transactionId: string) => Promise<string | true>;
   handleEditTransaction: (
     transaction: TransactionLine
   ) => Promise<string | true>;
   data: ThisWeeksTransactionsWithIcon[];
   budgets: DropdownOption[];
   users: DropdownOption[];
-  accounts: DropdownOption[];
+  bankAccounts: DropdownOption[];
 }) => {
   const [isModalOpen, setModalOpen] = useState<false | "add" | "edit">(false);
   const [modalErrorMessage, setModalErrorMessage] = useState("");
   const [editableTransaction, setEditableTransaction] = useState({
-    id: 0,
+    id: "0",
     budgetName: {
       label: "",
-      id: 0,
+      id: "0",
     },
     userName: {
       label: "",
-      id: 0,
+      id: "0",
     },
-    accountName: {
+    bankAccountName: {
       label: "",
-      id: 0,
+      id: "0",
     },
     transactionName: "name",
     transactionAmount: 0,
@@ -96,7 +96,7 @@ const RecentActivity = ({
               handleAddTransactions={addTransactions}
               budgetDropdownOption={budgets}
               userDropdownOption={users}
-              accountDropdownOption={accounts}
+              bankAccountDropdownOption={bankAccounts}
               errorMessage={modalErrorMessage}
               onClose={closeModal}
             />
@@ -106,7 +106,7 @@ const RecentActivity = ({
               transaction={editableTransaction}
               budgetDropdownOption={budgets}
               userDropdownOption={users}
-              accountDropdownOption={accounts}
+              bankAccountDropdownOption={bankAccounts}
               errorMessage={modalErrorMessage}
               onClose={closeModal}
             />

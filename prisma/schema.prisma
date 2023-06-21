@@ -7,9 +7,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model accounts {
-  id     Int     @id @default(autoincrement())
-  userId Int
+model BankAccount {
+  id     String       @id @default(cuid())
+  userId String
   amount Decimal @db.Decimal(19, 2)
   name   String  @db.VarChar(45)
   color     String  @db.VarChar(45) @default("#000000")
@@ -17,14 +17,14 @@ model accounts {
 }
 
 model budgets {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(cuid())
   name      String  @db.VarChar(45)
   color     String  @db.VarChar(45)
   amount    Decimal @db.Decimal(13, 2)
   longTerm  Int?    @db.TinyInt
   account   String  @db.VarChar(45)
   balance   Decimal @db.Decimal(13, 2)
-  userId    Int
+  userId    String
   dashboard Int?    @db.TinyInt
 
   @@index([userId], map: "userId")
@@ -35,14 +35,6 @@ model posts {
   title      String   @db.VarChar(100)
   body       String   @db.Text
   created_at DateTime @db.Date
-}
-
-model users {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(45)
-  color    String @db.VarChar(45)
-  password String @db.VarChar(45)
-  username String @db.VarChar(45)
 }
 
 model Example {
@@ -86,6 +78,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  color         String    @db.VarChar(45) @default("#000000")
   accounts      Account[]
   sessions      Session[]
 }
@@ -99,25 +92,25 @@ model VerificationToken {
 }
 
 model LongTerm {
-  id        Int     @id @default(autoincrement())
+  id        String  @id @default(cuid())
   name      String  @db.VarChar(45)
   color     String  @db.VarChar(45)
   goal      Decimal @db.Decimal(13, 2)
   dashboard Int?    @db.TinyInt
   saved     Decimal @db.Decimal(13, 2)
-  userId    Int
+  userId    String
   priority  Int
-  accountId Int
+  accountId String
 
   @@index([userId], map: "userId")
 }
 
 model Transaction {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   amount    Decimal  @db.Decimal(19, 2)
-  accountId Int
-  userId    Int
-  budgetId  Int
+  accountId String
+  userId    String
+  budgetId  String
   date      DateTime @db.DateTime(0)
   name      String   @db.VarChar(45)
 }

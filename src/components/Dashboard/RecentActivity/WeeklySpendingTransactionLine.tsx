@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 
 type Props = ThisWeeksTransactionsWithIcon & {
-  handleDeleteTransaction: (transactionId: number) => Promise<string | true>;
+  handleDeleteTransaction: (transactionId: string) => Promise<string | true>;
   handleEditTransaction: (transaction: TransactionLine) => void;
 };
 
@@ -90,7 +90,7 @@ const WeeklySpendingTransactionLine = ({
                 label: userName,
                 id: accountUserId,
               },
-              accountName: {
+              bankAccountName: {
                 label: accountName,
                 id: accountId,
               },

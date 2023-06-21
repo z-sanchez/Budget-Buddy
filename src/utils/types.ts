@@ -13,7 +13,7 @@ export type BudgetStatusDetailedProps = {
   color: string;
   name: string;
   message: string;
-  accounts: { accountName: string; id: number }[];
+  accounts: { accountName: string; id: string }[];
   longTerm?: boolean;
   className?: string;
 };
@@ -27,16 +27,16 @@ export type LineGraphDataset = {
 };
 
 export type ThisWeeksTransactions = {
-  id: number;
+  id: string;
   accountName: string;
-  accountId: number;
+  accountId: string;
   budgetName: string;
   date: string;
   name: string;
   userName: string;
   amount: number;
-  budgetId: number;
-  accountUserId: number;
+  budgetId: string;
+  accountUserId: string;
 };
 
 export type ThisWeeksTransactionsWithIcon = ThisWeeksTransactions & {
@@ -44,16 +44,16 @@ export type ThisWeeksTransactionsWithIcon = ThisWeeksTransactions & {
 };
 
 export type TransactionLine = {
-  id: number;
-  budgetName: { label: string; id: number };
-  userName: { label: string; id: number };
-  accountName: { label: string; id: number };
+  id: string;
+  budgetName: { label: string; id: string };
+  userName: { label: string; id: string };
+  bankAccountName: { label: string; id: string };
   transactionName: string;
   transactionAmount: number;
   date: string;
 };
 
 export type DropdownOption = {
-  id: number;
+  id: string;
   label: string;
 };

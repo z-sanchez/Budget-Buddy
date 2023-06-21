@@ -11,10 +11,10 @@ import {
 import dayjs from "dayjs";
 
 const NEW_TRANSACTION = {
-  id: 1,
-  budgetName: { label: "", id: 0 },
-  userName: { label: "", id: 0 },
-  accountName: { label: "", id: 0 },
+  id: "1",
+  budgetName: { label: "", id: "" },
+  userName: { label: "", id: "" },
+  bankAccountName: { label: "", id: "" },
   transactionName: "",
   transactionAmount: -1,
   date: dayjs(new Date()).toISOString(),
@@ -27,14 +27,14 @@ const AddTransactionModalContent = ({
   onClose,
   budgetDropdownOption,
   userDropdownOption,
-  accountDropdownOption,
+  bankAccountDropdownOption,
   errorMessage,
 }: {
   handleAddTransactions: (transactions: TransactionLine[]) => Promise<void>;
   onClose: () => void;
   budgetDropdownOption: DropdownOption[];
   userDropdownOption: DropdownOption[];
-  accountDropdownOption: DropdownOption[];
+  bankAccountDropdownOption: DropdownOption[];
   errorMessage?: string;
 }) => {
   const [transactions, dispatch] = useReducer(
@@ -46,7 +46,7 @@ const AddTransactionModalContent = ({
     dispatch({
       ...NEW_TRANSACTION,
       type: "added",
-      id: transactions.length + 1,
+      id: String(transactions.length + 1),
     });
   };
 
@@ -101,7 +101,7 @@ const AddTransactionModalContent = ({
               <TransactionFormBlock
                 budgetDropdownOption={budgetDropdownOption}
                 userDropdownOption={userDropdownOption}
-                accountDropdownOption={accountDropdownOption}
+                bankAccountDropdownOption={bankAccountDropdownOption}
                 changeTransaction={changeTransaction}
                 deleteTransaction={deleteTransaction}
                 {...transaction}

@@ -21,8 +21,8 @@ const useTransactions = () => {
     api.transactions.makeTransactions.useMutation({
       onSuccess: () => {
         void ctx.transactions.getThisWeeksTransactions.invalidate();
-        void ctx.accounts.getAllAccounts.invalidate();
-        void ctx.accounts.getTotalBalance.invalidate();
+        void ctx.bankAccounts.getAllBankAccounts.invalidate();
+        void ctx.bankAccounts.getTotalBalance.invalidate();
       },
     });
 
@@ -30,16 +30,16 @@ const useTransactions = () => {
     api.transactions.deleteTransaction.useMutation({
       onSuccess: () => {
         void ctx.transactions.getThisWeeksTransactions.invalidate();
-        void ctx.accounts.getAllAccounts.invalidate();
-        void ctx.accounts.getTotalBalance.invalidate();
+        void ctx.bankAccounts.getAllBankAccounts.invalidate();
+        void ctx.bankAccounts.getTotalBalance.invalidate();
       },
     });
 
   const editTransactionMutation = api.transactions.editTransaction.useMutation({
     onSuccess: () => {
       void ctx.transactions.getThisWeeksTransactions.invalidate();
-      void ctx.accounts.getAllAccounts.invalidate();
-      void ctx.accounts.getTotalBalance.invalidate();
+      void ctx.bankAccounts.getAllBankAccounts.invalidate();
+      void ctx.bankAccounts.getTotalBalance.invalidate();
     },
   });
 
@@ -49,7 +49,7 @@ const useTransactions = () => {
     const formatttedTransactions = transactions.map((transaction) => {
       return {
         amount: Number(transaction.transactionAmount),
-        accountId: transaction.accountName.id,
+        accountId: transaction.bankAccountName.id,
         userId: transaction.userName.id,
         budgetId: transaction.budgetName.id,
         name: transaction.transactionName,
@@ -74,7 +74,7 @@ const useTransactions = () => {
     const formatttedTransaction = {
       id: transaction.id,
       amount: Number(transaction.transactionAmount),
-      accountId: transaction.accountName.id,
+      accountId: transaction.bankAccountName.id,
       userId: transaction.userName.id,
       budgetId: transaction.budgetName.id,
       name: transaction.transactionName,
@@ -92,7 +92,7 @@ const useTransactions = () => {
   };
 
   const deleteTransaction = async (
-    transactionId: number
+    transactionId: string
   ): Promise<true | string> => {
     try {
       const response = await deleteTransactionMutation.mutateAsync(

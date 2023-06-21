@@ -13,7 +13,7 @@ const EditTransactionModalContent = ({
   transaction,
   budgetDropdownOption,
   userDropdownOption,
-  accountDropdownOption,
+  bankAccountDropdownOption,
   errorMessage,
 }: {
   handleEditTransaction: (transaction: TransactionLine) => Promise<void>;
@@ -21,7 +21,7 @@ const EditTransactionModalContent = ({
   transaction: TransactionLine;
   budgetDropdownOption: DropdownOption[];
   userDropdownOption: DropdownOption[];
-  accountDropdownOption: DropdownOption[];
+  bankAccountDropdownOption: DropdownOption[];
   errorMessage?: string;
 }) => {
   const [modifiedTransaction, setModifiedTransaction] = useState(transaction);
@@ -62,7 +62,7 @@ const EditTransactionModalContent = ({
         <TransactionFormBlock
           budgetDropdownOption={budgetDropdownOption}
           userDropdownOption={userDropdownOption}
-          accountDropdownOption={accountDropdownOption}
+          bankAccountDropdownOption={bankAccountDropdownOption}
           changeTransaction={(changedTransaction) =>
             changeTransaction(changedTransaction)
           }

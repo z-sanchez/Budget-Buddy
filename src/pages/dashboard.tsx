@@ -7,7 +7,7 @@ import { WeeklySpendingBlock } from "../components/Dashboard/Budgets/WeeklySpend
 import { type NextPageWithLayout } from "./_app";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 import { api } from "../utils/api";
-import type { accounts, budgets, LongTerm, users } from "@prisma/client";
+import type { BankAccount, budgets, LongTerm, User } from "@prisma/client";
 import { createWeekBudgetSpendingLineGraphData } from "../utils/helpers/lineGraph";
 import { useTransactions } from "../hooks/useTransactions";
 
@@ -22,11 +22,14 @@ const Dashboard: NextPageWithLayout = () => {
 
   const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
 
-  const users = api.user.getAllAccountUsers.useQuery().data as users[];
+  const users = api.user.getAllAccountUsers.useQuery().data as User[];
 
-  const accounts = api.accounts.getAllAccounts.useQuery().data as accounts[];
+  const bankAccounts = api.bankAccounts.getAllBankAccounts.useQuery()
+    .data as BankAccount[];
 
-  const dashboardAccounts = accounts?.filter(({ dashboard }) => dashboard);
+  const dashboardBankAccounts = bankAccounts?.filter(
+    ({ dashboard }) => dashboard
+  );
 
   const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
     .data as LongTerm[];
@@ -43,7 +46,7 @@ const Dashboard: NextPageWithLayout = () => {
     };
   });
 
-  const accountOptions = accounts?.map(({ name, id }) => {
+  const bankAccountOptions = bankAccounts?.map(({ name, id }) => {
     return {
       label: name,
       id,
@@ -52,12 +55,12 @@ const Dashboard: NextPageWithLayout = () => {
 
   const userOptions = users?.map(({ name, id }) => {
     return {
-      label: name,
+      label: name ?? "",
       id,
     };
   });
 
-  const totalBalance = api.accounts.getTotalBalance.useQuery().data ?? "";
+  const totalBalance = api.bankAccounts.getTotalBalance.useQuery().data ?? "";
 
   return (
     <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[50%_50%] grid-rows-[13%_25%_auto_25%] gap-y-2 px-5 py-3 pb-8">
@@ -89,12 +92,12 @@ const Dashboard: NextPageWithLayout = () => {
           handleEditTransaction={editTransaction}
           data={transactionsWithIcon}
           budgets={budgetOptions}
-          accounts={accountOptions}
+          bankAccounts={bankAccountOptions}
           users={userOptions}
         />
       </div>
       <div className="col-span-1">
-        <AccountsBlock accounts={dashboardAccounts} />
+        <AccountsBlock accounts={dashboardBankAccounts} />
       </div>
     </div>
   );

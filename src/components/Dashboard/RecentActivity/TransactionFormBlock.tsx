@@ -14,7 +14,7 @@ const TransactionFormBlock = ({
   id,
   budgetName,
   userName,
-  accountName,
+  bankAccountName,
   transactionName,
   transactionAmount,
   date,
@@ -22,14 +22,14 @@ const TransactionFormBlock = ({
   deleteTransaction,
   budgetDropdownOption,
   userDropdownOption,
-  accountDropdownOption,
+  bankAccountDropdownOption,
   disableDelete,
 }: TransactionLine & {
   changeTransaction: (transaction: TransactionLine) => void;
   deleteTransaction: (transaction: TransactionLine) => void;
   budgetDropdownOption: DropdownOption[];
   userDropdownOption: DropdownOption[];
-  accountDropdownOption: DropdownOption[];
+  bankAccountDropdownOption: DropdownOption[];
   disableDelete?: boolean;
 }) => {
   const [dateOpen, setDateOpen] = useState(false);
@@ -45,14 +45,14 @@ const TransactionFormBlock = ({
     (updatedFields?: {
       budgetName?: DropdownOption;
       userName?: DropdownOption;
-      accountName?: DropdownOption;
+      bankAccountName?: DropdownOption;
       amount?: number;
     }) => {
       changeTransaction({
         id,
         budgetName,
         userName,
-        accountName,
+        bankAccountName,
         transactionAmount: updatedFields?.amount
           ? updatedFields.amount
           : transactionAmountValue,
@@ -64,7 +64,7 @@ const TransactionFormBlock = ({
     [
       budgetName,
       userName,
-      accountName,
+      bankAccountName,
       id,
       transactionAmountValue,
       transactionNameValue,
@@ -78,7 +78,7 @@ const TransactionFormBlock = ({
       id,
       budgetName,
       userName,
-      accountName,
+      bankAccountName,
       transactionAmount: transactionAmountValue,
       transactionName: transactionNameValue,
       date: dayjs(dateValue).toISOString(),
@@ -90,9 +90,9 @@ const TransactionFormBlock = ({
     const emptyFields = [];
 
     if (transactionNameValue === "") emptyFields.push("Transaction Name");
-    if (userName.id === 0) emptyFields.push("User");
-    if (budgetName.id === 0) emptyFields.push("Budget");
-    if (accountName.id === 0) emptyFields.push("Account");
+    if (userName.id === "") emptyFields.push("User");
+    if (budgetName.id === "") emptyFields.push("Budget");
+    if (bankAccountName.id === "") emptyFields.push("Account");
     if (dateValue === "Invalid Date") emptyFields.push("Date");
 
     if (emptyFields.length) {
@@ -153,11 +153,11 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Accounts</p>
         <DropdownSelect
-          options={accountDropdownOption}
-          value={accountName}
+          options={bankAccountDropdownOption}
+          value={bankAccountName}
           placeholder="Select Budgets"
           onChange={(value) => {
-            handleChangeTransaction({ accountName: value });
+            handleChangeTransaction({ bankAccountName: value });
           }}
         />
       </div>

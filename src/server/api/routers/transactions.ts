@@ -41,7 +41,7 @@ export const transactionsRouter = createTRPCRouter({
           budgetName: "",
         };
 
-        newTransaction.accountName = (await ctx.prisma.accounts
+        newTransaction.accountName = (await ctx.prisma.bankAccount
           .findUnique({
             where: {
               id: transaction.accountId,
@@ -49,7 +49,7 @@ export const transactionsRouter = createTRPCRouter({
           })
           .then((data) => data?.name)) as string;
 
-        newTransaction.userName = (await ctx.prisma.users
+        newTransaction.userName = (await ctx.prisma.user
           .findUnique({
             where: {
               id: transaction.userId,
@@ -75,9 +75,9 @@ export const transactionsRouter = createTRPCRouter({
       z.array(
         z.object({
           amount: z.number(),
-          accountId: z.number().gt(0),
-          userId: z.number().gt(0),
-          budgetId: z.number().gt(0),
+          accountId: z.string(),
+          userId: z.string(),
+          budgetId: z.string(),
           name: z.string(),
           date: z.date(),
         })
@@ -87,7 +87,7 @@ export const transactionsRouter = createTRPCRouter({
       for (const transaction of input) {
         const { amount, accountId } = transaction;
 
-        const account = await ctx.prisma.accounts.findUnique({
+        const account = await ctx.prisma.bankAccount.findUnique({
           where: {
             id: accountId,
           },
@@ -102,7 +102,7 @@ export const transactionsRouter = createTRPCRouter({
           return "Insufficient Funds";
         }
 
-        ctx.prisma.accounts
+        ctx.prisma.bankAccount
           .update({
             where: { id: accountId },
             data: {
@@ -120,11 +120,11 @@ export const transactionsRouter = createTRPCRouter({
   editTransaction: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
         amount: z.number(),
-        accountId: z.number().gt(0),
-        userId: z.number().gt(0),
-        budgetId: z.number().gt(0),
+        accountId: z.string(),
+        userId: z.string(),
+        budgetId: z.string(),
         name: z.string(),
         date: z.date(),
       })
@@ -136,7 +136,7 @@ export const transactionsRouter = createTRPCRouter({
         },
       });
 
-      const account = await ctx.prisma.accounts.findUnique({
+      const account = await ctx.prisma.bankAccount.findUnique({
         where: {
           id: input.accountId,
         },
@@ -160,7 +160,7 @@ export const transactionsRouter = createTRPCRouter({
         return "Insufficient Funds";
       }
 
-      ctx.prisma.accounts
+      ctx.prisma.bankAccount
         .update({
           where: { id: input.accountId },
           data: {
@@ -187,7 +187,7 @@ export const transactionsRouter = createTRPCRouter({
     }),
 
   deleteTransaction: protectedProcedure
-    .input(z.number())
+    .input(z.string())
     .mutation(async ({ ctx, input }) => {
       const transaction = await ctx.prisma.transaction.findUnique({
         where: {
@@ -197,7 +197,7 @@ export const transactionsRouter = createTRPCRouter({
 
       const refundAmount = Number(transaction?.amount) * -1;
 
-      const account = await ctx.prisma.accounts.findUnique({
+      const account = await ctx.prisma.bankAccount.findUnique({
         where: {
           id: transaction?.accountId,
         },
@@ -212,7 +212,7 @@ export const transactionsRouter = createTRPCRouter({
         return "Insufficient Funds";
       }
 
-      ctx.prisma.accounts
+      ctx.prisma.bankAccount
         .update({
           where: { id: transaction?.accountId },
           data: {
