@@ -50,7 +50,7 @@ const WeeklySpendingTransactionLine = ({
           className="mr-5 flex items-center justify-center rounded-lg p-1 outline outline-1"
           style={{ outlineColor: GREY }}
         >
-          <Icon />
+          <Icon className="w-6" />
         </div>
         <div className="flex flex-col">
           <p className="truncate">

@@ -4,10 +4,10 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const budgetsRouter = createTRPCRouter({
   getAllBudgets: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.budgets.findMany();
+    return ctx.prisma.budget.findMany();
   }),
 
   getAllLongTermBudgets: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.longTerm.findMany();
+    return ctx.prisma.longTermBudget.findMany();
   }),
 });

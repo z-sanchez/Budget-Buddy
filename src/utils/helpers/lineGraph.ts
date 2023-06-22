@@ -1,4 +1,4 @@
-import { type budgets } from "@prisma/client";
+import { type Budget } from "@prisma/client";
 import dayjs from "dayjs";
 import { type ThisWeeksTransactions, type LineGraphDataset } from "../types";
 
@@ -17,7 +17,7 @@ export const createWeekBudgetSpendingLineGraphData = ({
   transactions,
   budgets,
 }: {
-  budgets: budgets[];
+  budgets: Budget[];
   transactions: ThisWeeksTransactions[];
 }) => {
   const data: LineGraphDataset[] = [];

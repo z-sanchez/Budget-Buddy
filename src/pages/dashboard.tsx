@@ -7,7 +7,7 @@ import { WeeklySpendingBlock } from "../components/Dashboard/Budgets/WeeklySpend
 import { type NextPageWithLayout } from "./_app";
 import { AccountsBlock } from "../components/Dashboard/AccountBalances/AccountsBlock";
 import { api } from "../utils/api";
-import type { BankAccount, budgets, LongTerm, User } from "@prisma/client";
+import type { BankAccount, Budget, LongTermBudget, User } from "@prisma/client";
 import { createWeekBudgetSpendingLineGraphData } from "../utils/helpers/lineGraph";
 import { useTransactions } from "../hooks/useTransactions";
 
@@ -20,7 +20,7 @@ const Dashboard: NextPageWithLayout = () => {
     editTransaction,
   } = useTransactions();
 
-  const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
+  const budgets = api.budgets.getAllBudgets.useQuery().data as Budget[];
 
   const users = api.user.getAllAccountUsers.useQuery().data as User[];
 
@@ -32,7 +32,7 @@ const Dashboard: NextPageWithLayout = () => {
   );
 
   const longTermGoalsData = api.budgets.getAllLongTermBudgets.useQuery()
-    .data as LongTerm[];
+    .data as LongTermBudget[];
 
   const lineGraphdata = createWeekBudgetSpendingLineGraphData({
     budgets: budgets?.filter(({ dashboard }) => dashboard),

@@ -57,7 +57,7 @@ export const transactionsRouter = createTRPCRouter({
           })
           .then((data) => data?.name)) as string;
 
-        newTransaction.budgetName = (await ctx.prisma.budgets
+        newTransaction.budgetName = (await ctx.prisma.budget
           .findUnique({
             where: {
               id: transaction.budgetId,

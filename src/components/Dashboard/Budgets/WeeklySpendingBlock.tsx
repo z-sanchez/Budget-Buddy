@@ -1,4 +1,4 @@
-import type { budgets } from "@prisma/client";
+import type { Budget } from "@prisma/client";
 import EllipsisIcon from "../../../../public/ellipsis-icon.svg";
 import { GREY, RED_STATE } from "../../../utils/constants";
 import { BudgetStatus } from "../../BudgetStatus";
@@ -6,7 +6,7 @@ import { BudgetStatus } from "../../BudgetStatus";
 const WeeklySpendingBlock = ({
   budgetStatusData,
 }: {
-  budgetStatusData: budgets[];
+  budgetStatusData: Budget[];
 }) => {
   const budgets =
     budgetStatusData?.length > 6

@@ -14,7 +14,8 @@ const useTransactions = () => {
       .data as ThisWeeksTransactions[];
 
   const transactionsWithIcon = thisWeeksTransactions?.map((transaction) => {
-    return { ...transaction, Icon: ShoppingIcon as string };
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    return { ...transaction, Icon: ShoppingIcon };
   });
 
   const makeTransactionsMutation =

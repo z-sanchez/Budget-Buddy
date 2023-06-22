@@ -40,7 +40,7 @@ export type ThisWeeksTransactions = {
 };
 
 export type ThisWeeksTransactionsWithIcon = ThisWeeksTransactions & {
-  Icon: string;
+  Icon: any;
 };
 
 export type TransactionLine = {
