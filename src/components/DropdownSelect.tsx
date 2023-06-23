@@ -37,7 +37,7 @@ const DropdownSelect = ({
     },
   });
 
-  const allOptions = [{ label: "Select Option", id: 0 }].concat(
+  const allOptions = [{ label: "Select Option", id: "0" }].concat(
     options.map((option) => {
       return option;
     })
@@ -55,7 +55,7 @@ const DropdownSelect = ({
         onChange={(_, value) => {
           const selectedOption = allOptions.find(
             ({ label }) => label === value
-          ) || { label: "", id: 0 };
+          ) || { label: "", id: "0" };
           onChange({
             ...selectedOption,
           });

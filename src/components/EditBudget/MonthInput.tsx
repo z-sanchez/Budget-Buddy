@@ -8,7 +8,7 @@ const MonthInput = () => {
       <div className="flex w-2/12 items-center">
         <DropdownSelect
           placeholder="month"
-          value={{ id: 1, label: "January" }}
+          value={{ id: "1", label: "January" }}
           options={MONTH_OPTIONS}
           onChange={() => null}
         />

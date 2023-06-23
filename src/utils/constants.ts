@@ -16,51 +16,51 @@ export const SIGNIN_PATH = "/";
 
 export const MONTH_OPTIONS = [
   {
-    id: 1,
+    id: "1",
     label: "January",
   },
   {
-    id: 2,
+    id: "2",
     label: "February",
   },
   {
-    id: 3,
+    id: "3",
     label: "March",
   },
   {
-    id: 4,
+    id: "4",
     label: "April",
   },
   {
-    id: 5,
+    id: "5",
     label: "May",
   },
   {
-    id: 6,
+    id: "6",
     label: "June",
   },
   {
-    id: 7,
+    id: "7",
     label: "July",
   },
   {
-    id: 8,
+    id: "8",
     label: "August",
   },
   {
-    id: 9,
+    id: "9",
     label: "September",
   },
   {
-    id: 10,
+    id: "10",
     label: "October",
   },
   {
-    id: 11,
+    id: "11",
     label: "November",
   },
   {
-    id: 12,
+    id: "12",
     label: "December",
   },
 ];
