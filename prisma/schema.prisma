@@ -26,6 +26,8 @@ model Budget {
   balance   Decimal @db.Decimal(13, 2)
   userId    String
   dashboard Int?    @db.TinyInt
+  icon      String  @db.VarChar(45) @default("default")
+  month     Int     
 
   @@index([userId], map: "userId")
 }

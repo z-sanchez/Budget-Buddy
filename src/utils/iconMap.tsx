@@ -4,30 +4,35 @@ import GearIcon from "../../public/gear-icon.svg";
 import HomeIcon from "../../public/home-icon.svg";
 import AccountIcon from "../../public/account-management-icon.svg";
 import IncomeIcon from "../../public/income-spending-icon.svg";
+import DollarIcon from "../../public/dollar-icon.svg";
 
 export const ICON_MAP = [
   {
-    id: "TrashIcon",
+    id: "default",
+    Icon: (props?: any) => <DollarIcon {...props} />,
+  },
+  {
+    id: "1",
     Icon: (props?: any) => <TrashIcon {...props} />,
   },
   {
-    id: "ShoppingIcon",
+    id: "2",
     Icon: (props?: any) => <ShoppingIcon {...props} />,
   },
   {
-    id: "GearIcon",
+    id: "3",
     Icon: (props?: any) => <GearIcon {...props} />,
   },
   {
-    id: "HomeIcon",
+    id: "4",
     Icon: (props?: any) => <HomeIcon {...props} />,
   },
   {
-    id: "AccountIcon",
+    id: "5",
     Icon: (props?: any) => <AccountIcon {...props} />,
   },
   {
-    id: "IncomeIcon",
+    id: "6",
     Icon: (props?: any) => <IncomeIcon {...props} />,
   },
 ];
