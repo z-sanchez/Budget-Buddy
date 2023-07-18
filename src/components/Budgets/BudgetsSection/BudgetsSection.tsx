@@ -138,7 +138,7 @@ const BudgetsSection = () => {
       </div>
       <Collapse in={expandSection}>
         <div className="flex flex-col">
-          <div className="mx-16 mt-3 flex w-1/3 justify-between font-light">
+          <div className="mx-16 mt-3 flex w-1/2 justify-between font-light 2xl:w-1/3 ">
             {monthLinks.map(({ month, active }) => {
               return (
                 <button
