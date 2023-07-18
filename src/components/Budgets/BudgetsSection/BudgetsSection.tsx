@@ -22,19 +22,19 @@ const BudgetsSection = () => {
 
   const accounts = [
     {
-      id: 1,
+      id: "1",
       accountName: "Wells Fargo 1",
     },
     {
-      id: 2,
+      id: "2",
       accountName: "Wells Fargo 2",
     },
     {
-      id: 3,
+      id: "3",
       accountName: "Bofa",
     },
     {
-      id: 4,
+      id: "4",
       accountName: "Bella's Wells Fargo",
     },
   ];
@@ -103,6 +103,10 @@ const BudgetsSection = () => {
 
   const handleEditBudget = async (budgetName: string) => {
     await router.push(`/budgets/${budgetName}`);
+  };
+
+  const handleAddBudget = () => {
+    router.push(`/budgets/new budget`).catch((err) => console.log(err));
   };
 
   return (
@@ -186,6 +190,14 @@ const BudgetsSection = () => {
               onEdit={handleEditBudget}
               className="my-5 mx-5 w-2/5 2xl:w-1/4"
             />
+          </div>
+          <div className="flex w-10/12 justify-end self-center">
+            <button
+              onClick={handleAddBudget}
+              className="text-sky-300 transition-all hover:text-sky-500"
+            >
+              Add Budget
+            </button>
           </div>
         </div>
       </Collapse>

@@ -28,6 +28,9 @@ const EditBudget: NextPageWithLayout = () => {
         <IconInput SelectedIcon={ICON_MAP[0]?.Icon} />
         <AmountInput />
         <DashboardInput />
+        <button className="text-red-400 transition-all hover:text-red-600">
+          Delete Budget
+        </button>
       </div>
     </div>
   );

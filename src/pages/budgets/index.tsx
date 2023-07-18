@@ -5,12 +5,12 @@ import { BudgetsSection } from "../../components/Budgets/BudgetsSection/BudgetsS
 import { IncomeSection } from "../../components/Budgets/IncomeSection/IncomeSection";
 import { WeeklyBudgetSection } from "../../components/Budgets/WeeklyBudgetSection/WeeklyBudgetSection";
 import { api } from "../../utils/api";
-import { type budgets } from "@prisma/client";
+import { type Budget } from "@prisma/client";
 const Budgets: NextPageWithLayout = () => {
-  const totalBalance = api.accounts.getTotalBalance.useQuery().data ?? "";
-  const budgets = api.budgets.getAllBudgets.useQuery().data as budgets[];
+  const totalBalance = api.bankAccounts.getTotalBalance.useQuery().data ?? "";
+  const budgets = api.budgets.getAllBudgets.useQuery().data as Budget[];
 
-  console.log({ budgets });
+  console.log({ budgets, totalBalance });
 
   return (
     <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[100%] grid-rows-[13%_auto] gap-y-2 px-5 py-3">
