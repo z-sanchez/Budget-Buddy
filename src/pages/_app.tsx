@@ -8,6 +8,7 @@ import "../styles/globals.css";
 import { type ReactNode } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DateContext, getMonthValue } from "../state/dateContext";
 
 export type NextPageWithLayout = NextComponentType<
   NextPageContext,
@@ -31,7 +32,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        {getLayout(<Component {...pageProps} />)}
+        <DateContext.Provider value={getMonthValue()}>
+          {getLayout(<Component {...pageProps} />)}
+        </DateContext.Provider>
       </LocalizationProvider>
     </SessionProvider>
   );

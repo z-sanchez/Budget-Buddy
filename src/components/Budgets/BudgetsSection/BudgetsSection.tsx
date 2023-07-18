@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DropdownIcon from "../../../../public/dropdown-icon.svg";
 import { Collapse, TextField, Autocomplete } from "@mui/material";
-import { BLUE } from "../../../utils/constants";
+import { BLUE, MONTH_OPTIONS } from "../../../utils/constants";
 import type { BudgetStatusDetailedProps } from "../../../utils/types";
 import { BudgetStatusDetailed } from "./BudgetStatusDetailed";
 import GarbageIcon from "../../../../public/trash-icon.svg";
 import { useRouter } from "next/router";
+import { DateContext } from "../../../state/dateContext";
 
 const BudgetsSection = () => {
   const [expandSection, setExpandSection] = useState(true);
+  const { month } = useContext(DateContext);
+  const [activeMonth, setActiveMonth] = useState(() =>
+    MONTH_OPTIONS.find(({ id }) => id === month)
+  );
   const router = useRouter();
 
   const testBudgetName = [
@@ -50,63 +55,20 @@ const BudgetsSection = () => {
     Icon: GarbageIcon as string,
   };
 
-  const monthLinks = [
-    {
-      month: "Jan",
-      active: false,
-    },
-    {
-      month: "Feb",
-      active: false,
-    },
-    {
-      month: "Mar",
-      active: true,
-    },
-    {
-      month: "Apr",
-      active: false,
-    },
-    {
-      month: "May",
-      active: false,
-    },
-    {
-      month: "Jun",
-      active: false,
-    },
-    {
-      month: "Jul",
-      active: false,
-    },
-    {
-      month: "Aug",
-      active: false,
-    },
-    {
-      month: "Sep",
-      active: false,
-    },
-    {
-      month: "Oct",
-      active: false,
-    },
-    {
-      month: "Nov",
-      active: false,
-    },
-    {
-      month: "Dec",
-      active: false,
-    },
-  ];
-
   const handleEditBudget = async (budgetName: string) => {
     await router.push(`/budgets/${budgetName}`);
   };
 
   const handleAddBudget = () => {
     router.push(`/budgets/new budget`).catch((err) => console.log(err));
+  };
+
+  const handleChangeMonth = (newMonth: {
+    id: string;
+    label: string;
+    abbreviation: string;
+  }) => {
+    setActiveMonth(newMonth);
   };
 
   return (
@@ -139,12 +101,12 @@ const BudgetsSection = () => {
       <Collapse in={expandSection}>
         <div className="flex flex-col">
           <div className="mx-16 mt-3 flex w-1/2 justify-between font-light 2xl:w-1/3 ">
-            {monthLinks.map(({ month, active }) => {
+            {MONTH_OPTIONS.map((monthOption) => {
               return (
                 <button
                   className="blueOnHover hover:font-normal hover:underline"
                   style={
-                    active
+                    monthOption.id === activeMonth?.id
                       ? {
                           color: BLUE,
                           fontWeight: 400,
@@ -152,9 +114,10 @@ const BudgetsSection = () => {
                         }
                       : {}
                   }
-                  key={month}
+                  onClick={() => handleChangeMonth(monthOption)}
+                  key={monthOption.id}
                 >
-                  {month}
+                  {monthOption.abbreviation}
                 </button>
               );
             })}

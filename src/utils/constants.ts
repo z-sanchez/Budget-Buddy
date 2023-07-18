@@ -16,51 +16,63 @@ export const SIGNIN_PATH = "/";
 
 export const MONTH_OPTIONS = [
   {
-    id: "1",
+    id: "0",
     label: "January",
+    abbreviation: "Jan",
+  },
+  {
+    id: "1",
+    label: "February",
+    abbreviation: "Feb",
   },
   {
     id: "2",
-    label: "February",
+    label: "March",
+    abbreviation: "Mar",
   },
   {
     id: "3",
-    label: "March",
+    label: "April",
+    abbreviation: "Apr",
   },
   {
     id: "4",
-    label: "April",
+    label: "May",
+    abbreviation: "May",
   },
   {
     id: "5",
-    label: "May",
+    label: "June",
+    abbreviation: "Jun",
   },
   {
     id: "6",
-    label: "June",
+    label: "July",
+    abbreviation: "Jul",
   },
   {
     id: "7",
-    label: "July",
+    label: "August",
+    abbreviation: "Aug",
   },
   {
     id: "8",
-    label: "August",
+    label: "September",
+    abbreviation: "Sep",
   },
   {
     id: "9",
-    label: "September",
+    label: "October",
+    abbreviation: "Oct",
   },
   {
     id: "10",
-    label: "October",
+    label: "November",
+    abbreviation: "Nov",
   },
   {
     id: "11",
-    label: "November",
-  },
-  {
-    id: "12",
     label: "December",
+    abbreviation: "Dec",
   },
 ];
