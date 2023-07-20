@@ -10,7 +10,7 @@ import { ICON_MAP } from "../../../utils/iconMap";
 import { type Budget } from "@prisma/client";
 
 const BudgetsSection = () => {
-  const { getMonthsBudgets } = useBudgets();
+  const { getMonthsBudgets, createBudget } = useBudgets();
   const [expandSection, setExpandSection] = useState(true);
   const { month } = useContext(DateContext);
   const [activeMonth, setActiveMonth] = useState(() =>
@@ -29,14 +29,23 @@ const BudgetsSection = () => {
     { label: "Loans" },
   ];
 
-  const goToEdit = async (budgetName: string, budgetData: Budget) => {
+  const goToEdit = async (budgetData: Budget) => {
     await router.push({
       pathname: `/budgets/${budgetData.id}`,
     });
   };
 
-  const handleAddBudget = () => {
-    router.push(`/budgets/new budget`).catch((err) => console.log(err));
+  const handleAddBudget = async () => {
+    if (!activeMonth) return;
+    await createBudget(activeMonth?.id)
+      .then(async (result) => {
+        if (!result) return;
+
+        await router.push({
+          pathname: `/budgets/${result.id}`,
+        });
+      })
+      .catch(() => null);
   };
 
   const handleChangeMonth = (newMonth: {
@@ -116,7 +125,9 @@ const BudgetsSection = () => {
           </div>
           <div className="flex w-10/12 justify-end self-center">
             <button
-              onClick={handleAddBudget}
+              onClick={() => {
+                handleAddBudget().catch(() => null);
+              }}
               className="text-sky-300 transition-all hover:text-sky-500"
             >
               Add Budget

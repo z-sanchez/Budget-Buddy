@@ -10,6 +10,16 @@ export const useBudgets = () => {
     },
   });
 
+  const createBudgetMutation = api.budgets.createMonthBudget.useMutation({
+    onSuccess() {
+      void ctx.budgets.getMonthsBudgets.invalidate();
+    },
+  });
+
+  const createBudget = async (monthId: string) => {
+    return await createBudgetMutation.mutateAsync(monthId).catch(() => null);
+  };
+
   const getMonthsBudgets = (monthId: string) => {
     return api.budgets.getMonthsBudgets.useQuery(monthId).data;
   };
@@ -19,20 +29,19 @@ export const useBudgets = () => {
   };
 
   const updateMonthsBudget = async (updatedBudget: Budget): Promise<void> => {
-    const response = await makeBudgetMutation.mutateAsync({
+    await makeBudgetMutation.mutateAsync({
       ...updatedBudget,
       amount: Number(updatedBudget.amount),
       balance: Number(updatedBudget.balance),
       longTerm: Number(updatedBudget.longTerm ?? 0),
       dashboard: Number(updatedBudget.dashboard ?? 0),
     });
-
-    console.log({ response });
   };
 
   return {
     getMonthsBudgets,
     updateMonthsBudget,
     getBudgetData,
+    createBudget,
   };
 };

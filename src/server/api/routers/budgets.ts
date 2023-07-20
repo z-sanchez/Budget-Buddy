@@ -11,6 +11,34 @@ export const budgetsRouter = createTRPCRouter({
     return ctx.prisma.longTermBudget.findMany();
   }),
 
+  createMonthBudget: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
+      const bankAccount = await ctx.prisma.bankAccount.findFirst({
+        where: {
+          userId: userId,
+        },
+      });
+
+      if (!bankAccount) {
+        return;
+      }
+
+      return await ctx.prisma.budget.create({
+        data: {
+          month: Number(input),
+          userId,
+          name: "New Budget",
+          color: "#00b8ff",
+          amount: 0,
+          account: bankAccount?.id,
+          balance: 0,
+        },
+      });
+    }),
+
   getMonthsBudgets: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {

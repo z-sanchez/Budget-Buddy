@@ -36,7 +36,7 @@ const BudgetStatusDetailed = ({
   budgetData: Budget;
   className: string;
   Icon: any;
-  onEdit: (budgetName: string, budget: Budget) => Promise<void>;
+  onEdit: (budget: Budget) => Promise<void>;
 }) => {
   const { amount, balance, color, longTerm, name, message } = budgetData;
 
@@ -67,7 +67,7 @@ const BudgetStatusDetailed = ({
               <EditIcon
                 className="ml-3 h-3 w-3 cursor-pointer"
                 style={{ fill: GREY }}
-                onClick={() => onEdit(name, budgetData)}
+                onClick={() => onEdit(budgetData)}
               />
             </>
           </div>
