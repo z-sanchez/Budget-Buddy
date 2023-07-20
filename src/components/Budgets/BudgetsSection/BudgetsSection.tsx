@@ -82,7 +82,7 @@ const BudgetsSection = () => {
                     monthOption.id === activeMonth?.id
                       ? {
                           color: BLUE,
-                          fontWeight: 500,
+                          fontWeight: 400,
                           textDecoration: "underline",
                         }
                       : {}
