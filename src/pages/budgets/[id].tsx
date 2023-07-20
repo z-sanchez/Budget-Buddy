@@ -9,7 +9,7 @@ import { AmountInput } from "../../components/EditBudget/AmountInput";
 import { DashboardInput } from "../../components/EditBudget/DashboardInput";
 import { MonthInput } from "../../components/EditBudget/MonthInput";
 import { useBudgets } from "../../hooks/useBudgets";
-import { type Budget } from "@prisma/client";
+import { Prisma, type Budget } from "@prisma/client";
 import { MONTH_OPTIONS } from "../../utils/constants";
 import { type DropdownOption } from "../../utils/types";
 
@@ -62,8 +62,22 @@ const EditBudget: NextPageWithLayout = () => {
             })
           }
         />
-        <AmountInput />
-        <DashboardInput />
+        <AmountInput
+          value={budgetData?.amount}
+          handleUpdate={(newValue: number) =>
+            handleUpdateBudget({
+              amount: new Prisma.Decimal(newValue),
+            })
+          }
+        />
+        <DashboardInput
+          checked={budgetData?.dashboard || 0}
+          handleUpdate={(newValue: number) =>
+            handleUpdateBudget({
+              dashboard: newValue,
+            })
+          }
+        />
         <button className="text-red-400 transition-all hover:text-red-600">
           Delete Budget
         </button>
