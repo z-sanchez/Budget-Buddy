@@ -2,19 +2,22 @@ import { useContext, useState } from "react";
 import DropdownIcon from "../../../../public/dropdown-icon.svg";
 import { Collapse, TextField, Autocomplete } from "@mui/material";
 import { BLUE, MONTH_OPTIONS } from "../../../utils/constants";
-import type { BudgetStatusDetailedProps } from "../../../utils/types";
 import { BudgetStatusDetailed } from "./BudgetStatusDetailed";
-import GarbageIcon from "../../../../public/trash-icon.svg";
 import { useRouter } from "next/router";
 import { DateContext } from "../../../state/dateContext";
+import { useBudgets } from "../../../hooks/useBudgets";
+import { ICON_MAP } from "../../../utils/iconMap";
 
 const BudgetsSection = () => {
+  const { getMonthsBudgets } = useBudgets();
   const [expandSection, setExpandSection] = useState(true);
   const { month } = useContext(DateContext);
   const [activeMonth, setActiveMonth] = useState(() =>
     MONTH_OPTIONS.find(({ id }) => id === month)
   );
   const router = useRouter();
+
+  const monthBudgets = getMonthsBudgets(activeMonth?.id ?? month);
 
   const testBudgetName = [
     { label: "Dativity" },
@@ -24,36 +27,6 @@ const BudgetsSection = () => {
     { label: "Gas" },
     { label: "Loans" },
   ];
-
-  const accounts = [
-    {
-      id: "1",
-      accountName: "Wells Fargo 1",
-    },
-    {
-      id: "2",
-      accountName: "Wells Fargo 2",
-    },
-    {
-      id: "3",
-      accountName: "Bofa",
-    },
-    {
-      id: "4",
-      accountName: "Bella's Wells Fargo",
-    },
-  ];
-
-  const budgetStatusData: BudgetStatusDetailedProps & { Icon: string } = {
-    color: BLUE,
-    budgetAmount: 150,
-    name: "Bussy Money",
-    budgetBalance: 20,
-    message: "Next Payment: $40 due April 4th, 2023",
-    accounts: [...accounts],
-    longTerm: true,
-    Icon: GarbageIcon as string,
-  };
 
   const handleEditBudget = async (budgetName: string) => {
     await router.push(`/budgets/${budgetName}`);
@@ -123,36 +96,20 @@ const BudgetsSection = () => {
             })}
           </div>
           <div className="mt-5 flex w-10/12 flex-wrap justify-between self-center">
-            <BudgetStatusDetailed
-              {...budgetStatusData}
-              onEdit={handleEditBudget}
-              className="my-5 mx-5 w-2/5 2xl:w-1/4"
-            />
-            <BudgetStatusDetailed
-              {...budgetStatusData}
-              onEdit={handleEditBudget}
-              className="my-5 mx-5 w-2/5 2xl:w-1/4"
-            />
-            <BudgetStatusDetailed
-              {...budgetStatusData}
-              onEdit={handleEditBudget}
-              className="my-5 mx-5 w-2/5 2xl:w-1/4"
-            />
-            <BudgetStatusDetailed
-              {...budgetStatusData}
-              onEdit={handleEditBudget}
-              className="my-5 mx-5 w-2/5 2xl:w-1/4"
-            />
-            <BudgetStatusDetailed
-              {...budgetStatusData}
-              onEdit={handleEditBudget}
-              className="my-5 mx-5 w-2/5 2xl:w-1/4"
-            />
-            <BudgetStatusDetailed
-              {...budgetStatusData}
-              onEdit={handleEditBudget}
-              className="my-5 mx-5 w-2/5 2xl:w-1/4"
-            />
+            {monthBudgets?.map((budgetData) => {
+              return (
+                <BudgetStatusDetailed
+                  key={budgetData.id}
+                  {...budgetData}
+                  Icon={
+                    ICON_MAP.find(({ id }) => id === budgetData.icon)?.Icon ||
+                    ICON_MAP[0]?.Icon
+                  }
+                  onEdit={handleEditBudget}
+                  className="my-5 mx-5 w-2/5 2xl:w-1/4"
+                />
+              );
+            })}
           </div>
           <div className="flex w-10/12 justify-end self-center">
             <button

@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { GREY, LIGHT_GREY } from "../../../utils/constants";
 import EditIcon from "../../../../public/edit-icon.svg";
 import TargetIcon from "../../../../public/target-icon.svg";
-import type { BudgetStatusDetailedProps } from "../../../utils/types";
+import { type Budget } from "@prisma/client";
 
 const getThemeWithBackgroundColor = (backgroundColor: string) => {
   return createTheme({
@@ -29,19 +29,20 @@ const getThemeWithBackgroundColor = (backgroundColor: string) => {
 
 const BudgetStatusDetailed = ({
   Icon,
-  budgetAmount,
-  budgetBalance,
+  amount,
+  balance,
   color,
   name,
   message,
   longTerm,
   className,
   onEdit,
-}: BudgetStatusDetailedProps & {
-  Icon: string;
+}: Budget & {
+  className: string;
+  Icon: any;
   onEdit: (budgetName: string) => Promise<void>;
 }) => {
-  const percentage = (100 / budgetAmount) * budgetBalance;
+  const percentage = (100 / Number(amount)) * Number(balance);
 
   const theme = getThemeWithBackgroundColor(color);
 
@@ -76,7 +77,7 @@ const BudgetStatusDetailed = ({
             className="poppinsFont text-sm font-light 2xl:text-base"
             style={{ color: GREY }}
           >
-            {budgetBalance} / {budgetAmount}
+            {String(balance)} / {String(amount)}
           </p>
         </div>
         <LinearProgress

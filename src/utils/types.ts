@@ -7,17 +7,6 @@ export type BudgetStatusProps = {
   className?: string;
 };
 
-export type BudgetStatusDetailedProps = {
-  budgetAmount: number;
-  budgetBalance: number;
-  color: string;
-  name: string;
-  message: string;
-  accounts: { accountName: string; id: string }[];
-  longTerm?: boolean;
-  className?: string;
-};
-
 export type LineGraphDataset = {
   label: string;
   data: number[];

@@ -28,6 +28,7 @@ model Budget {
   dashboard Int?    @db.TinyInt
   icon      String  @db.VarChar(45) @default("default")
   month     Int     
+  message   String  @default("")
 
   @@index([userId], map: "userId")
 }
