@@ -1,13 +1,33 @@
+import { type Budget } from "@prisma/client";
 import { api } from "../utils/api";
 
 export const useBudgets = () => {
   const ctx = api.useContext();
 
+  const makeBudgetMutation = api.budgets.updateMonthBudget.useMutation({
+    onSuccess: () => {
+      void ctx.budgets.getMonthsBudgets.invalidate();
+    },
+  });
+
   const getMonthsBudgets = (monthId: string) => {
     return api.budgets.getMonthsBudgets.useQuery(monthId).data;
   };
 
+  const updateMonthsBudget = async (updatedBudget: Budget): Promise<void> => {
+    const response = await makeBudgetMutation.mutateAsync({
+      ...updatedBudget,
+      amount: Number(updatedBudget.amount),
+      balance: Number(updatedBudget.balance),
+      longTerm: Number(updatedBudget.longTerm ?? 0),
+      dashboard: Number(updatedBudget.dashboard ?? 0),
+    });
+
+    console.log({ response });
+  };
+
   return {
     getMonthsBudgets,
+    updateMonthsBudget,
   };
 };

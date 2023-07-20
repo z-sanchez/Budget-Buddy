@@ -28,20 +28,18 @@ const getThemeWithBackgroundColor = (backgroundColor: string) => {
 };
 
 const BudgetStatusDetailed = ({
+  budgetData,
   Icon,
-  amount,
-  balance,
-  color,
-  name,
-  message,
-  longTerm,
   className,
   onEdit,
-}: Budget & {
+}: {
+  budgetData: Budget;
   className: string;
   Icon: any;
-  onEdit: (budgetName: string) => Promise<void>;
+  onEdit: (budgetName: string, budget: Budget) => Promise<void>;
 }) => {
+  const { amount, balance, color, longTerm, name, message } = budgetData;
+
   const percentage = (100 / Number(amount)) * Number(balance);
 
   const theme = getThemeWithBackgroundColor(color);
@@ -69,7 +67,7 @@ const BudgetStatusDetailed = ({
               <EditIcon
                 className="ml-3 h-3 w-3 cursor-pointer"
                 style={{ fill: GREY }}
-                onClick={() => onEdit(name)}
+                onClick={() => onEdit(name, budgetData)}
               />
             </>
           </div>

@@ -25,4 +25,34 @@ export const budgetsRouter = createTRPCRouter({
 
       return Promise.all(monthsBudgets);
     }),
+
+  updateMonthBudget: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        color: z.string(),
+        amount: z.number(),
+        longTerm: z.number(),
+        account: z.string(),
+        balance: z.number(),
+        userId: z.string(),
+        dashboard: z.number(),
+        icon: z.string(),
+        month: z.number(),
+        message: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.budget
+        .update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            ...input,
+          },
+        })
+        .catch((err) => console.log(err));
+    }),
 });

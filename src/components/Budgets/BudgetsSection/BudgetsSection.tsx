@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { DateContext } from "../../../state/dateContext";
 import { useBudgets } from "../../../hooks/useBudgets";
 import { ICON_MAP } from "../../../utils/iconMap";
+import { type Budget } from "@prisma/client";
 
 const BudgetsSection = () => {
   const { getMonthsBudgets } = useBudgets();
@@ -28,8 +29,15 @@ const BudgetsSection = () => {
     { label: "Loans" },
   ];
 
-  const handleEditBudget = async (budgetName: string) => {
-    await router.push(`/budgets/${budgetName}`);
+  const goToEdit = async (budgetName: string, budget: Budget) => {
+    await router.push({
+      pathname: `/budgets/${budgetName}`,
+      query: {
+        ...budget,
+        amount: Number(budget.amount),
+        balance: Number(budget.balance),
+      },
+    });
   };
 
   const handleAddBudget = () => {
@@ -100,12 +108,12 @@ const BudgetsSection = () => {
               return (
                 <BudgetStatusDetailed
                   key={budgetData.id}
-                  {...budgetData}
+                  budgetData={budgetData}
                   Icon={
                     ICON_MAP.find(({ id }) => id === budgetData.icon)?.Icon ||
                     ICON_MAP[0]?.Icon
                   }
-                  onEdit={handleEditBudget}
+                  onEdit={goToEdit}
                   className="my-5 mx-5 w-2/5 2xl:w-1/4"
                 />
               );
