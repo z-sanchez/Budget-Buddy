@@ -5,9 +5,11 @@ import { DropdownSelect } from "../DropdownSelect";
 const MonthInput = ({
   selectedOption,
   handleUpdate,
+  noPlaceholderOption,
 }: {
   selectedOption: DropdownOption;
   handleUpdate: (value: any) => Promise<void>;
+  noPlaceholderOption?: boolean;
 }) => {
   return (
     <div className="my-8 flex items-center">
@@ -16,6 +18,7 @@ const MonthInput = ({
         <DropdownSelect
           placeholder="month"
           value={selectedOption}
+          noPlaceholderOption={noPlaceholderOption || false}
           options={MONTH_OPTIONS}
           onChange={(newvalue) => {
             handleUpdate(newvalue).catch((err) => console.log(err));

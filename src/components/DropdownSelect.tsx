@@ -9,11 +9,13 @@ const DropdownSelect = ({
   value,
   options,
   placeholder,
+  noPlaceholderOption,
   onChange,
 }: {
   value: DropdownOption;
   options: DropdownOption[];
   placeholder: string;
+  noPlaceholderOption?: boolean;
   onChange: (value: DropdownOption) => void;
 }) => {
   const styles = {
@@ -37,11 +39,13 @@ const DropdownSelect = ({
     },
   });
 
-  const allOptions = [{ label: "Select Option", id: "0" }].concat(
-    options.map((option) => {
-      return option;
-    })
-  );
+  const allOptions = !noPlaceholderOption
+    ? [{ label: "Select Option", id: "0" }].concat(
+        options.map((option) => {
+          return option;
+        })
+      )
+    : options;
 
   const selectedOption = value.label === "" ? "Select Option" : value.label;
 

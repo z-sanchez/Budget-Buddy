@@ -47,6 +47,7 @@ const EditBudget: NextPageWithLayout = () => {
         </div>
         <MonthInput
           selectedOption={selectedMonth}
+          noPlaceholderOption={true}
           handleUpdate={(newValue: DropdownOption) =>
             handleUpdateBudget({ month: Number(newValue?.id) })
           }
