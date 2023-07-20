@@ -24,7 +24,7 @@ const Breadcrumb = () => {
         if (index === paths.length - 1) {
           return (
             <button key={index} style={{ color: BLUE }}>
-              {" " + String(router.query.name)}
+              {" " + String(router.query.id)}
             </button>
           );
         }

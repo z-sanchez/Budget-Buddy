@@ -26,6 +26,16 @@ export const budgetsRouter = createTRPCRouter({
       return Promise.all(monthsBudgets);
     }),
 
+  getBudgetData: protectedProcedure
+    .input(z.string())
+    .query(({ ctx, input }) => {
+      return ctx.prisma.budget.findFirst({
+        where: {
+          id: input,
+        },
+      });
+    }),
+
   updateMonthBudget: protectedProcedure
     .input(
       z.object({

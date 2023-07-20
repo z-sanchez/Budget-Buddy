@@ -51,7 +51,7 @@ const BudgetStatusDetailed = ({
           className ? className : "w-2/5"
         }`}
       >
-        {longTerm && (
+        {Boolean(longTerm) && (
           <TargetIcon
             className="absolute h-3 w-3 "
             style={{ right: "100%", bottom: "95%" }}
@@ -60,8 +60,8 @@ const BudgetStatusDetailed = ({
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center">
             <>
-              <span className="mr-3">
-                <Icon />
+              <span className="flex items-center justify-center">
+                <Icon className="h-8 w-8" viewBox="0 0 40 40" />
               </span>
               <p className="2xl:text-xl">{name}</p>
               <EditIcon

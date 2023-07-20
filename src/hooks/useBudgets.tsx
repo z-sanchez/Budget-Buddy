@@ -6,12 +6,16 @@ export const useBudgets = () => {
 
   const makeBudgetMutation = api.budgets.updateMonthBudget.useMutation({
     onSuccess: () => {
-      void ctx.budgets.getMonthsBudgets.invalidate();
+      void ctx.budgets.getBudgetData.invalidate();
     },
   });
 
   const getMonthsBudgets = (monthId: string) => {
     return api.budgets.getMonthsBudgets.useQuery(monthId).data;
+  };
+
+  const getBudgetData = (budgetId: string) => {
+    return api.budgets.getBudgetData.useQuery(budgetId).data;
   };
 
   const updateMonthsBudget = async (updatedBudget: Budget): Promise<void> => {
@@ -29,5 +33,6 @@ export const useBudgets = () => {
   return {
     getMonthsBudgets,
     updateMonthsBudget,
+    getBudgetData,
   };
 };

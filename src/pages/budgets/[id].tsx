@@ -10,17 +10,28 @@ import { DashboardInput } from "../../components/EditBudget/DashboardInput";
 import { MonthInput } from "../../components/EditBudget/MonthInput";
 import { useBudgets } from "../../hooks/useBudgets";
 import { type Budget } from "@prisma/client";
+import { MONTH_OPTIONS } from "../../utils/constants";
+import { type DropdownOption } from "../../utils/types";
+
+type PartialBudget = Partial<Budget>;
 
 const EditBudget: NextPageWithLayout = () => {
   const router = useRouter();
+  const { updateMonthsBudget, getBudgetData } = useBudgets();
 
-  const { name } = router.query;
+  const budgetId = router.query.id as string;
 
-  const { updateMonthsBudget } = useBudgets();
+  const budgetData = getBudgetData(budgetId) as Budget;
 
-  const handleUpdateBudget = async (updatedBudget: Budget) => {
-    await updateMonthsBudget(updatedBudget);
+  const handleUpdateBudget = async (
+    updatedValues: PartialBudget
+  ): Promise<void> => {
+    await updateMonthsBudget({ ...budgetData, ...updatedValues });
   };
+
+  const selectedMonth = MONTH_OPTIONS?.find(
+    ({ id }) => id === String(budgetData?.month)
+  ) || { label: "January", id: "0" };
 
   return (
     <div className="col-span-1 grid h-screen min-h-[800px] grid-cols-[100%] grid-rows-[13%_auto] gap-y-2 px-5 py-3">
@@ -32,10 +43,25 @@ const EditBudget: NextPageWithLayout = () => {
       </div>
       <div className="col-span-1 pb-8">
         <div className="flex items-center">
-          <p className="text-2xl font-light 2xl:text-3xl">{name}</p>
+          <p className="text-2xl font-light 2xl:text-3xl">{budgetData?.name}</p>
         </div>
-        <MonthInput />
-        <IconInput SelectedIcon={ICON_MAP[0]?.Icon} />
+        <MonthInput
+          selectedOption={selectedMonth}
+          handleUpdate={(newValue: DropdownOption) =>
+            handleUpdateBudget({ month: Number(newValue?.id) })
+          }
+        />
+        <IconInput
+          SelectedIcon={
+            ICON_MAP.find(({ id }) => id === budgetData?.icon)?.Icon ??
+            ICON_MAP[0]?.Icon
+          }
+          handleUpdate={(newIconId: string) =>
+            handleUpdateBudget({
+              icon: newIconId,
+            })
+          }
+        />
         <AmountInput />
         <DashboardInput />
         <button className="text-red-400 transition-all hover:text-red-600">

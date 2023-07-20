@@ -29,14 +29,9 @@ const BudgetsSection = () => {
     { label: "Loans" },
   ];
 
-  const goToEdit = async (budgetName: string, budget: Budget) => {
+  const goToEdit = async (budgetName: string, budgetData: Budget) => {
     await router.push({
-      pathname: `/budgets/${budgetName}`,
-      query: {
-        ...budget,
-        amount: Number(budget.amount),
-        balance: Number(budget.balance),
-      },
+      pathname: `/budgets/${budgetData.id}`,
     });
   };
 
