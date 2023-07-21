@@ -16,6 +16,12 @@ export const useBudgets = () => {
     },
   });
 
+  const deleteBudgetMutation = api.budgets.deleteBudget.useMutation({
+    onSuccess() {
+      void ctx.budgets.getMonthsBudgets.invalidate();
+    },
+  });
+
   const createBudget = async (monthId: string) => {
     return await createBudgetMutation.mutateAsync(monthId).catch(() => null);
   };
@@ -38,10 +44,15 @@ export const useBudgets = () => {
     });
   };
 
+  const deleteBudget = async (budgetId: string) => {
+    await deleteBudgetMutation.mutateAsync(budgetId);
+  };
+
   return {
     getMonthsBudgets,
     updateMonthsBudget,
     getBudgetData,
     createBudget,
+    deleteBudget,
   };
 };

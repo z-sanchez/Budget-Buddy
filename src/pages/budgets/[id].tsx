@@ -19,7 +19,7 @@ type PartialBudget = Partial<Budget>;
 
 const EditBudget: NextPageWithLayout = () => {
   const router = useRouter();
-  const { updateMonthsBudget, getBudgetData } = useBudgets();
+  const { updateMonthsBudget, getBudgetData, deleteBudget } = useBudgets();
 
   const budgetId = router.query.id as string;
 
@@ -29,6 +29,14 @@ const EditBudget: NextPageWithLayout = () => {
     updatedValues: PartialBudget
   ): Promise<void> => {
     await updateMonthsBudget({ ...budgetData, ...updatedValues });
+  };
+
+  const handleDeleteBudget = async (): Promise<void> => {
+    await deleteBudget(budgetData?.id)
+      .then(async () => {
+        await router.push("/budgets");
+      })
+      .catch(() => console.log("error"));
   };
 
   const selectedMonth = MONTH_OPTIONS?.find(
@@ -103,7 +111,12 @@ const EditBudget: NextPageWithLayout = () => {
             })
           }
         />
-        <button className="text-red-400 transition-all hover:text-red-600">
+        <button
+          className="text-red-400 transition-all hover:text-red-600"
+          onClick={() => {
+            void handleDeleteBudget();
+          }}
+        >
           Delete Budget
         </button>
       </div>

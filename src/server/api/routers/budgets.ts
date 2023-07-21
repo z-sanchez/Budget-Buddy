@@ -93,4 +93,14 @@ export const budgetsRouter = createTRPCRouter({
         })
         .catch((err) => console.log(err));
     }),
+
+  deleteBudget: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.budget.delete({
+        where: {
+          id: input,
+        },
+      });
+    }),
 });
