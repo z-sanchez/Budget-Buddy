@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import DropdownIcon from "../../../../public/dropdown-icon.svg";
-import { Collapse, TextField, Autocomplete } from "@mui/material";
+import { Collapse } from "@mui/material";
 import { BLUE, MONTH_OPTIONS } from "../../../utils/constants";
 import { BudgetStatusDetailed } from "./BudgetStatusDetailed";
 import { useRouter } from "next/router";
@@ -19,15 +19,6 @@ const BudgetsSection = () => {
   const router = useRouter();
 
   const monthBudgets = getMonthsBudgets(activeMonth?.id ?? month);
-
-  const testBudgetName = [
-    { label: "Dativity" },
-    { label: "Grocery" },
-    { label: "Ziek" },
-    { label: "Chelsea" },
-    { label: "Gas" },
-    { label: "Loans" },
-  ];
 
   const goToEdit = async (budgetData: Budget) => {
     await router.push({
@@ -68,20 +59,6 @@ const BudgetsSection = () => {
           />
           <p className="text-2xl font-light 2xl:text-3xl">March 2023</p>
         </div>
-        <Autocomplete
-          disablePortal
-          id="search-budgets"
-          options={testBudgetName}
-          sx={{ width: 200 }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              hiddenLabel
-              size="small"
-              placeholder="Search Budgets"
-            />
-          )}
-        />
       </div>
       <Collapse in={expandSection}>
         <div className="flex flex-col">

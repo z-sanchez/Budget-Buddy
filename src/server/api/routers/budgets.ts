@@ -57,7 +57,7 @@ export const budgetsRouter = createTRPCRouter({
   getBudgetData: protectedProcedure
     .input(z.string())
     .query(({ ctx, input }) => {
-      return ctx.prisma.budget.findFirst({
+      return ctx.prisma.budget.findUnique({
         where: {
           id: input,
         },

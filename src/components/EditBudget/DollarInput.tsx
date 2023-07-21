@@ -5,15 +5,16 @@ import { Prisma } from "@prisma/client";
 
 type Props = {
   value: Decimal;
+  label: string;
   handleUpdate: (newValue: any) => Promise<void>;
 };
 
-const AmountInput = ({ value, handleUpdate }: Props) => {
+const DollarInput = ({ value, label, handleUpdate }: Props) => {
   const [amount, setAmount] = useState(value);
 
   return (
     <div className="my-8 flex items-center">
-      <p className="w-1/12 font-medium">Amount</p>
+      <p className="w-1/12 font-medium">{label}</p>
       <div className="flex w-1/12">
         <span className="mr-2 ">$</span>{" "}
         <input
@@ -38,4 +39,4 @@ const AmountInput = ({ value, handleUpdate }: Props) => {
     </div>
   );
 };
-export { AmountInput };
+export { DollarInput };

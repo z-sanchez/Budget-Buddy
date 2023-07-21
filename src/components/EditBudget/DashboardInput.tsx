@@ -4,7 +4,6 @@ type Props = {
 };
 
 const DashboardInput = ({ checked, handleUpdate }: Props) => {
-  console.log({ checked });
   return (
     <div className="my-8 flex items-center">
       <p className="w-1/12 font-medium">Dashboard</p>
