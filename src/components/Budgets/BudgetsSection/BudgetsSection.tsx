@@ -84,7 +84,7 @@ const BudgetsSection = () => {
               );
             })}
           </div>
-          <div className=" mt-5 flex w-10/12 flex-wrap self-center">
+          <div className="mt-12 flex w-full flex-wrap justify-around self-center">
             {monthBudgets?.map((budgetData) => {
               return (
                 <BudgetStatusDetailed

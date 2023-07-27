@@ -61,7 +61,7 @@ const BudgetStatusDetailed = ({
           <div className="flex items-center">
             <>
               <span className="flex items-center justify-center">
-                <Icon className="h-8 w-8" viewBox="0 0 40 40" />
+                <Icon className="mr-2 h-8 w-8" />
               </span>
               <p className="2xl:text-xl">{name}</p>
               <EditIcon
