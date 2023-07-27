@@ -32,9 +32,6 @@ const TransactionLine = ({ index }: { index: number }) => {
       <StyledTableCell align="center" className="font-light">
         Amount
       </StyledTableCell>
-      <StyledTableCell align="center" className="font-light">
-        Paid Amount
-      </StyledTableCell>
     </TableRow>
   );
 };

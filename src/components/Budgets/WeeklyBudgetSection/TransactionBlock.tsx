@@ -28,7 +28,6 @@ const TransactionBlock = ({ blockName }: { blockName: string }) => {
               <StyledTableCell align="center">Date</StyledTableCell>
               <StyledTableCell align="center">Account</StyledTableCell>
               <StyledTableCell align="center">Amount</StyledTableCell>
-              <StyledTableCell align="center">Paid Amount</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

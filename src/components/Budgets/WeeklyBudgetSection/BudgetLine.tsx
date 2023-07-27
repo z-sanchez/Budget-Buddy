@@ -28,14 +28,13 @@ const BudgetLine = () => {
               Week 1 - 3/1 - 3/7
             </p>
             <p className="poppinsFont ml-8">
-              Projected Total: <span style={{ color: BLUE }}>$1934.56</span>{" "}
+              Projected EOW Total: <span style={{ color: BLUE }}>$1934.56</span>{" "}
               <span style={{ color: GREEN_STATE }}> (+130)</span>
             </p>
           </div>
         </div>
       </div>
       <Collapse in={expandSection} className="mx-auto w-11/12">
-        <TransactionBlock blockName="Budgeted Transactions" />
         <TransactionBlock blockName="Transactions" />
       </Collapse>
     </>

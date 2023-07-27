@@ -39,11 +39,11 @@ const WeeklyBudgetSection = () => {
       </div>
       <div className="mt-5 flex px-8">
         <p className="poppinsFont ml-8">
-          Projected Total: <span style={{ color: BLUE }}>$1934.56</span>{" "}
+          Projected EOM Total: <span style={{ color: BLUE }}>$1934.56</span>{" "}
           <span style={{ color: GREEN_STATE }}> (+130)</span>
         </p>
         <p className="poppinsFont ml-8">
-          Current Total: <span style={{ color: BLUE }}>$1934.56</span>{" "}
+          Actual Total: <span style={{ color: BLUE }}>$1934.56</span>{" "}
           <span style={{ color: RED_STATE }}> (+130)</span>
         </p>
         <p className="poppinsFont ml-8">
