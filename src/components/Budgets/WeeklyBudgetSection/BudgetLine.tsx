@@ -4,9 +4,26 @@ import { BLUE, GREEN_STATE, LIGHT_GREY } from "../../../utils/constants";
 
 import DropdownIcon from "../../../../public/dropdown-icon.svg";
 import { TransactionBlock } from "./TransactionBlock";
+import { type Dayjs } from "dayjs";
+import { api } from "../../../utils/api";
 
-const BudgetLine = () => {
-  const [expandSection, setExpandSection] = useState(true);
+const BudgetLine = ({
+  startDate,
+  endDate,
+  weekNumber,
+}: {
+  startDate: Dayjs;
+  endDate: Dayjs;
+  weekNumber: number;
+}) => {
+  const [expandSection, setExpandSection] = useState(false);
+
+  const transactions = api.transactions.getTransactionsInBetweenDates.useQuery({
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
+  }).data;
+
+  console.log({ transactions, startDate, endDate });
 
   return (
     <>
@@ -25,7 +42,8 @@ const BudgetLine = () => {
               className=" text-xl font-light 2xl:text-2xl"
               style={{ borderColor: LIGHT_GREY }}
             >
-              Week 1 - 3/1 - 3/7
+              Week {weekNumber} - {startDate.format("MM/DD")} -{" "}
+              {endDate.format("MM/DD")}
             </p>
             <p className="poppinsFont ml-8">
               Projected EOW Total: <span style={{ color: BLUE }}>$1934.56</span>{" "}

@@ -8,9 +8,12 @@ import {
   RED_STATE,
 } from "../../../utils/constants";
 import { BudgetLine } from "./BudgetLine";
+import { getCurrentMonthsWeekDates } from "../../../utils/helpers/dayjs";
 
 const WeeklyBudgetSection = () => {
   const [expandSection, setExpandSection] = useState(true);
+
+  const dates = getCurrentMonthsWeekDates();
 
   return (
     <>
@@ -34,7 +37,13 @@ const WeeklyBudgetSection = () => {
       </div>
       <div className="flex w-full justify-center px-3">
         <Collapse in={expandSection} className="w-full">
-          <BudgetLine />
+          {dates.map((date, index) => {
+            const startDate = date.startDate.format("L LT");
+
+            return (
+              <BudgetLine key={startDate} {...date} weekNumber={index + 1} />
+            );
+          })}
         </Collapse>
       </div>
       <div className="mt-5 flex px-8">

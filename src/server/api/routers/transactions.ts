@@ -70,6 +70,24 @@ export const transactionsRouter = createTRPCRouter({
     );
   }),
 
+  getTransactionsInBetweenDates: protectedProcedure
+    .input(
+      z.object({
+        startDate: z.string(),
+        endDate: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.transaction.findMany({
+        where: {
+          date: {
+            lte: input.endDate,
+            gte: input.startDate,
+          },
+        },
+      });
+    }),
+
   makeTransactions: protectedProcedure
     .input(
       z.array(
