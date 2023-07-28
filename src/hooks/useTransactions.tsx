@@ -44,6 +44,10 @@ const useTransactions = () => {
     },
   });
 
+  const getTransactionById = (transactionId: string) => {
+    return api.transactions.getTransactionById.useQuery(transactionId);
+  };
+
   const addTransactions = async (
     transactions: TransactionLine[]
   ): Promise<string | true> => {
@@ -108,6 +112,7 @@ const useTransactions = () => {
   return {
     thisWeeksTransactions,
     transactionsWithIcon,
+    getTransactionById,
     addTransactions,
     deleteTransaction,
     editTransaction,

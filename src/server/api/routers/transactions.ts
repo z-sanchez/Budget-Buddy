@@ -7,6 +7,17 @@ export const transactionsRouter = createTRPCRouter({
     return ctx.prisma.transaction.findMany();
   }),
 
+  getTransactionById: protectedProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.transaction.findFirst({
+        where: {
+          userId: ctx.session.user.id,
+          id: input,
+        },
+      });
+    }),
+
   getThisWeeksTransactions: protectedProcedure.query(async ({ ctx }) => {
     const today = dayjs();
     const daysToNextSunday = 7 - today.day();

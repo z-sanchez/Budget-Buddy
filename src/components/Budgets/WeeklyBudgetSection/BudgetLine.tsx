@@ -24,8 +24,6 @@ const BudgetLine = ({
       endDate: endDate.toISOString(),
     }).data || [];
 
-  console.log({ transactions, startDate, endDate });
-
   return (
     <>
       <div

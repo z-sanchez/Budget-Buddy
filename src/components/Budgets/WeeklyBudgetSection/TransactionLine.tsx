@@ -5,6 +5,7 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import { type Transaction } from "@prisma/client";
 import dayjs from "dayjs";
 import EditIcon from "../../../../public/edit-icon.svg";
+import { useRouter } from "next/router";
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -23,6 +24,14 @@ const TransactionLine = ({
   index: number;
   transaction: Transaction;
 }) => {
+  const router = useRouter();
+
+  const handleEdit = async () => {
+    await router.push({
+      pathname: `/transactions/${transaction.id}`,
+    });
+  };
+
   return (
     <TableRow
       style={{
@@ -42,7 +51,10 @@ const TransactionLine = ({
         {String(transaction.amount)}
       </StyledTableCell>
       <StyledTableCell align="center" className="w-1/6">
-        <EditIcon className="icon--hoverBlue mb-1 h-4 w-4 cursor-pointer transition-all" />
+        <EditIcon
+          onClick={() => handleEdit()}
+          className="icon--hoverBlue mb-1 h-4 w-4 cursor-pointer transition-all"
+        />
       </StyledTableCell>
     </TableRow>
   );
