@@ -80,6 +80,7 @@ export const transactionsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.transaction.findMany({
         where: {
+          userId: ctx.session.user.id,
           date: {
             lte: input.endDate,
             gte: input.startDate,
