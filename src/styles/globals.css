@@ -62,3 +62,7 @@ html {
 .icon--hoverGreen:hover {
   fill: #82e460;
 }
+
+.icon--hoverBlue:hover {
+  fill: #00b8ff;
+}

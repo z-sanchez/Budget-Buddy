@@ -40,6 +40,7 @@ const TransactionBlock = ({
                 <StyledTableCell align="center">Date</StyledTableCell>
                 <StyledTableCell align="center">Account</StyledTableCell>
                 <StyledTableCell align="center">Amount</StyledTableCell>
+                <StyledTableCell align="center"></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
