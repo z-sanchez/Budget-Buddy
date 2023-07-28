@@ -50,7 +50,7 @@ const WeeklySpendingTransactionLine = ({
           className="mr-5 flex items-center justify-center rounded-lg p-1 outline outline-1"
           style={{ outlineColor: GREY }}
         >
-          <Icon className="w-6" />
+          <Icon className="h-8 w-8" />
         </div>
         <div className="flex flex-col">
           <p className="truncate">
@@ -101,7 +101,7 @@ const WeeklySpendingTransactionLine = ({
           }
         />
         <TrashIcon
-          className="icon--hoverRed w-5 cursor-pointer transition-colors"
+          className="icon--hoverRed cursor-pointer transition-colors"
           onClick={deleteTransaction}
         />
       </div>
