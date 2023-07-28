@@ -18,10 +18,11 @@ const BudgetLine = ({
 }) => {
   const [expandSection, setExpandSection] = useState(false);
 
-  const transactions = api.transactions.getTransactionsInBetweenDates.useQuery({
-    startDate: startDate.toISOString(),
-    endDate: endDate.toISOString(),
-  }).data;
+  const transactions =
+    api.transactions.getTransactionsInBetweenDates.useQuery({
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+    }).data || [];
 
   console.log({ transactions, startDate, endDate });
 
@@ -53,7 +54,10 @@ const BudgetLine = ({
         </div>
       </div>
       <Collapse in={expandSection} className="mx-auto w-11/12">
-        <TransactionBlock blockName="Transactions" />
+        <TransactionBlock
+          blockName="Transactions"
+          transactions={transactions}
+        />
       </Collapse>
     </>
   );
