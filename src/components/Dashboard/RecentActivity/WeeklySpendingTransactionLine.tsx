@@ -1,6 +1,7 @@
 import { GREEN_STATE, GREY, RED_STATE } from "../../../utils/constants";
 import TrashIcon from "../../../../public/trash-icon.svg";
 import EditIcon from "../../../../public/edit-icon.svg";
+import ShoppingIcon from "../../../../public/shopping-icon.svg";
 import {
   type TransactionLine,
   type ThisWeeksTransactionsWithIcon,
