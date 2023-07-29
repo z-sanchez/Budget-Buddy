@@ -22,7 +22,7 @@ const TransactionLine = ({
   transaction,
 }: {
   index: number;
-  transaction: Transaction & { budgetName: string };
+  transaction: Transaction & { budgetName: string; accountName: string };
 }) => {
   const router = useRouter();
 
@@ -48,7 +48,7 @@ const TransactionLine = ({
         {dayjs(transaction.date).format("L LT")}
       </StyledTableCell>
       <StyledTableCell align="center" className="w-1/6 font-light">
-        Account
+        {transaction.accountName}
       </StyledTableCell>
       <StyledTableCell align="center" className="w-1/6 font-light">
         {String(transaction.amount)}

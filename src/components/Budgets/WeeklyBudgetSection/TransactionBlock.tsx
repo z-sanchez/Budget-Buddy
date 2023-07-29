@@ -19,7 +19,9 @@ const TransactionBlock = ({
   transactions,
 }: {
   blockName: string;
-  transactions: Array<Transaction & { budgetName: string }>;
+  transactions: Array<
+    Transaction & { budgetName: string; accountName: string }
+  >;
 }) => {
   return (
     <>

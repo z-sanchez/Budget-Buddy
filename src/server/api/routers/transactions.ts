@@ -111,7 +111,17 @@ export const transactionsRouter = createTRPCRouter({
               })
               .then((result) => result?.name)) || "";
 
-          return { ...transaction, budgetName };
+          const accountName =
+            (await ctx.prisma.bankAccount
+              .findFirst({
+                where: {
+                  id: transaction.accountId,
+                  userId: ctx.session.user.id,
+                },
+              })
+              .then((result) => result?.name)) || "";
+
+          return { ...transaction, budgetName, accountName };
         })
       );
     }),
