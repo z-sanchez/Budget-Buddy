@@ -19,7 +19,7 @@ const TransactionBlock = ({
   transactions,
 }: {
   blockName: string;
-  transactions: Transaction[];
+  transactions: Array<Transaction & { budgetName: string }>;
 }) => {
   return (
     <>
@@ -36,6 +36,9 @@ const TransactionBlock = ({
           <Table>
             <TableHead>
               <TableRow>
+                <StyledTableCell align="center">
+                  Transaction Name
+                </StyledTableCell>
                 <StyledTableCell align="center">Budget</StyledTableCell>
                 <StyledTableCell align="center">Date</StyledTableCell>
                 <StyledTableCell align="center">Account</StyledTableCell>

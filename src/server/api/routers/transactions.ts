@@ -89,7 +89,7 @@ export const transactionsRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
-      return await ctx.prisma.transaction.findMany({
+      const transactions = await ctx.prisma.transaction.findMany({
         where: {
           userId: ctx.session.user.id,
           date: {
@@ -98,6 +98,22 @@ export const transactionsRouter = createTRPCRouter({
           },
         },
       });
+
+      return Promise.all(
+        transactions.map(async (transaction) => {
+          const budgetName =
+            (await ctx.prisma.budget
+              .findFirst({
+                where: {
+                  id: transaction.budgetId,
+                  userId: ctx.session.user.id,
+                },
+              })
+              .then((result) => result?.name)) || "";
+
+          return { ...transaction, budgetName };
+        })
+      );
     }),
 
   makeTransactions: protectedProcedure
