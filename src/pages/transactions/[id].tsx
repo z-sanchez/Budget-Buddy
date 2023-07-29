@@ -5,6 +5,10 @@ import { type NextPageWithLayout } from "../_app";
 import { useRouter } from "next/router";
 import { type Transaction } from "@prisma/client";
 import { useTransactions } from "../../hooks/useTransactions";
+import { TextInput } from "../../components/EditPageInputs/TextInput";
+import { DropdownInput } from "../../components/EditPageInputs/DropdownInput";
+import { api } from "../../utils/api";
+import { type DropdownOption } from "../../utils/types";
 
 type PartialTransaction = Partial<Transaction>;
 
@@ -14,7 +18,19 @@ const EditTransaction: NextPageWithLayout = () => {
 
   const transactionId = router.query.id as string;
 
-  const transactionData = getTransactionById(transactionId).data as Transaction;
+  const budgetOptions: DropdownOption[] =
+    api.budgets.getAllBudgets.useQuery().data?.map((budget) => {
+      return {
+        id: budget.id,
+        label: budget.name,
+      };
+    }) || [];
+
+  const transactionData = getTransactionById(transactionId)
+    .data as Transaction & {
+    accountName: string;
+    budgetName: string;
+  };
 
   const handleUpdateTransaction = async (
     updatedValues: PartialTransaction
@@ -42,6 +58,33 @@ const EditTransaction: NextPageWithLayout = () => {
             {transactionData?.name}
           </p>
         </div>
+
+        <TextInput
+          value={transactionData.name}
+          label="Transaction Name"
+          placeholder="Transaction Name"
+          handleUpdate={() => {
+            null;
+          }}
+        ></TextInput>
+
+        <DropdownInput
+          placeholder="Budget Name"
+          label="Budget Name"
+          options={budgetOptions}
+          selectedOption={
+            budgetOptions.find(({ id }) => id === transactionData.budgetId) || {
+              id: "",
+              label: "",
+            }
+          }
+          handleUpdate={() => {
+            null;
+          }}
+        ></DropdownInput>
+        {/* date input */}
+        {/* dropdown input for account */}
+        {/* amount input */}
 
         <button
           className="text-red-400 transition-all hover:text-red-600"

@@ -7,13 +7,13 @@ import { IconInput } from "../../components/EditBudget/IconInput";
 import { ICON_MAP } from "../../utils/iconMap";
 import { DollarInput } from "../../components/EditBudget/DollarInput";
 import { DashboardInput } from "../../components/EditBudget/DashboardInput";
-import { MonthInput } from "../../components/EditBudget/MonthInput";
 import { useBudgets } from "../../hooks/useBudgets";
 import { Prisma, type Budget } from "@prisma/client";
 import { MONTH_OPTIONS } from "../../utils/constants";
 import { type DropdownOption } from "../../utils/types";
-import { TextInput } from "../../components/EditBudget/TextInput";
 import { ColorInput } from "../../components/EditBudget/ColorInput";
+import { TextInput } from "../../components/EditPageInputs/TextInput";
+import { DropdownInput } from "../../components/EditPageInputs/DropdownInput";
 
 type PartialBudget = Partial<Budget>;
 
@@ -55,19 +55,27 @@ const EditBudget: NextPageWithLayout = () => {
         <div className="flex items-center">
           <p className="text-2xl font-light 2xl:text-3xl">{budgetData?.name}</p>
         </div>
+
         <TextInput
-          value={budgetData?.name}
+          value={budgetData.name}
+          label="Budget Name"
+          placeholder="Budget Name"
           handleUpdate={(newValue: string) =>
             handleUpdateBudget({ name: newValue })
           }
-        />
-        <MonthInput
+        ></TextInput>
+
+        <DropdownInput
           selectedOption={selectedMonth}
           noPlaceholderOption={true}
           handleUpdate={(newValue: DropdownOption) =>
             handleUpdateBudget({ month: Number(newValue?.id) })
           }
+          options={MONTH_OPTIONS}
+          label="Month"
+          placeholder="Month"
         />
+
         <IconInput
           SelectedIcon={
             ICON_MAP.find(({ id }) => id === budgetData?.icon)?.Icon ??

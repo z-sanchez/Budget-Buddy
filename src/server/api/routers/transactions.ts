@@ -10,12 +10,36 @@ export const transactionsRouter = createTRPCRouter({
   getTransactionById: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
-      return await ctx.prisma.transaction.findFirst({
+      const transaction = await ctx.prisma.transaction.findFirst({
         where: {
           userId: ctx.session.user.id,
           id: input,
         },
       });
+
+      if (!transaction) throw "Bad Transaction Id";
+
+      const budgetName =
+        (await ctx.prisma.budget
+          .findFirst({
+            where: {
+              id: transaction.budgetId,
+              userId: ctx.session.user.id,
+            },
+          })
+          .then((result) => result?.name)) || "";
+
+      const accountName =
+        (await ctx.prisma.bankAccount
+          .findFirst({
+            where: {
+              id: transaction.accountId,
+              userId: ctx.session.user.id,
+            },
+          })
+          .then((result) => result?.name)) || "";
+
+      return { ...transaction, budgetName, accountName };
     }),
 
   getThisWeeksTransactions: protectedProcedure.query(async ({ ctx }) => {
