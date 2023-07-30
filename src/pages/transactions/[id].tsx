@@ -3,12 +3,15 @@ import { PageHeader } from "../../components/PageHeader";
 import NavigationLayout from "../../components/layouts/NavigationLayout";
 import { type NextPageWithLayout } from "../_app";
 import { useRouter } from "next/router";
-import { type Transaction } from "@prisma/client";
+import { Prisma, type Transaction } from "@prisma/client";
 import { useTransactions } from "../../hooks/useTransactions";
 import { TextInput } from "../../components/EditPageInputs/TextInput";
 import { DropdownInput } from "../../components/EditPageInputs/DropdownInput";
 import { api } from "../../utils/api";
 import { type DropdownOption } from "../../utils/types";
+import { DateInput } from "../../components/EditPageInputs/DateInput";
+import dayjs from "dayjs";
+import { DollarInput } from "../../components/EditPageInputs/DollarInput";
 
 type PartialTransaction = Partial<Transaction>;
 
@@ -23,6 +26,14 @@ const EditTransaction: NextPageWithLayout = () => {
       return {
         id: budget.id,
         label: budget.name,
+      };
+    }) || [];
+
+  const accountOptions: DropdownOption[] =
+    api.bankAccounts.getAllBankAccounts.useQuery().data?.map((account) => {
+      return {
+        id: account.id,
+        label: account.name,
       };
     }) || [];
 
@@ -81,10 +92,43 @@ const EditTransaction: NextPageWithLayout = () => {
           handleUpdate={() => {
             null;
           }}
+          noPlaceholderOption={true}
         ></DropdownInput>
-        {/* date input */}
-        {/* dropdown input for account */}
-        {/* amount input */}
+
+        <DateInput
+          value={dayjs(transactionData.date).toISOString()}
+          handleUpdate={() => {
+            null;
+          }}
+          label="Date"
+        />
+
+        <DropdownInput
+          placeholder="Account"
+          label="Account"
+          options={accountOptions}
+          selectedOption={
+            accountOptions.find(
+              ({ id }) => id === transactionData.accountId
+            ) || {
+              id: "",
+              label: "",
+            }
+          }
+          handleUpdate={() => {
+            null;
+          }}
+          noPlaceholderOption={true}
+        ></DropdownInput>
+
+        <DollarInput
+          value={transactionData.amount}
+          label="Amount"
+          placeholder="amount"
+          handleUpdate={() => {
+            null;
+          }}
+        />
 
         <button
           className="text-red-400 transition-all hover:text-red-600"
