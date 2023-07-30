@@ -84,7 +84,7 @@ const BudgetsSection = () => {
               );
             })}
           </div>
-          <div className="mt-12 flex w-full flex-wrap justify-around self-center">
+          <div className="mt-12 flex w-10/12 flex-wrap self-center">
             {monthBudgets?.map((budgetData) => {
               return (
                 <BudgetStatusDetailed
@@ -95,7 +95,7 @@ const BudgetsSection = () => {
                     ICON_MAP[0]?.Icon
                   }
                   onEdit={goToEdit}
-                  className="my-5 mx-5 w-2/5 2xl:w-1/4"
+                  className="my-5 mx-5 w-1/5 2xl:w-1/4"
                 />
               );
             })}
