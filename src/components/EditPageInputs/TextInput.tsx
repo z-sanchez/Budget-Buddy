@@ -13,8 +13,8 @@ const TextInput = ({ value, label, placeholder, handleUpdate }: Props) => {
 
   return (
     <div className="my-8 flex items-center">
-      <p className="w-1/12 font-medium">{label}</p>
-      <div className="flex w-2/12">
+      <p className="font-medium lg:w-2/12">{label}</p>
+      <div className="flex items-center lg:w-1/5">
         <input
           onChange={(newValue) => {
             newValue ? setText(newValue.target.value) : null;

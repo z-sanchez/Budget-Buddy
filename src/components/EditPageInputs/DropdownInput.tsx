@@ -18,8 +18,8 @@ const DropdownInput = ({
 }) => {
   return (
     <div className="my-8 flex items-center">
-      <p className="w-1/12 font-medium">{label}</p>
-      <div className="flex w-2/12 items-center">
+      <p className="font-medium lg:w-2/12">{label}</p>
+      <div className="flex items-center lg:w-1/5">
         <DropdownSelect
           placeholder={placeholder}
           value={selectedOption}

@@ -1,5 +1,9 @@
 import { styled, TableCell } from "@mui/material";
-import { EXTRA_LIGHT_GREY } from "../../../utils/constants";
+import {
+  EXTRA_LIGHT_GREY,
+  GREEN_STATE,
+  RED_STATE,
+} from "../../../utils/constants";
 import { TableRow } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { type Transaction } from "@prisma/client";
@@ -51,7 +55,13 @@ const TransactionLine = ({
         {transaction.accountName}
       </StyledTableCell>
       <StyledTableCell align="center" className="w-1/6 font-light">
-        {String(transaction.amount)}
+        <span
+          style={{
+            color: Number(transaction.amount) < 0 ? RED_STATE : GREEN_STATE,
+          }}
+        >
+          {String(transaction.amount)}
+        </span>
       </StyledTableCell>
       <StyledTableCell align="center" className="w-1/6">
         <EditIcon
