@@ -3,6 +3,7 @@ import { Table, TableContainer, TableHead, TableRow } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { TransactionLine } from "./TransactionLine";
 import { type Transaction } from "@prisma/client";
+import { useState } from "react";
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -23,11 +24,20 @@ const TransactionBlock = ({
     Transaction & { budgetName: string; accountName: string }
   >;
 }) => {
+  const [searchText, setSearchText] = useState("");
+
   return (
     <>
       <div className="mt-5 flex w-full items-center justify-between">
         <p className="font-semibold">{blockName}</p>
-        <TextField hiddenLabel size="small" placeholder="Search Transactions" />
+        <TextField
+          hiddenLabel
+          size="small"
+          placeholder="Search Transactions"
+          onChange={(newSearch) => {
+            setSearchText(newSearch.target.value);
+          }}
+        />
       </div>
       {!transactions.length ? (
         <div className="mt-5 flex w-full items-center justify-center">
@@ -49,15 +59,21 @@ const TransactionBlock = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {transactions.map((transaction, index) => {
-                return (
-                  <TransactionLine
-                    index={index}
-                    transaction={transaction}
-                    key={transaction.id}
-                  />
-                );
-              })}
+              {transactions
+                .filter((transaction) =>
+                  searchText === ""
+                    ? true
+                    : transaction.name.includes(searchText)
+                )
+                .map((transaction, index) => {
+                  return (
+                    <TransactionLine
+                      index={index}
+                      transaction={transaction}
+                      key={transaction.id}
+                    />
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
