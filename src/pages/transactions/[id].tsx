@@ -3,7 +3,7 @@ import { PageHeader } from "../../components/PageHeader";
 import NavigationLayout from "../../components/layouts/NavigationLayout";
 import { type NextPageWithLayout } from "../_app";
 import { useRouter } from "next/router";
-import { Prisma, type Transaction } from "@prisma/client";
+import { type Transaction } from "@prisma/client";
 import { useTransactions } from "../../hooks/useTransactions";
 import { TextInput } from "../../components/EditPageInputs/TextInput";
 import { DropdownInput } from "../../components/EditPageInputs/DropdownInput";
@@ -17,7 +17,7 @@ type PartialTransaction = Partial<Transaction>;
 
 const EditTransaction: NextPageWithLayout = () => {
   const router = useRouter();
-  const { getTransactionById } = useTransactions();
+  const { getTransactionById, editTransactionProperties } = useTransactions();
 
   const transactionId = router.query.id as string;
 
@@ -46,7 +46,9 @@ const EditTransaction: NextPageWithLayout = () => {
   const handleUpdateTransaction = async (
     updatedValues: PartialTransaction
   ): Promise<void> => {
-    // await updateMonthsBudget({ ...budgetData, ...updatedValues });
+    const newTransaction = { ...transactionData, ...updatedValues };
+
+    await editTransactionProperties(newTransaction);
   };
 
   const handleDeleteBudget = async (): Promise<void> => {
@@ -74,8 +76,10 @@ const EditTransaction: NextPageWithLayout = () => {
           value={transactionData.name}
           label="Transaction Name"
           placeholder="Transaction Name"
-          handleUpdate={() => {
-            null;
+          handleUpdate={(newName: string) => {
+            handleUpdateTransaction({
+              name: newName,
+            }).catch((err: string) => console.log({ err }));
           }}
         ></TextInput>
 

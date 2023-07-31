@@ -5,6 +5,7 @@ import {
 } from "../utils/types";
 import ShoppingIcon from "../../public/shopping-icon.svg";
 import dayjs from "dayjs";
+import { type Transaction } from "@prisma/client";
 
 const useTransactions = () => {
   const ctx = api.useContext();
@@ -41,6 +42,7 @@ const useTransactions = () => {
       void ctx.transactions.getThisWeeksTransactions.invalidate();
       void ctx.bankAccounts.getAllBankAccounts.invalidate();
       void ctx.bankAccounts.getTotalBalance.invalidate();
+      void ctx.transactions.getTransactionById.invalidate();
     },
   });
 
@@ -96,6 +98,24 @@ const useTransactions = () => {
     }
   };
 
+  const editTransactionProperties = async (
+    transaction: Transaction
+  ): Promise<void> => {
+    const formatttedTransaction = {
+      ...transaction,
+      amount: Number(transaction.amount),
+      date: dayjs(transaction.date).toDate(),
+    };
+
+    try {
+      await editTransactionMutation.mutateAsync({
+        ...formatttedTransaction,
+      });
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   const deleteTransaction = async (
     transactionId: string
   ): Promise<true | string> => {
@@ -116,6 +136,7 @@ const useTransactions = () => {
     addTransactions,
     deleteTransaction,
     editTransaction,
+    editTransactionProperties,
   };
 };
 
