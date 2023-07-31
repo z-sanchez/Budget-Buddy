@@ -36,6 +36,8 @@ const TransactionLine = ({
     });
   };
 
+  const isIncomeOrZero = Number(transaction.amount) >= 0;
+
   return (
     <TableRow
       style={{
@@ -57,9 +59,10 @@ const TransactionLine = ({
       <StyledTableCell align="center" className="w-1/6 font-light">
         <span
           style={{
-            color: Number(transaction.amount) < 0 ? RED_STATE : GREEN_STATE,
+            color: !isIncomeOrZero ? RED_STATE : GREEN_STATE,
           }}
         >
+          {isIncomeOrZero ? "+" : ""}
           {String(transaction.amount)}
         </span>
       </StyledTableCell>

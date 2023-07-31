@@ -12,12 +12,14 @@ import { type DropdownOption } from "../../utils/types";
 import { DateInput } from "../../components/EditPageInputs/DateInput";
 import dayjs from "dayjs";
 import { DollarInput } from "../../components/EditPageInputs/DollarInput";
+import { type Decimal } from "@prisma/client/runtime";
 
 type PartialTransaction = Partial<Transaction>;
 
 const EditTransaction: NextPageWithLayout = () => {
   const router = useRouter();
-  const { getTransactionById, editTransactionProperties } = useTransactions();
+  const { getTransactionById, editTransactionProperties, deleteTransaction } =
+    useTransactions();
 
   const transactionId = router.query.id as string;
 
@@ -51,8 +53,12 @@ const EditTransaction: NextPageWithLayout = () => {
     await editTransactionProperties(newTransaction);
   };
 
-  const handleDeleteBudget = async (): Promise<void> => {
-    //
+  const handleDeleteTransaction = async (): Promise<void> => {
+    await deleteTransaction(transactionId)
+      .then(async () => {
+        await router.push("/budgets");
+      })
+      .catch(() => console.log("error"));
   };
 
   console.log({ transactionData });
@@ -93,16 +99,20 @@ const EditTransaction: NextPageWithLayout = () => {
               label: "",
             }
           }
-          handleUpdate={() => {
-            null;
+          handleUpdate={(selectedOption: DropdownOption) => {
+            handleUpdateTransaction({
+              budgetId: selectedOption.id,
+            }).catch((err: string) => console.log({ err }));
           }}
           noPlaceholderOption={true}
         ></DropdownInput>
 
         <DateInput
           value={dayjs(transactionData.date).toISOString()}
-          handleUpdate={() => {
-            null;
+          handleUpdate={(newDate: Date) => {
+            handleUpdateTransaction({
+              date: newDate,
+            }).catch((err: string) => console.log({ err }));
           }}
           label="Date"
         />
@@ -119,8 +129,10 @@ const EditTransaction: NextPageWithLayout = () => {
               label: "",
             }
           }
-          handleUpdate={() => {
-            null;
+          handleUpdate={(selectedOption: DropdownOption) => {
+            handleUpdateTransaction({
+              accountId: selectedOption.id,
+            }).catch((err: string) => console.log({ err }));
           }}
           noPlaceholderOption={true}
         ></DropdownInput>
@@ -129,15 +141,19 @@ const EditTransaction: NextPageWithLayout = () => {
           value={transactionData.amount}
           label="Amount"
           placeholder="amount"
-          handleUpdate={() => {
-            null;
+          handleUpdate={(newAmount: Decimal) => {
+            handleUpdateTransaction({
+              amount: newAmount,
+            }).catch((err: string) => console.log({ err }));
           }}
         />
 
         <button
           className="text-red-400 transition-all hover:text-red-600"
           onClick={() => {
-            null;
+            handleDeleteTransaction().catch((err: string) =>
+              console.log({ err })
+            );
           }}
         >
           Delete Transaction
