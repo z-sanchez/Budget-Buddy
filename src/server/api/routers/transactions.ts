@@ -160,7 +160,7 @@ export const transactionsRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       for (const transaction of input) {
-        const { amount, accountId } = transaction;
+        const { amount, accountId, budgetId, name } = transaction;
 
         const account = await ctx.prisma.bankAccount.findUnique({
           where: {
@@ -175,6 +175,10 @@ export const transactionsRouter = createTRPCRouter({
 
         if (!isValidTransaction) {
           return "Insufficient Funds";
+        }
+
+        if (accountId === "" || budgetId === "" || name === "") {
+          return "Missing Fields";
         }
 
         ctx.prisma.bankAccount

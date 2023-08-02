@@ -131,6 +131,7 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Users</p>
         <DropdownSelect
+          noPlaceholderOption={true}
           options={userDropdownOption}
           value={userName}
           placeholder="Select Users"
@@ -142,6 +143,7 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Budgets</p>
         <DropdownSelect
+          noPlaceholderOption={true}
           options={budgetDropdownOption}
           value={budgetName}
           placeholder="Select Budgets"
@@ -153,6 +155,7 @@ const TransactionFormBlock = ({
       <div className="mb-5 flex h-16 w-full flex-col justify-between">
         <p className="font-bold">Accounts</p>
         <DropdownSelect
+          noPlaceholderOption={true}
           options={bankAccountDropdownOption}
           value={bankAccountName}
           placeholder="Select Budgets"
