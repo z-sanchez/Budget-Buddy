@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import DropdownIcon from "../../../../public/dropdown-icon.svg";
 import { Collapse } from "@mui/material";
 import { BLUE, MONTH_OPTIONS } from "../../../utils/constants";
 import { BudgetStatusDetailed } from "./BudgetStatusDetailed";
 import { useRouter } from "next/router";
-import { DateContext } from "../../../state/dateContext";
 import { useBudgets } from "../../../hooks/useBudgets";
 import { ICON_MAP } from "../../../utils/iconMap";
 import { type Budget } from "@prisma/client";
