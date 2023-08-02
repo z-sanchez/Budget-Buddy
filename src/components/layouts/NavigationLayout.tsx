@@ -9,7 +9,12 @@ import AccountManagementIcon from "../../../public/account-management-icon.svg";
 import SignOutIcon from "../../../public/sign-out-icon.svg";
 import { NavLink } from "../NavLink";
 import { NavUser } from "../NavUser";
-import { BUDGETS_PATH, DASHBOARD_PATH, GREY } from "../../utils/constants";
+import {
+  BUDGETS_PATH,
+  DASHBOARD_PATH,
+  GREY,
+  INCOME_DETAILS_PATH,
+} from "../../utils/constants";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { AuthWrapper } from "../AuthWrapper";
@@ -59,7 +64,7 @@ const NavigationLayout: NextPageWithLayout = ({
                 <NavLink
                   Icon={IncomeSpendingIcon as string}
                   name="Income/Spending"
-                  link={"/"}
+                  link={INCOME_DETAILS_PATH}
                 />
                 <NavLink
                   Icon={AccountManagementIcon as string}
