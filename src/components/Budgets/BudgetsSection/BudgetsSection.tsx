@@ -9,13 +9,28 @@ import { useBudgets } from "../../../hooks/useBudgets";
 import { ICON_MAP } from "../../../utils/iconMap";
 import { type Budget } from "@prisma/client";
 
-const BudgetsSection = () => {
+const BudgetsSection = ({
+  activeMonth,
+  month,
+  onMonthChange,
+}: {
+  activeMonth:
+    | {
+        id: string;
+        label: string;
+        abbreviation: string;
+      }
+    | undefined;
+  month: string;
+  onMonthChange: (month: {
+    id: string;
+    label: string;
+    abbreviation: string;
+  }) => void;
+}) => {
   const { getMonthsBudgets, createBudget } = useBudgets();
   const [expandSection, setExpandSection] = useState(true);
-  const { month } = useContext(DateContext);
-  const [activeMonth, setActiveMonth] = useState(() =>
-    MONTH_OPTIONS.find(({ id }) => id === month)
-  );
+
   const router = useRouter();
 
   const monthBudgets = getMonthsBudgets(activeMonth?.id ?? month);
@@ -44,7 +59,7 @@ const BudgetsSection = () => {
     label: string;
     abbreviation: string;
   }) => {
-    setActiveMonth(newMonth);
+    onMonthChange(newMonth);
   };
 
   return (

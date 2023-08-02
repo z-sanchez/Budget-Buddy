@@ -117,7 +117,7 @@ export const transactionsRouter = createTRPCRouter({
         where: {
           userId: ctx.session.user.id,
           date: {
-            lte: input.endDate,
+            lte: dayjs(input.endDate).endOf("day").toISOString(),
             gte: input.startDate,
           },
         },

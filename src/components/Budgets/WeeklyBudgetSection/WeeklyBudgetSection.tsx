@@ -8,12 +8,22 @@ import {
   RED_STATE,
 } from "../../../utils/constants";
 import { BudgetLine } from "./BudgetLine";
-import { getCurrentMonthsWeekDates } from "../../../utils/helpers/dayjs";
+import { getMonthsWeekDates } from "../../../utils/helpers/dayjs";
 
-const WeeklyBudgetSection = () => {
+const WeeklyBudgetSection = ({
+  activeMonth,
+}: {
+  activeMonth:
+    | {
+        id: string;
+        label: string;
+        abbreviation: string;
+      }
+    | undefined;
+}) => {
   const [expandSection, setExpandSection] = useState(true);
 
-  const dates = getCurrentMonthsWeekDates();
+  const dates = getMonthsWeekDates(activeMonth?.id ?? null);
 
   return (
     <>
