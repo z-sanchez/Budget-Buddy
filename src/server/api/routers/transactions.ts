@@ -43,20 +43,15 @@ export const transactionsRouter = createTRPCRouter({
     }),
 
   getThisWeeksTransactions: protectedProcedure.query(async ({ ctx }) => {
-    const today = dayjs();
-    const daysToNextSunday = 7 - today.day();
-    const daysToPreviousSunday = today.day();
-
-    const nextSunday = today.add(daysToNextSunday, "day").startOf("day");
-    const prevSunday = today
-      .subtract(daysToPreviousSunday, "day")
-      .startOf("day");
+    //makes monday start of week
+    const startOfWeek = dayjs().startOf("week").add(1, "day");
+    const endOfWeek = dayjs().endOf("week").add(1, "day");
 
     const weeksTransactionData = await ctx.prisma.transaction.findMany({
       where: {
         date: {
-          lte: nextSunday.toISOString(),
-          gte: prevSunday.toISOString(),
+          lte: endOfWeek.endOf("day").toISOString(),
+          gte: startOfWeek.toISOString(),
         },
       },
     });
